@@ -2,7 +2,7 @@ const KatigStorage = (() => {
   const memory = {};
   const hasLocal = () => {
     try {
-      const testKey = '__katig_test__';
+      const testKey = '_katig_test_';
       window.localStorage.setItem(testKey, '1');
       window.localStorage.removeItem(testKey);
       return true;
@@ -86,6 +86,24 @@ const KatigAuth = (() => {
 
   return { findUser, saveUser, getSession, setSession, clearSession };
 })();
+
+// Protect pages that require a signed-in user.
+function requireAuth() {
+  const session = KatigAuth.getSession();
+
+  if (!session) {
+    const currentPage =
+      window.location.pathname.split('/').pop() || 'index.html';
+
+    const redirect =
+      encodeURIComponent(currentPage + window.location.search);
+
+    window.location.href = 'signin.html?redirect=' + redirect;
+    return null;
+  }
+
+  return session;
+}
 
 const navToggle = document.querySelector('.nav-toggle');
 const navLinksEl = document.querySelector('.nav-links');
@@ -177,7 +195,7 @@ if (registerForm) {
       showRegisterMessage('Please fill in every field.', 'error');
       return;
     }
-    if (password.length < 8) {
+    if (password.length < 😎 {
       showRegisterMessage('Password must be at least 8 characters.', 'error');
       return;
     }
@@ -210,7 +228,7 @@ const signinForm = document.getElementById('signinForm');
 if (signinForm) {
   const existingSession = KatigAuth.getSession();
   const params = new URLSearchParams(window.location.search);
-  const redirectTo = params.get('redirect') || 'index.html';
+  const redirectTo = params.get('redirect') || 'authenticated.html';
   if (existingSession) {
     window.location.href = redirectTo;
   }
@@ -392,7 +410,7 @@ if (bookingLayout) {
 
     const details = updateSummary();
     const currentSession = KatigAuth.getSession();
-    const reference = 'KTG-' + Math.random().toString(36).slice(2, 8).toUpperCase();
+    const reference = 'KTG-' + Math.random().toString(36).slice(2, 😎.toUpperCase();
 
     const booking = {
       reference,
