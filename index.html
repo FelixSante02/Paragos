@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PARAGOS — Island Travel, Philippines</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,900;1,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/pages.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="index.html" class="logo">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M3 17c2 1.4 4 1.4 6 0s4-1.4 6 0 4 1.4 6 0" stroke="#FF6B4A" stroke-width="2" stroke-linecap="round"/><path d="M6 17V6l10 3-6 2.4V17" stroke="#0A2E2C" stroke-width="2" stroke-linejoin="round"/></svg>
+    PARAGOS
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="active">Home</a></li>
+    <li><a href="destinations.html">Destinations</a></li>
+    <li><a href="offers.html">Offers</a></li>
+    <li><a href="support.html">Support</a></li>
+  </ul>
+  <div class="nav-cta">
+    <a href="signin.html" class="btn btn-ghost" id="navAuthLink">Sign in</a>
+    <button class="nav-toggle" aria-label="Open menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<header class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="eyebrow">7,641 islands, one itinerary</div>
+    <h1>Plan your Philippine <em>escape</em> in minutes</h1>
+    <p>Stays, island crossings, and rental cars across the archipelago, matched to how you actually want to travel.</p>
+  </div>
+  <div class="search-card">
+    <div class="search-field">
+      <label>Destination</label>
+      <select>
+        <option>El Nido, Palawan</option>
+        <option>Boracay, Aklan</option>
+        <option>Siargao, Surigao</option>
+        <option>Cebu City</option>
+        <option>Panglao, Bohol</option>
+        <option>Baguio City</option>
+      </select>
+    </div>
+    <div class="search-field">
+      <label>Check-in</label>
+      <input type="date">
+    </div>
+    <div class="search-field">
+      <label>Check-out</label>
+      <input type="date">
+    </div>
+    <div class="search-field">
+      <label>Travelers</label>
+      <select>
+        <option>1 traveler</option>
+        <option>2 travelers</option>
+        <option>3 travelers</option>
+        <option>4+ travelers</option>
+      </select>
+    </div>
+    <div class="search-submit">
+      <a href="destinations.html" aria-label="Search" style="width:54px;height:54px;border-radius:14px;background:var(--coral);display:flex;align-items:center;justify-content:center;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="white" stroke-width="2"/><path d="M21 21l-4-4" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+      </a>
+    </div>
+  </div>
+</header>
+
+<section class="stats-strip">
+  <div class="stat"><h3>120+</h3><p>Islands and destinations covered</p></div>
+  <div class="stat"><h3>860</h3><p>Partner stays, from hostels to resorts</p></div>
+  <div class="stat"><h3>34,900</h3><p>Trips booked by local and visiting travelers</p></div>
+</section>
+
+<section class="section" id="destinations">
+  <div class="section-head">
+    <div class="eyebrow">Where to next</div>
+    <h2>Popular destinations</h2>
+    <p>Six starting points into the archipelago, each with its own reason to go.</p>
+  </div>
+  <div class="dest-grid">
+    <a href="booking.html" class="dest-card">
+      <img src="https://picsum.photos/seed/boracay/600/800" alt="Boracay">
+      <div class="dest-card-overlay">
+        <span class="dest-code">BOR</span>
+        <h3>Boracay</h3>
+        <p class="from">From <strong>₱4,200</strong> / night</p>
+      </div>
+    </a>
+    <a href="booking.html" class="dest-card">
+      <img src="https://picsum.photos/seed/elnido/600/800" alt="El Nido, Palawan">
+      <div class="dest-card-overlay">
+        <span class="dest-code">PPS</span>
+        <h3>El Nido</h3>
+        <p class="from">From <strong>₱5,600</strong> / night</p>
+      </div>
+    </a>
+    <a href="booking.html" class="dest-card">
+      <img src="https://picsum.photos/seed/siargao/600/800" alt="Siargao">
+      <div class="dest-card-overlay">
+        <span class="dest-code">IAO</span>
+        <h3>Siargao</h3>
+        <p class="from">From <strong>₱3,100</strong> / night</p>
+      </div>
+    </a>
+    <a href="booking.html" class="dest-card">
+      <img src="https://picsum.photos/seed/cebu/600/800" alt="Cebu">
+      <div class="dest-card-overlay">
+        <span class="dest-code">CEB</span>
+        <h3>Cebu</h3>
+        <p class="from">From <strong>₱2,800</strong> / night</p>
+      </div>
+    </a>
+    <a href="booking.html" class="dest-card">
+      <img src="https://picsum.photos/seed/bohol/600/800" alt="Bohol">
+      <div class="dest-card-overlay">
+        <span class="dest-code">TAG</span>
+        <h3>Bohol</h3>
+        <p class="from">From <strong>₱3,450</strong> / night</p>
+      </div>
+    </a>
+    <a href="booking.html" class="dest-card">
+      <img src="https://picsum.photos/seed/baguio/600/800" alt="Baguio">
+      <div class="dest-card-overlay">
+        <span class="dest-code">BAG</span>
+        <h3>Baguio</h3>
+        <p class="from">From <strong>₱2,300</strong> / night</p>
+      </div>
+    </a>
+  </div>
+</section>
+
+<section class="section route-section">
+  <div class="section-head">
+    <div class="eyebrow">Sample route</div>
+    <h2>One trip, four stops</h2>
+    <p>How a two-week island hop through the archipelago typically lays out, start to finish.</p>
+  </div>
+  <div class="route-strip">
+    <div class="route-stop">
+      <span class="code">MNL</span>
+      <div class="route-dot"></div>
+      <h4>Manila</h4>
+      <span>Day 1 — arrival</span>
+    </div>
+    <div class="route-line"></div>
+    <div class="route-stop">
+      <span class="code">PPS</span>
+      <div class="route-dot"></div>
+      <h4>Palawan</h4>
+      <span>Day 2 — 5 nights</span>
+    </div>
+    <div class="route-line"></div>
+    <div class="route-stop">
+      <span class="code">BOR</span>
+      <div class="route-dot"></div>
+      <h4>Boracay</h4>
+      <span>Day 7 — 4 nights</span>
+    </div>
+    <div class="route-line"></div>
+    <div class="route-stop">
+      <span class="code">CEB</span>
+      <div class="route-dot"></div>
+      <h4>Cebu</h4>
+      <span>Day 11 — 3 nights</span>
+    </div>
+    <div class="route-line"></div>
+    <div class="route-stop">
+      <span class="code">TAG</span>
+      <div class="route-dot"></div>
+      <h4>Bohol</h4>
+      <span>Day 14 — departure</span>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head">
+    <div class="eyebrow">Stay</div>
+    <h2>Handpicked accommodations</h2>
+    <p>Verified stays, from beachfront resorts to city-center hotels.</p>
+  </div>
+  <div class="stay-grid">
+    <div class="stay-card">
+      <img src="https://picsum.photos/seed/resort1/500/400" alt="Resort in Palawan">
+      <div class="stay-body">
+        <div class="stay-tags"><span class="tag">Beachfront</span><span class="tag">Pool</span></div>
+        <h4>Amihan Cove Resort</h4>
+        <div class="stay-meta">
+          <span class="rating">★ 4.8</span>
+          <span class="price">₱6,900/night</span>
+        </div>
+      </div>
+    </div>
+    <div class="stay-card">
+      <img src="https://picsum.photos/seed/resort2/500/400" alt="Hotel in Cebu">
+      <div class="stay-body">
+        <div class="stay-tags"><span class="tag">City center</span><span class="tag">Breakfast</span></div>
+        <h4>Kalye Suites Cebu</h4>
+        <div class="stay-meta">
+          <span class="rating">★ 4.6</span>
+          <span class="price">₱3,200/night</span>
+        </div>
+      </div>
+    </div>
+    <div class="stay-card">
+      <img src="https://picsum.photos/seed/resort3/500/400" alt="Villa in Siargao">
+      <div class="stay-body">
+        <div class="stay-tags"><span class="tag">Surf camp</span><span class="tag">Private villa</span></div>
+        <h4>Cloud 9 Villas</h4>
+        <div class="stay-meta">
+          <span class="rating">★ 4.9</span>
+          <span class="price">₱5,400/night</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="split">
+    <div>
+      <div class="eyebrow">Move</div>
+      <h2 style="font-family:'Fraunces',serif;font-weight:600;font-size:clamp(32px,4vw,48px);margin-top:14px;">Rental cars for the road between islands</h2>
+      <p style="margin-top:16px;color:rgba(10,46,44,0.72);max-width:440px;">Self-drive or with a driver, picked up at the airport or your hotel.</p>
+      <div class="fleet-list" style="margin-top:32px;">
+        <div class="fleet-item">
+          <div class="fleet-name">Sedan<span>Vios or similar, 4 seats</span></div>
+          <div class="fleet-price">₱1,800<span>per day</span></div>
+        </div>
+        <div class="fleet-item">
+          <div class="fleet-name">SUV<span>Fortuner or similar, 7 seats</span></div>
+          <div class="fleet-price">₱3,500<span>per day</span></div>
+        </div>
+        <div class="fleet-item">
+          <div class="fleet-name">Van<span>Grandia or similar, 12 seats</span></div>
+          <div class="fleet-price">₱4,900<span>per day</span></div>
+        </div>
+        <div class="fleet-item">
+          <div class="fleet-name">Motorbike<span>Automatic, 1-2 seats</span></div>
+          <div class="fleet-price">₱600<span>per day</span></div>
+        </div>
+      </div>
+      <a href="booking.html" class="btn btn-primary" style="margin-top:30px;">Book a ride</a>
+    </div>
+    <img src="https://picsum.photos/seed/rentalcar/700/850" alt="Rental car on a coastal road">
+  </div>
+</section>
+
+<section class="section" id="offers">
+  <div class="section-head">
+    <div class="eyebrow">Limited seats</div>
+    <h2>Current offers</h2>
+    <p>Seasonal fares and stay discounts, booked out fast.</p>
+  </div>
+  <div class="offers-grid">
+    <div class="ticket">
+      <div class="ticket-top">
+        <div class="eyebrow">Off-peak fare</div>
+        <div class="ticket-route">MNL <span class="arrow">→</span> PPS</div>
+        <h4>Palawan stay, 15% off</h4>
+      </div>
+      <div class="ticket-perf"></div>
+      <div class="ticket-bottom">
+        <div class="ticket-discount">15%<span>Valid through Sept 30</span></div>
+        <a href="booking.html" class="btn btn-coral">Claim</a>
+      </div>
+    </div>
+    <div class="ticket">
+      <div class="ticket-top">
+        <div class="eyebrow">Group rate</div>
+        <div class="ticket-route">MNL <span class="arrow">→</span> BOR</div>
+        <h4>Boracay group package</h4>
+      </div>
+      <div class="ticket-perf"></div>
+      <div class="ticket-bottom">
+        <div class="ticket-discount">20%<span>Groups of 4+</span></div>
+        <a href="booking.html" class="btn btn-coral">Claim</a>
+      </div>
+    </div>
+    <div class="ticket">
+      <div class="ticket-top">
+        <div class="eyebrow">Rental bundle</div>
+        <div class="ticket-route">CEB <span class="arrow">→</span> TAG</div>
+        <h4>Bohol stay + rental car</h4>
+      </div>
+      <div class="ticket-perf"></div>
+      <div class="ticket-bottom">
+        <div class="ticket-discount">10%<span>Book both together</span></div>
+        <a href="booking.html" class="btn btn-coral">Claim</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head">
+    <div class="eyebrow">Heard from travelers</div>
+    <h2>What guests are saying</h2>
+  </div>
+  <div class="testimonial-grid">
+    <div class="testimonial">
+      <p>"Booked our whole Palawan to Boracay route in one sitting. No back and forth between five different apps."</p>
+      <div class="testimonial-author">
+        <div class="avatar">RM</div>
+        <div><strong>Rina M.</strong><span>Quezon City</span></div>
+      </div>
+    </div>
+    <div class="testimonial">
+      <p>"The rental car showed up at the airport exactly on time. Made the Bohol countryside loop painless."</p>
+      <div class="testimonial-author">
+        <div class="avatar">JD</div>
+        <div><strong>Jared D.</strong><span>Cebu City</span></div>
+      </div>
+    </div>
+    <div class="testimonial">
+      <p>"Found a Siargao surf villa well under what I was quoted elsewhere, and it matched the photos exactly."</p>
+      <div class="testimonial-author">
+        <div class="avatar">AL</div>
+        <div><strong>Anna L.</strong><span>Davao City</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="support" style="padding-top:0;">
+  <div class="newsletter">
+    <div class="eyebrow">Stay in the loop</div>
+    <h2>Get seat sales and stay drops before they're gone</h2>
+    <form class="newsletter-form">
+      <input type="email" placeholder="you@email.com" required>
+      <button class="btn btn-coral" type="submit">Subscribe</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="index.html" class="logo">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M3 17c2 1.4 4 1.4 6 0s4-1.4 6 0 4 1.4 6 0" stroke="#FF6B4A" stroke-width="2" stroke-linecap="round"/><path d="M6 17V6l10 3-6 2.4V17" stroke="#0A2E2C" stroke-width="2" stroke-linejoin="round"/></svg>
+        PARAGOS
+      </a>
+      <p>Local trip planning for the Philippine archipelago. Stays, island transfers, and rental cars in one place.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Company</h5>
+      <ul>
+        <li><a href="about.html">About</a></li>
+        <li><a href="support.html">Support</a></li>
+        <li><a href="#">Careers</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Explore</h5>
+      <ul>
+        <li><a href="destinations.html">Destinations</a></li>
+        <li><a href="offers.html">Offers</a></li>
+        <li><a href="#">Rental cars</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Account</h5>
+      <ul>
+        <li><a href="signin.html">Sign in</a></li>
+        <li><a href="register.html">Register</a></li>
+        <li><a href="admin.html">Admin (demo)</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 PARAGOS Travel. All rights reserved.</span>
+    <div class="socials">
+      <a href="#">Instagram</a>
+      <a href="#">Facebook</a>
+      <a href="#">TikTok</a>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/main.js"></script>
+
+</body>
+</html>

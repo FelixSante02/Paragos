@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book your trip — PARAGOS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,900;1,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/pages.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="index.html" class="logo">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M3 17c2 1.4 4 1.4 6 0s4-1.4 6 0 4 1.4 6 0" stroke="#FF6B4A" stroke-width="2" stroke-linecap="round"/><path d="M6 17V6l10 3-6 2.4V17" stroke="#0A2E2C" stroke-width="2" stroke-linejoin="round"/></svg>
+    PARAGOS
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="destinations.html">Destinations</a></li>
+    <li><a href="offers.html">Offers</a></li>
+    <li><a href="support.html">Support</a></li>
+  </ul>
+  <div class="nav-cta">
+    <a href="signin.html" class="btn btn-ghost" id="navAuthLink">Sign in</a>
+    <button class="nav-toggle" aria-label="Open menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<header class="page-header" style="padding-bottom:60px;">
+  <div class="page-header-inner">
+    <div class="breadcrumb"><a href="index.html">Home</a> / <a href="destinations.html">Destinations</a> / Book</div>
+    <div class="eyebrow">Almost there</div>
+    <h1>Complete your booking</h1>
+    <p>Confirm your trip details, pick a stay and a rental car, then pay securely.</p>
+  </div>
+</header>
+
+<section class="section" style="padding-top:70px;">
+  <div class="stepper">
+    <div class="step active"><span class="step-num">1</span><span class="step-label">Trip details</span></div>
+    <div class="step-line"></div>
+    <div class="step"><span class="step-num">2</span><span class="step-label">Stay</span></div>
+    <div class="step-line"></div>
+    <div class="step"><span class="step-num">3</span><span class="step-label">Rental car</span></div>
+    <div class="step-line"></div>
+    <div class="step"><span class="step-num">4</span><span class="step-label">Payment</span></div>
+  </div>
+
+  <div id="authBanner" style="display:none;margin-bottom:30px;padding:14px 18px;border-radius:12px;background:var(--sand-dim);font-size:13px;color:rgba(10,46,44,0.75);"></div>
+
+  <div class="booking-layout" id="bookingLayout">
+    <div class="booking-main" id="bookingMain">
+
+      <div class="booking-step">
+        <div class="eyebrow">Step 1</div>
+        <h3>Trip details</h3>
+        <div class="form-row">
+          <div class="form-field">
+            <label>Destination</label>
+            <select id="tripDestination">
+              <option data-code="PPS">El Nido, Palawan</option>
+              <option data-code="BOR">Boracay, Aklan</option>
+              <option data-code="IAO">Siargao, Surigao</option>
+              <option data-code="CEB">Cebu City</option>
+              <option data-code="TAG">Panglao, Bohol</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label>Travelers</label>
+            <select id="tripTravelers">
+              <option value="1">1 traveler</option>
+              <option value="2" selected>2 travelers</option>
+              <option value="3">3 travelers</option>
+              <option value="4">4+ travelers</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label>Check-in</label>
+            <input type="date" id="tripCheckin" value="2026-09-14">
+          </div>
+          <div class="form-field">
+            <label>Check-out</label>
+            <input type="date" id="tripCheckout" value="2026-09-18">
+          </div>
+        </div>
+      </div>
+
+      <div class="booking-step">
+        <div class="eyebrow">Step 2</div>
+        <h3>Choose your stay</h3>
+        <div class="select-grid" id="stayGrid">
+          <div class="select-card" data-name="Kalye Suites" data-price="3200">
+            <div class="radio-dot"></div>
+            <img src="https://picsum.photos/seed/resort2/400/240" alt="Kalye Suites">
+            <div class="select-card-body">
+              <h4>Kalye Suites</h4>
+              <span>₱3,200 / night</span>
+            </div>
+          </div>
+          <div class="select-card selected" data-name="Amihan Cove Resort" data-price="5600">
+            <div class="radio-dot"></div>
+            <img src="https://picsum.photos/seed/resort1/400/240" alt="Amihan Cove Resort">
+            <div class="select-card-body">
+              <h4>Amihan Cove Resort</h4>
+              <span>₱5,600 / night</span>
+            </div>
+          </div>
+          <div class="select-card" data-name="Cloud 9 Villas" data-price="5400">
+            <div class="radio-dot"></div>
+            <img src="https://picsum.photos/seed/resort3/400/240" alt="Cloud 9 Villas">
+            <div class="select-card-body">
+              <h4>Cloud 9 Villas</h4>
+              <span>₱5,400 / night</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="booking-step">
+        <div class="eyebrow">Step 3</div>
+        <h3>Add a rental car</h3>
+        <div class="select-grid" id="carGrid">
+          <div class="select-card" data-name="Sedan" data-price="1800">
+            <div class="radio-dot"></div>
+            <img src="https://picsum.photos/seed/sedan/400/240" alt="Sedan">
+            <div class="select-card-body">
+              <h4>Sedan</h4>
+              <span>₱1,800 / day</span>
+            </div>
+          </div>
+          <div class="select-card selected" data-name="SUV" data-price="3500">
+            <div class="radio-dot"></div>
+            <img src="https://picsum.photos/seed/suv/400/240" alt="SUV">
+            <div class="select-card-body">
+              <h4>SUV</h4>
+              <span>₱3,500 / day</span>
+            </div>
+          </div>
+          <div class="select-card" data-name="Van" data-price="4900">
+            <div class="radio-dot"></div>
+            <img src="https://picsum.photos/seed/van/400/240" alt="Van">
+            <div class="select-card-body">
+              <h4>Van</h4>
+              <span>₱4,900 / day</span>
+            </div>
+          </div>
+          <div class="select-card select-card-noimg" data-name="" data-price="0">
+            <div class="radio-dot"></div>
+            <div class="select-card-body" style="padding:0;">
+              <h4>No rental car</h4>
+              <span>Skip this step</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="booking-step">
+        <div class="eyebrow">Step 4</div>
+        <h3>Payment details</h3>
+        <div id="paymentError" style="display:none;padding:12px 14px;border-radius:10px;font-size:13px;margin-bottom:18px;background:rgba(255,107,74,0.12);color:#B8422A;"></div>
+        <div class="form-field">
+          <label>Name on card</label>
+          <input type="text" id="paymentName" placeholder="Juan Dela Cruz">
+        </div>
+        <div class="form-field">
+          <label>Card number</label>
+          <input type="text" id="paymentCard" placeholder="1234 1234 1234 1234" maxlength="19">
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label>Expiry</label>
+            <input type="text" id="paymentExpiry" placeholder="MM / YY" maxlength="7">
+          </div>
+          <div class="form-field">
+            <label>CVV</label>
+            <input type="text" id="paymentCVV" placeholder="123" maxlength="4">
+          </div>
+        </div>
+        <div class="form-field">
+          <label>Billing address</label>
+          <input type="text" id="paymentAddress" placeholder="Street, city, province">
+        </div>
+      </div>
+
+    </div>
+
+    <div class="summary-card">
+      <div class="eyebrow">Your itinerary</div>
+      <div class="summary-route">MNL <span class="arrow">→</span> <span id="summaryCode">PPS</span></div>
+      <div class="summary-meta">
+        <div><span>Destination</span><span id="metaDestination">El Nido, Palawan</span></div>
+        <div><span>Check-in</span><span id="metaCheckin">Sep 14, 2026</span></div>
+        <div><span>Check-out</span><span id="metaCheckout">Sep 18, 2026</span></div>
+        <div><span>Travelers</span><span id="metaTravelers">2</span></div>
+      </div>
+      <div class="summary-perf"></div>
+      <div class="summary-row" id="rowStay"><span id="rowStayLabel">Amihan Cove Resort, 4 nights</span><span id="rowStayPrice">₱22,400</span></div>
+      <div class="summary-row" id="rowCar"><span id="rowCarLabel">SUV rental, 4 days</span><span id="rowCarPrice">₱14,000</span></div>
+      <div class="summary-row"><span>Service fee</span><span id="rowServiceFee">₱850</span></div>
+      <div class="summary-row discount" id="rowDiscount" style="display:none;"><span id="rowDiscountLabel">Promo</span><span id="rowDiscountAmount">−₱0</span></div>
+      <div class="promo-row">
+        <input type="text" id="promoInput" placeholder="Promo code">
+        <button type="button" id="promoApplyBtn">Apply</button>
+      </div>
+      <p id="promoMsg" style="display:none;font-size:12px;margin-top:-2px;margin-bottom:6px;"></p>
+      <div class="summary-total">
+        <span>Total</span>
+        <span id="summaryTotal">₱37,250</span>
+      </div>
+      <button type="button" class="btn btn-coral form-submit" id="confirmPayBtn" style="margin-top:20px;">Confirm and pay</button>
+      <p class="summary-note">Demo checkout, no real payment is processed. Free cancellation up to 48 hours before check-in.</p>
+    </div>
+  </div>
+
+  <div id="confirmationPanel" style="display:none;">
+    <div class="ticket" style="max-width:560px;margin:0 auto;">
+      <div class="ticket-top">
+        <div class="eyebrow">Booking confirmed</div>
+        <div class="ticket-route">MNL <span class="arrow">→</span> <span id="confirmCode">PPS</span></div>
+        <h4 id="confirmDestination">El Nido, Palawan</h4>
+      </div>
+      <div class="ticket-perf"></div>
+      <div class="ticket-bottom" style="flex-direction:column;align-items:flex-start;gap:16px;">
+        <div style="width:100%;">
+          <div class="summary-meta" style="margin-top:0;">
+            <div><span>Reference</span><span id="confirmRef">KTG-000000</span></div>
+            <div><span>Check-in</span><span id="confirmCheckin">Sep 14, 2026</span></div>
+            <div><span>Check-out</span><span id="confirmCheckout">Sep 18, 2026</span></div>
+            <div><span>Travelers</span><span id="confirmTravelers">2</span></div>
+            <div><span>Total paid</span><span id="confirmTotal">₱37,250</span></div>
+          </div>
+        </div>
+        <a href="index.html" class="btn btn-primary" style="width:100%;justify-content:center;">Back to home</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="index.html" class="logo">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M3 17c2 1.4 4 1.4 6 0s4-1.4 6 0 4 1.4 6 0" stroke="#FF6B4A" stroke-width="2" stroke-linecap="round"/><path d="M6 17V6l10 3-6 2.4V17" stroke="#0A2E2C" stroke-width="2" stroke-linejoin="round"/></svg>
+        PARAGOS
+      </a>
+      <p>Local trip planning for the Philippine archipelago. Stays, island transfers, and rental cars in one place.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Company</h5>
+      <ul>
+        <li><a href="about.html">About</a></li>
+        <li><a href="support.html">Support</a></li>
+        <li><a href="#">Careers</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Explore</h5>
+      <ul>
+        <li><a href="destinations.html">Destinations</a></li>
+        <li><a href="offers.html">Offers</a></li>
+        <li><a href="#">Rental cars</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Account</h5>
+      <ul>
+        <li><a href="signin.html">Sign in</a></li>
+        <li><a href="register.html">Register</a></li>
+        <li><a href="admin.html">Admin (demo)</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 PARAGOS Travel. All rights reserved.</span>
+    <div class="socials">
+      <a href="#">Instagram</a>
+      <a href="#">Facebook</a>
+      <a href="#">TikTok</a>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/main.js"></script>
+
+</body>
+</html>

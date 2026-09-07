@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin (demo) — PARAGOS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,900;1,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/pages.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="index.html" class="logo">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M3 17c2 1.4 4 1.4 6 0s4-1.4 6 0 4 1.4 6 0" stroke="#FF6B4A" stroke-width="2" stroke-linecap="round"/><path d="M6 17V6l10 3-6 2.4V17" stroke="#0A2E2C" stroke-width="2" stroke-linejoin="round"/></svg>
+    PARAGOS
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="destinations.html">Destinations</a></li>
+    <li><a href="offers.html">Offers</a></li>
+    <li><a href="support.html">Support</a></li>
+  </ul>
+  <div class="nav-cta">
+    <a href="signin.html" class="btn btn-ghost" id="navAuthLink">Sign in</a>
+    <button class="nav-toggle" aria-label="Open menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<header class="page-header" style="padding-bottom:60px;">
+  <div class="page-header-inner">
+    <div class="breadcrumb"><a href="index.html">Home</a> / Admin</div>
+    <div class="eyebrow">Debug view</div>
+    <h1>Stored accounts and bookings</h1>
+    <p>This page reads directly from the same storage the site uses for sign in, register, and checkout. It's a demo tool, not something to expose publicly.</p>
+    <div class="storage-pill" id="storagePill">
+      <span class="storage-dot"></span>
+      <span id="storageLabel">Checking storage...</span>
+    </div>
+  </div>
+</header>
+
+<section class="section" style="padding-top:60px;">
+  <div class="section-head">
+    <div class="eyebrow">Users</div>
+    <h2>Registered accounts</h2>
+    <p>Every account created through the Register page.</p>
+  </div>
+  <div id="usersWrap"></div>
+</section>
+
+<section class="section" style="padding-top:0;">
+  <div class="section-head">
+    <div class="eyebrow">Bookings</div>
+    <h2>Confirmed bookings</h2>
+    <p>Every booking confirmed through the checkout flow.</p>
+  </div>
+  <div id="bookingsWrap"></div>
+</section>
+
+<section class="section" style="padding-top:0;">
+  <div class="section-head">
+    <div class="eyebrow">No UI needed</div>
+    <h2>Or check from the console</h2>
+    <p>Open the browser dev tools console on any page of this site and run:</p>
+  </div>
+  <pre style="background:var(--ink);color:var(--sand);padding:20px 24px;border-radius:14px;font-family:'IBM Plex Mono',monospace;font-size:13px;overflow-x:auto;">await PARAGOSStorage.list('users:')
+await PARAGOSStorage.get('users:you@email.com')
+await PARAGOSStorage.list('bookings:')</pre>
+</section>
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="index.html" class="logo">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M3 17c2 1.4 4 1.4 6 0s4-1.4 6 0 4 1.4 6 0" stroke="#FF6B4A" stroke-width="2" stroke-linecap="round"/><path d="M6 17V6l10 3-6 2.4V17" stroke="#0A2E2C" stroke-width="2" stroke-linejoin="round"/></svg>
+        PARAGOS
+      </a>
+      <p>Local trip planning for the Philippine archipelago. Stays, island transfers, and rental cars in one place.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Company</h5>
+      <ul>
+        <li><a href="about.html">About</a></li>
+        <li><a href="support.html">Support</a></li>
+        <li><a href="#">Careers</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Explore</h5>
+      <ul>
+        <li><a href="destinations.html">Destinations</a></li>
+        <li><a href="offers.html">Offers</a></li>
+        <li><a href="#">Rental cars</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Account</h5>
+      <ul>
+        <li><a href="signin.html">Sign in</a></li>
+        <li><a href="register.html">Register</a></li>
+        <li><a href="admin.html">Admin (demo)</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 PARAGOS Travel. All rights reserved.</span>
+    <div class="socials">
+      <a href="#">Instagram</a>
+      <a href="#">Facebook</a>
+      <a href="#">TikTok</a>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/main.js"></script>
+
+</body>
+</html>
