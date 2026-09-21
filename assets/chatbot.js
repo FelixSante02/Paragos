@@ -8,7 +8,7 @@
 (function () {
 
   // Paste your deployed Worker URL here (see worker/README.md)
-  const CHATBOT_ENDPOINT = "";
+  const CHATBOT_ENDPOINT = "https://paragos-chat.paragos.workers.dev";
 
   const MAX_CONTEXT_CHARS = 12000;
   const HISTORY_KEY = "paragos:chat_history";
