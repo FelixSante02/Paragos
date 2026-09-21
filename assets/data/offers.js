@@ -1,0 +1,9 @@
+/* PARAGOS sample offers. category: stays | rental-cars | packages */
+window.PARAGOS_OFFERS = [
+  { id: "island-escape", title: "Island Escape Package", eyebrow: "Package", category: "packages", discount: 20, description: "Save 20% on 3+ night beach stays in Boracay or El Nido when you book a stay and rental together.", originCode: "MNL", destinationCode: "MPH", destinationId: "boracay", startDate: "2026-09-01", endDate: "2026-12-31" },
+  { id: "long-stay", title: "Stay 4, Pay 3", eyebrow: "Stays", category: "stays", discount: 25, description: "Book four nights at any participating stay and the fourth night is on us.", originCode: "MNL", destinationCode: "CEB", destinationId: "cebu", startDate: "2026-09-15", endDate: "2026-11-30" },
+  { id: "road-trip", title: "Weekend Road Trip", eyebrow: "Rental cars", category: "rental-cars", discount: 15, description: "15% off compact cars and SUVs for rentals of 2 days or more.", originCode: "MNL", destinationCode: "BAG", destinationId: "baguio", startDate: "2026-09-01", endDate: "2026-12-15" },
+  { id: "surf-week", title: "Surf Week in Siargao", eyebrow: "Package", category: "packages", discount: 18, description: "Stay at Cloud 9 Surf Lodge with a scooter rental and two surf lessons.", originCode: "MNL", destinationCode: "IAO", destinationId: "siargao", startDate: "2026-10-01", endDate: "2027-01-31" },
+  { id: "early-bird", title: "Early Bird Stays", eyebrow: "Stays", category: "stays", discount: 12, description: "Book at least 30 days ahead and save 12% on any stay.", originCode: "MNL", startDate: "2026-09-01", endDate: "2027-03-31" },
+  { id: "highland-getaway", title: "Highlands Getaway", eyebrow: "Package", category: "packages", discount: 10, description: "Baguio or Banaue stay bundled with a van rental for groups of 6 or more.", originCode: "MNL", destinationCode: "BAN", destinationId: "banaue", startDate: "2026-09-10", endDate: "2026-12-20" }
+];

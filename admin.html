@@ -3,119 +3,1829 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Admin (demo) — PARAGOS</title>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,900;1,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
 <link rel="stylesheet" href="assets/style.css">
 <link rel="stylesheet" href="assets/pages.css">
 </head>
-<body>
 
-<nav class="navbar">
-  <a href="index.html" class="logo">
-    <svg viewBox="0 0 24 24" fill="none"><path d="M3 17c2 1.4 4 1.4 6 0s4-1.4 6 0 4 1.4 6 0" stroke="#FF6B4A" stroke-width="2" stroke-linecap="round"/><path d="M6 17V6l10 3-6 2.4V17" stroke="#0A2E2C" stroke-width="2" stroke-linejoin="round"/></svg>
-    PARAGOS
-  </a>
-  <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="destinations.html">Destinations</a></li>
-    <li><a href="offers.html">Offers</a></li>
-    <li><a href="support.html">Support</a></li>
-  </ul>
-  <div class="nav-cta">
-    <a href="signin.html" class="btn btn-ghost" id="navAuthLink">Sign in</a>
-    <button class="nav-toggle" aria-label="Open menu"><span></span><span></span><span></span></button>
-  </div>
-</nav>
+<body data-no-chatbot>
 
-<header class="page-header" style="padding-bottom:60px;">
+<!-- NAVBAR -->
+<nav class="navbar" id="siteNav" aria-label="Main navigation"></nav>
+
+
+<!-- PAGE HEADER -->
+<header
+  class="page-header"
+  style="padding-bottom:60px;">
+
   <div class="page-header-inner">
-    <div class="breadcrumb"><a href="index.html">Home</a> / Admin</div>
-    <div class="eyebrow">Debug view</div>
-    <h1>Stored accounts and bookings</h1>
-    <p>This page reads directly from the same storage the site uses for sign in, register, and checkout. It's a demo tool, not something to expose publicly.</p>
-    <div class="storage-pill" id="storagePill">
-      <span class="storage-dot"></span>
-      <span id="storageLabel">Checking storage...</span>
+
+    <div class="breadcrumb">
+      <a href="index.html">
+        Home
+      </a>
+      /
+      Admin
     </div>
+
+
+    <div class="eyebrow">
+      Debug view
+    </div>
+
+
+    <h1>
+      Stored accounts and bookings
+    </h1>
+
+
+    <p>
+      This page reads the same local storage used by the
+      PARAGOS demo for accounts, sessions, and bookings.
+      It is intended for development and testing only.
+    </p>
+
+
+    <div
+      class="storage-pill"
+      id="storagePill">
+
+      <span class="storage-dot"></span>
+
+      <span id="storageLabel">
+        Checking storage...
+      </span>
+
+    </div>
+
   </div>
+
 </header>
 
-<section class="section" style="padding-top:60px;">
+
+<!-- USERS -->
+<section
+  class="section"
+  style="padding-top:60px;">
+
   <div class="section-head">
-    <div class="eyebrow">Users</div>
-    <h2>Registered accounts</h2>
-    <p>Every account created through the Register page.</p>
+
+    <div class="eyebrow">
+      Users
+    </div>
+
+    <h2>
+      Registered accounts
+    </h2>
+
+    <p>
+      Accounts created through the PARAGOS Register page.
+    </p>
+
   </div>
-  <div id="usersWrap"></div>
+
+
+  <div id="usersWrap">
+
+    <div class="empty-state">
+      Loading accounts...
+    </div>
+
+  </div>
+
 </section>
 
-<section class="section" style="padding-top:0;">
+
+<!-- BOOKINGS -->
+<section
+  class="section"
+  style="padding-top:0;">
+
   <div class="section-head">
-    <div class="eyebrow">Bookings</div>
-    <h2>Confirmed bookings</h2>
-    <p>Every booking confirmed through the checkout flow.</p>
+
+    <div class="eyebrow">
+      Bookings
+    </div>
+
+    <h2>
+      Confirmed bookings
+    </h2>
+
+    <p>
+      Bookings saved through the PARAGOS checkout flow.
+    </p>
+
   </div>
-  <div id="bookingsWrap"></div>
+
+
+  <div id="bookingsWrap">
+
+    <div class="empty-state">
+      Loading bookings...
+    </div>
+
+  </div>
+
 </section>
 
-<section class="section" style="padding-top:0;">
+
+<!-- STORAGE CONSOLE -->
+<section
+  class="section"
+  style="padding-top:0;">
+
   <div class="section-head">
-    <div class="eyebrow">No UI needed</div>
-    <h2>Or check from the console</h2>
-    <p>Open the browser dev tools console on any page of this site and run:</p>
+
+    <div class="eyebrow">
+      Developer tools
+    </div>
+
+    <h2>
+      Inspect storage
+    </h2>
+
+    <p>
+      You can also inspect the PARAGOS demo data from the
+      browser developer console.
+    </p>
+
   </div>
-  <pre style="background:var(--ink);color:var(--sand);padding:20px 24px;border-radius:14px;font-family:'IBM Plex Mono',monospace;font-size:13px;overflow-x:auto;">await PARAGOSStorage.list('users:')
-await PARAGOSStorage.get('users:you@email.com')
-await PARAGOSStorage.list('bookings:')</pre>
+
+
+  <pre
+    style="
+      background:var(--ink);
+      color:var(--sand);
+      padding:20px 24px;
+      border-radius:14px;
+      font-family:'IBM Plex Mono',monospace;
+      font-size:13px;
+      line-height:1.7;
+      overflow-x:auto;
+    ">PARAGOSStorage.list('users:')
+PARAGOSStorage.get('users:you@email.com')
+PARAGOSStorage.list('bookings:')</pre>
+
+
+  <p
+    style="
+      margin-top:14px;
+      font-size:13px;
+      color:var(--muted);
+    ">
+
+    Passwords are intentionally not displayed in this
+    admin view.
+
+  </p>
+
 </section>
 
+
+<!-- FOOTER -->
 <footer>
+
   <div class="footer-top">
+
+
     <div class="footer-brand">
+
       <a href="index.html" class="logo">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M3 17c2 1.4 4 1.4 6 0s4-1.4 6 0 4 1.4 6 0" stroke="#FF6B4A" stroke-width="2" stroke-linecap="round"/><path d="M6 17V6l10 3-6 2.4V17" stroke="#0A2E2C" stroke-width="2" stroke-linejoin="round"/></svg>
+
+        <svg viewBox="0 0 24 24" fill="none">
+
+          <path
+            d="M3 17c2 1.4 4 1.4 6 0s4-1.4 6 0 4 1.4 6 0"
+            stroke="#FF6B4A"
+            stroke-width="2"
+            stroke-linecap="round"/>
+
+          <path
+            d="M6 17V6l10 3-6 2.4V17"
+            stroke="#0A2E2C"
+            stroke-width="2"
+            stroke-linejoin="round"/>
+
+        </svg>
+
         PARAGOS
+
       </a>
-      <p>Local trip planning for the Philippine archipelago. Stays, island transfers, and rental cars in one place.</p>
+
+
+      <p>
+        Local trip planning for the Philippine archipelago.
+        Stays, island transfers, and rental cars in one place.
+      </p>
+
     </div>
+
+
     <div class="footer-col">
-      <h5>Company</h5>
+
+      <h5>
+        Company
+      </h5>
+
       <ul>
-        <li><a href="about.html">About</a></li>
-        <li><a href="support.html">Support</a></li>
-        <li><a href="#">Careers</a></li>
+
+        <li>
+          <a href="about.html">
+            About
+          </a>
+        </li>
+
+        <li>
+          <a href="support.html">
+            Support
+          </a>
+        </li>
+
+        <li>
+          <a href="#">
+            Careers
+          </a>
+        </li>
+
       </ul>
+
     </div>
+
+
     <div class="footer-col">
-      <h5>Explore</h5>
+
+      <h5>
+        Explore
+      </h5>
+
       <ul>
-        <li><a href="destinations.html">Destinations</a></li>
-        <li><a href="offers.html">Offers</a></li>
-        <li><a href="#">Rental cars</a></li>
+
+        <li>
+          <a href="destinations.html">
+            Destinations
+          </a>
+        </li>
+
+        <li>
+          <a href="offers.html">
+            Offers
+          </a>
+        </li>
+
+        <li>
+          <a href="booking.html">
+            Rental cars
+          </a>
+        </li>
+
       </ul>
+
     </div>
+
+
     <div class="footer-col">
-      <h5>Account</h5>
+
+      <h5>
+        Account
+      </h5>
+
       <ul>
-        <li><a href="signin.html">Sign in</a></li>
-        <li><a href="register.html">Register</a></li>
-        <li><a href="admin.html">Admin (demo)</a></li>
+
+        <li>
+          <a href="signin.html">
+            Sign in
+          </a>
+        </li>
+
+        <li>
+          <a href="register.html">
+            Register
+          </a>
+        </li>
+
+        <li>
+          <a href="authenticated.html">
+            My account
+          </a>
+        </li>
+
       </ul>
+
     </div>
+
+
   </div>
+
+
   <div class="footer-bottom">
-    <span>© 2026 PARAGOS Travel. All rights reserved.</span>
+
+    <span>
+      © 2026 PARAGOS Travel. All rights reserved.
+    </span>
+
     <div class="socials">
-      <a href="#">Instagram</a>
-      <a href="#">Facebook</a>
-      <a href="#">TikTok</a>
+
+      <a href="#">
+        Instagram
+      </a>
+
+      <a href="#">
+        Facebook
+      </a>
+
+      <a href="#">
+        TikTok
+      </a>
+
     </div>
+
   </div>
+
 </footer>
 
+
+<!-- CENTRAL PARAGOS DATA -->
+<script src="assets/data/destinations.js"></script>
+<script src="assets/data/stays.js"></script>
+<script src="assets/data/vehicles.js"></script>
+<script src="assets/data/offers.js"></script>
+<script src="assets/data/faqs.js"></script>
+<script src="assets/data/policies.js"></script>
+
 <script src="assets/main.js"></script>
+
+
+<script>
+(function(){
+
+  "use strict";
+
+
+  /* -----------------------------------------
+     ELEMENTS
+  ----------------------------------------- */
+
+  const usersWrap =
+    document.getElementById("usersWrap");
+
+  const bookingsWrap =
+    document.getElementById("bookingsWrap");
+
+  const storagePill =
+    document.getElementById("storagePill");
+
+  const storageLabel =
+    document.getElementById("storageLabel");
+
+
+  /* -----------------------------------------
+     HELPERS
+  ----------------------------------------- */
+
+  function escapeHTML(value){
+
+    return String(value ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+
+  }
+
+
+  function formatPHP(value){
+
+    const number =
+      Number(value);
+
+    if(
+      window.PARAGOS &&
+      typeof window.PARAGOS.formatPHP === "function"
+    ){
+
+      return window.PARAGOS.formatPHP(number);
+
+    }
+
+    if(!Number.isFinite(number)){
+
+      return "₱0";
+
+    }
+
+    return "₱" +
+      number.toLocaleString(
+        "en-PH"
+      );
+
+  }
+
+
+  function formatDate(value){
+
+    if(!value){
+
+      return "—";
+
+    }
+
+
+    const date =
+      new Date(value);
+
+
+    if(Number.isNaN(date.getTime())){
+
+      return String(value);
+
+    }
+
+
+    return date.toLocaleDateString(
+      "en-PH",
+      {
+        year: "numeric",
+        month: "short",
+        day: "numeric"
+      }
+    );
+
+  }
+
+
+  function getField(object, fields, fallback){
+
+    if(!object){
+
+      return fallback;
+
+    }
+
+
+    for(
+      let i = 0;
+      i < fields.length;
+      i++
+    ){
+
+      const value =
+        object[fields[i]];
+
+
+      if(
+        value !== undefined &&
+        value !== null &&
+        value !== ""
+      ){
+
+        return value;
+
+      }
+
+    }
+
+
+    return fallback;
+
+  }
+
+
+  function getAuth(){
+
+    if(window.PARAGOSAuth){
+
+      return window.PARAGOSAuth;
+
+    }
+
+
+    if(window.KatigAuth){
+
+      return window.KatigAuth;
+
+    }
+
+
+    return null;
+
+  }
+
+
+  /* -----------------------------------------
+     NAV AUTH STATE
+  ----------------------------------------- */
+
+  function setupNav(){
+
+    const auth =
+      getAuth();
+
+
+    const session =
+      auth &&
+      typeof auth.getSession === "function"
+        ? auth.getSession()
+        : null;
+
+
+    const navUser =
+      document.getElementById("navUser");
+
+    const navAuthLink =
+      document.getElementById("navAuthLink");
+
+    const navLogout =
+      document.getElementById("navLogout");
+
+
+    if(!session){
+
+      if(navUser){
+
+        navUser.style.display =
+          "none";
+
+      }
+
+
+      if(navAuthLink){
+
+        navAuthLink.textContent =
+          "Sign in";
+
+        navAuthLink.href =
+          "signin.html";
+
+        navAuthLink.style.display =
+          "inline-flex";
+
+      }
+
+
+      if(navLogout){
+
+        navLogout.style.display =
+          "none";
+
+      }
+
+
+      return;
+
+    }
+
+
+    if(navUser){
+
+      navUser.textContent =
+        session.name ||
+        session.email ||
+        "Account";
+
+      navUser.style.display =
+        "inline-flex";
+
+    }
+
+
+    if(navAuthLink){
+
+      navAuthLink.textContent =
+        "My account";
+
+      navAuthLink.href =
+        "authenticated.html";
+
+      navAuthLink.style.display =
+        "inline-flex";
+
+    }
+
+
+    if(navLogout){
+
+      navLogout.style.display =
+        "inline-flex";
+
+
+      navLogout.addEventListener(
+        "click",
+        function(){
+
+          if(
+            auth &&
+            typeof auth.clearSession === "function"
+          ){
+
+            auth.clearSession();
+
+          }
+
+
+          window.location.href =
+            "signin.html";
+
+        }
+      );
+
+    }
+
+  }
+
+
+  setupNav();
+
+
+  /* -----------------------------------------
+     STORAGE STATUS
+  ----------------------------------------- */
+
+  function updateStorageStatus(){
+
+    let available =
+      false;
+
+
+    try{
+
+      const testKey =
+        "__paragos_storage_test__";
+
+
+      localStorage.setItem(
+        testKey,
+        "1"
+      );
+
+      localStorage.removeItem(
+        testKey
+      );
+
+
+      available =
+        true;
+
+    }catch(error){
+
+      available =
+        false;
+
+    }
+
+
+    if(
+      available &&
+      storageLabel
+    ){
+
+      storageLabel.textContent =
+        "Local storage available";
+
+      if(storagePill){
+
+        storagePill.setAttribute(
+          "data-status",
+          "ready"
+        );
+
+      }
+
+    }else if(storageLabel){
+
+      storageLabel.textContent =
+        "Local storage unavailable";
+
+      if(storagePill){
+
+        storagePill.setAttribute(
+          "data-status",
+          "error"
+        );
+
+      }
+
+    }
+
+  }
+
+
+  updateStorageStatus();
+
+
+  /* -----------------------------------------
+     GET USERS
+  ----------------------------------------- */
+
+  function getUsers(){
+
+    const auth =
+      getAuth();
+
+
+    if(
+      auth &&
+      typeof auth.getUsers === "function"
+    ){
+
+      const users =
+        auth.getUsers();
+
+
+      return Array.isArray(users)
+        ? users
+        : [];
+
+    }
+
+
+    try{
+
+      const raw =
+        localStorage.getItem(
+          "paragos:users"
+        );
+
+
+      const parsed =
+        raw
+          ? JSON.parse(raw)
+          : [];
+
+
+      return Array.isArray(parsed)
+        ? parsed
+        : [];
+
+    }catch(error){
+
+      return [];
+
+    }
+
+  }
+
+
+  /* -----------------------------------------
+     RENDER USERS
+  ----------------------------------------- */
+
+  function renderUsers(){
+
+    if(!usersWrap){
+
+      return;
+
+    }
+
+
+    const users =
+      getUsers();
+
+
+    if(!users.length){
+
+      usersWrap.innerHTML = `
+        <div class="empty-state">
+          <h3>No registered accounts yet.</h3>
+          <p>Create an account from the Register page and it will appear here.</p>
+          <a href="register.html" class="btn btn-primary">
+            Create Account
+          </a>
+        </div>
+      `;
+
+      return;
+
+    }
+
+
+    const sortedUsers =
+      users
+        .slice()
+        .sort(function(a, b){
+
+          const dateA =
+            new Date(
+              getField(
+                a,
+                ["createdAt", "created_at"],
+                0
+              )
+            ).getTime();
+
+
+          const dateB =
+            new Date(
+              getField(
+                b,
+                ["createdAt", "created_at"],
+                0
+              )
+            ).getTime();
+
+
+          return dateB - dateA;
+
+        });
+
+
+    usersWrap.innerHTML = `
+
+      <div
+        style="
+          display:grid;
+          gap:14px;
+        ">
+
+        ${sortedUsers.map(function(user, index){
+
+          const name =
+            getField(
+              user,
+              ["name", "fullName", "full_name"],
+              "Unnamed user"
+            );
+
+
+          const email =
+            getField(
+              user,
+              ["email"],
+              "No email"
+            );
+
+
+          const createdAt =
+            getField(
+              user,
+              ["createdAt", "created_at"],
+              null
+            );
+
+
+          return `
+
+            <article
+              class="card"
+              style="
+                padding:22px;
+                display:flex;
+                justify-content:space-between;
+                align-items:center;
+                gap:20px;
+                flex-wrap:wrap;
+              ">
+
+              <div>
+
+                <div
+                  class="eyebrow"
+                  style="margin-bottom:6px;">
+                  Account ${index + 1}
+                </div>
+
+                <h3
+                  style="
+                    margin:0 0 6px;
+                  ">
+                  ${escapeHTML(name)}
+                </h3>
+
+                <p
+                  style="
+                    margin:0;
+                    color:var(--muted);
+                  ">
+                  ${escapeHTML(email)}
+                </p>
+
+              </div>
+
+
+              <div
+                style="
+                  text-align:right;
+                  font-family:'IBM Plex Mono',monospace;
+                  font-size:12px;
+                  color:var(--muted);
+                ">
+
+                <div>
+                  Created
+                </div>
+
+                <strong>
+                  ${escapeHTML(
+                    formatDate(createdAt)
+                  )}
+                </strong>
+
+              </div>
+
+            </article>
+
+          `;
+
+        }).join("")}
+
+      </div>
+
+    `;
+
+  }
+
+
+  /* -----------------------------------------
+     GET BOOKINGS
+  ----------------------------------------- */
+
+  async function getBookings(){
+
+    const storage =
+      window.PARAGOSStorage ||
+      window.KatigStorage;
+
+
+    if(
+      storage &&
+      typeof storage.list === "function"
+    ){
+
+      try{
+
+        const result =
+          await storage.list(
+            "bookings:"
+          );
+
+
+        if(Array.isArray(result)){
+
+          return result;
+
+        }
+
+      }catch(error){
+
+        console.warn(
+          "Could not load bookings with PARAGOSStorage:",
+          error
+        );
+
+      }
+
+    }
+
+
+    /*
+     * Fallback for the localStorage demo.
+     * Supports the centralized paragos: prefix.
+     */
+    const bookings =
+      [];
+
+
+    try{
+
+      for(
+        let i = 0;
+        i < localStorage.length;
+        i++
+      ){
+
+        const key =
+          localStorage.key(i);
+
+
+        if(
+          !key ||
+          !(
+            key.startsWith("paragos:bookings:") ||
+            key.startsWith("bookings:")
+          )
+        ){
+
+          continue;
+
+        }
+
+
+        const raw =
+          localStorage.getItem(key);
+
+
+        if(!raw){
+
+          continue;
+
+        }
+
+
+        try{
+
+          const parsed =
+            JSON.parse(raw);
+
+
+          if(parsed){
+
+            bookings.push(parsed);
+
+          }
+
+        }catch(error){
+
+          /* Ignore malformed demo records. */
+
+        }
+
+      }
+
+    }catch(error){
+
+      console.warn(
+        "Could not inspect localStorage:",
+        error
+      );
+
+    }
+
+
+    return bookings;
+
+  }
+
+
+  /* -----------------------------------------
+     DESTINATION / STAY / VEHICLE LOOKUPS
+  ----------------------------------------- */
+
+  function getData(){
+
+    return window.PARAGOS || {};
+
+  }
+
+
+  function getDestination(id){
+
+    const data =
+      getData();
+
+
+    if(
+      data &&
+      typeof data.getDestination === "function"
+    ){
+
+      return data.getDestination(id);
+
+    }
+
+
+    const destinations =
+      data.destinations || [];
+
+
+    return destinations.find(function(item){
+
+      return String(
+        getField(
+          item,
+          ["id", "code", "slug"],
+          ""
+        )
+      ).toLowerCase() ===
+      String(id || "").toLowerCase();
+
+    }) || null;
+
+  }
+
+
+  function getStay(id){
+
+    const data =
+      getData();
+
+
+    if(
+      data &&
+      typeof data.getStay === "function"
+    ){
+
+      return data.getStay(id);
+
+    }
+
+
+    const stays =
+      data.stays || [];
+
+
+    return stays.find(function(item){
+
+      return String(
+        getField(
+          item,
+          ["id", "code", "slug"],
+          ""
+        )
+      ).toLowerCase() ===
+      String(id || "").toLowerCase();
+
+    }) || null;
+
+  }
+
+
+  function getVehicle(id){
+
+    const data =
+      getData();
+
+
+    if(
+      data &&
+      typeof data.getVehicle === "function"
+    ){
+
+      return data.getVehicle(id);
+
+    }
+
+
+    const vehicles =
+      data.vehicles || [];
+
+
+    return vehicles.find(function(item){
+
+      return String(
+        getField(
+          item,
+          ["id", "code", "slug"],
+          ""
+        )
+      ).toLowerCase() ===
+      String(id || "").toLowerCase();
+
+    }) || null;
+
+  }
+
+
+  /* -----------------------------------------
+     BOOKING VALUE HELPERS
+  ----------------------------------------- */
+
+  function getBookingDestination(booking){
+
+    return getField(
+      booking,
+      [
+        "destinationId",
+        "destination",
+        "destination_id"
+      ],
+      ""
+    );
+
+  }
+
+
+  function getBookingStay(booking){
+
+    return getField(
+      booking,
+      [
+        "stayId",
+        "stay",
+        "stay_id"
+      ],
+      ""
+    );
+
+  }
+
+
+  function getBookingVehicle(booking){
+
+    return getField(
+      booking,
+      [
+        "vehicleId",
+        "vehicle",
+        "vehicle_id",
+        "carId"
+      ],
+      ""
+    );
+
+  }
+
+
+  /* -----------------------------------------
+     RENDER BOOKINGS
+  ----------------------------------------- */
+
+  async function renderBookings(){
+
+    if(!bookingsWrap){
+
+      return;
+
+    }
+
+
+    bookingsWrap.innerHTML = `
+      <div class="empty-state">
+        Loading bookings...
+      </div>
+    `;
+
+
+    const bookings =
+      await getBookings();
+
+
+    if(!bookings.length){
+
+      bookingsWrap.innerHTML = `
+
+        <div class="empty-state">
+
+          <h3>
+            No bookings yet.
+          </h3>
+
+          <p>
+            Confirmed bookings will appear here
+            after a checkout is completed.
+          </p>
+
+          <a
+            href="booking.html"
+            class="btn btn-primary">
+
+            Start a Booking
+
+          </a>
+
+        </div>
+
+      `;
+
+      return;
+
+    }
+
+
+    const sortedBookings =
+      bookings
+        .slice()
+        .sort(function(a, b){
+
+          const dateA =
+            new Date(
+              getField(
+                a,
+                [
+                  "createdAt",
+                  "created_at",
+                  "bookedAt",
+                  "booked_at"
+                ],
+                0
+              )
+            ).getTime();
+
+
+          const dateB =
+            new Date(
+              getField(
+                b,
+                [
+                  "createdAt",
+                  "created_at",
+                  "bookedAt",
+                  "booked_at"
+                ],
+                0
+              )
+            ).getTime();
+
+
+          return dateB - dateA;
+
+        });
+
+
+    bookingsWrap.innerHTML = `
+
+      <div
+        style="
+          display:grid;
+          gap:16px;
+        ">
+
+        ${sortedBookings.map(function(booking, index){
+
+          const reference =
+            getField(
+              booking,
+              [
+                "reference",
+                "bookingReference",
+                "booking_reference",
+                "id"
+              ],
+              "Booking " + (index + 1)
+            );
+
+
+          const email =
+            getField(
+              booking,
+              [
+                "email",
+                "customerEmail",
+                "customer_email"
+              ],
+              "—"
+            );
+
+
+          const name =
+            getField(
+              booking,
+              [
+                "name",
+                "customerName",
+                "customer_name"
+              ],
+              ""
+            );
+
+
+          const destinationId =
+            getBookingDestination(
+              booking
+            );
+
+
+          const stayId =
+            getBookingStay(
+              booking
+            );
+
+
+          const vehicleId =
+            getBookingVehicle(
+              booking
+            );
+
+
+          const destination =
+            getDestination(
+              destinationId
+            );
+
+
+          const stay =
+            getStay(
+              stayId
+            );
+
+
+          const vehicle =
+            getVehicle(
+              vehicleId
+            );
+
+
+          const destinationName =
+            destination
+              ? getField(
+                  destination,
+                  ["name", "title"],
+                  destinationId || "Destination"
+                )
+              : destinationId || "Destination";
+
+
+          const destinationCode =
+            destination
+              ? getField(
+                  destination,
+                  ["code", "airportCode"],
+                  ""
+                )
+              : "";
+
+
+          const stayName =
+            stay
+              ? getField(
+                  stay,
+                  ["name", "title"],
+                  "Selected stay"
+                )
+              : (
+                  stayId
+                    ? stayId
+                    : "No stay"
+                );
+
+
+          const vehicleName =
+            vehicle
+              ? getField(
+                  vehicle,
+                  ["name", "title"],
+                  "Rental vehicle"
+                )
+              : (
+                  vehicleId
+                    ? vehicleId
+                    : "No rental"
+                );
+
+
+          const checkin =
+            getField(
+              booking,
+              [
+                "checkin",
+                "checkIn",
+                "check_in",
+                "startDate",
+                "start_date"
+              ],
+              ""
+            );
+
+
+          const checkout =
+            getField(
+              booking,
+              [
+                "checkout",
+                "checkOut",
+                "check_out",
+                "endDate",
+                "end_date"
+              ],
+              ""
+            );
+
+
+          const travelers =
+            getField(
+              booking,
+              [
+                "travelers",
+                "travellerCount",
+                "travelerCount",
+                "guests",
+                "passengers"
+              ],
+              "—"
+            );
+
+
+          const total =
+            getField(
+              booking,
+              [
+                "total",
+                "grandTotal",
+                "grand_total",
+                "amount"
+              ],
+              0
+            );
+
+
+          const status =
+            getField(
+              booking,
+              ["status"],
+              "confirmed"
+            );
+
+
+          return `
+
+            <article
+              class="card"
+              style="
+                padding:24px;
+              ">
+
+
+              <div
+                style="
+                  display:flex;
+                  justify-content:space-between;
+                  align-items:flex-start;
+                  gap:20px;
+                  flex-wrap:wrap;
+                  margin-bottom:20px;
+                ">
+
+                <div>
+
+                  <div
+                    class="eyebrow"
+                    style="margin-bottom:7px;">
+
+                    ${escapeHTML(
+                      String(reference)
+                    )}
+
+                  </div>
+
+
+                  <h3
+                    style="
+                      margin:0 0 5px;
+                    ">
+
+                    ${escapeHTML(
+                      String(destinationName)
+                    )}
+
+                    ${
+                      destinationCode
+                        ? `
+                          <span
+                            style="
+                              font-family:'IBM Plex Mono',monospace;
+                              font-size:12px;
+                              color:var(--muted);
+                            ">
+                            ${escapeHTML(
+                              String(destinationCode)
+                            )}
+                          </span>
+                        `
+                        : ""
+                    }
+
+                  </h3>
+
+
+                  ${
+                    name
+                      ? `
+                        <p
+                          style="
+                            margin:0;
+                            color:var(--muted);
+                          ">
+                          ${escapeHTML(
+                            String(name)
+                          )}
+                        </p>
+                      `
+                      : ""
+                  }
+
+
+                  <p
+                    style="
+                      margin:5px 0 0;
+                      color:var(--muted);
+                    ">
+
+                    ${escapeHTML(
+                      String(email)
+                    )}
+
+                  </p>
+
+                </div>
+
+
+                <div
+                  style="
+                    text-align:right;
+                  ">
+
+                  <div
+                    style="
+                      font-family:'IBM Plex Mono',monospace;
+                      font-size:12px;
+                      text-transform:uppercase;
+                      color:var(--muted);
+                      margin-bottom:4px;
+                    ">
+
+                    Status
+
+                  </div>
+
+
+                  <strong>
+
+                    ${escapeHTML(
+                      String(status)
+                    )}
+
+                  </strong>
+
+                </div>
+
+              </div>
+
+
+              <div
+                style="
+                  display:grid;
+                  grid-template-columns:
+                    repeat(auto-fit,minmax(150px,1fr));
+                  gap:14px;
+                ">
+
+
+                <div>
+
+                  <div
+                    style="
+                      font-size:11px;
+                      text-transform:uppercase;
+                      letter-spacing:.08em;
+                      color:var(--muted);
+                      margin-bottom:4px;
+                    ">
+
+                    Travel dates
+
+                  </div>
+
+                  <strong>
+
+                    ${escapeHTML(
+                      formatDate(checkin)
+                    )}
+
+                    →
+
+                    ${escapeHTML(
+                      formatDate(checkout)
+                    )}
+
+                  </strong>
+
+                </div>
+
+
+                <div>
+
+                  <div
+                    style="
+                      font-size:11px;
+                      text-transform:uppercase;
+                      letter-spacing:.08em;
+                      color:var(--muted);
+                      margin-bottom:4px;
+                    ">
+
+                    Travelers
+
+                  </div>
+
+                  <strong>
+
+                    ${escapeHTML(
+                      String(travelers)
+                    )}
+
+                  </strong>
+
+                </div>
+
+
+                <div>
+
+                  <div
+                    style="
+                      font-size:11px;
+                      text-transform:uppercase;
+                      letter-spacing:.08em;
+                      color:var(--muted);
+                      margin-bottom:4px;
+                    ">
+
+                    Stay
+
+                  </div>
+
+                  <strong>
+
+                    ${escapeHTML(
+                      String(stayName)
+                    )}
+
+                  </strong>
+
+                </div>
+
+
+                <div>
+
+                  <div
+                    style="
+                      font-size:11px;
+                      text-transform:uppercase;
+                      letter-spacing:.08em;
+                      color:var(--muted);
+                      margin-bottom:4px;
+                    ">
+
+                    Rental
+
+                  </div>
+
+                  <strong>
+
+                    ${escapeHTML(
+                      String(vehicleName)
+                    )}
+
+                  </strong>
+
+                </div>
+
+
+                <div>
+
+                  <div
+                    style="
+                      font-size:11px;
+                      text-transform:uppercase;
+                      letter-spacing:.08em;
+                      color:var(--muted);
+                      margin-bottom:4px;
+                    ">
+
+                    Total
+
+                  </div>
+
+                  <strong>
+
+                    ${escapeHTML(
+                      formatPHP(total)
+                    )}
+
+                  </strong>
+
+                </div>
+
+
+              </div>
+
+            </article>
+
+          `;
+
+        }).join("")}
+
+      </div>
+
+    `;
+
+  }
+
+
+  /* -----------------------------------------
+     INITIALIZE
+  ----------------------------------------- */
+
+  async function init(){
+
+    renderUsers();
+
+    await renderBookings();
+
+  }
+
+
+  init();
+
+})();
+</script>
 
 </body>
 </html>

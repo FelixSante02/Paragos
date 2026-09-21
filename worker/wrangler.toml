@@ -1,0 +1,7 @@
+name = "paragos-chat"
+main = "worker.js"
+compatibility_date = "2025-01-01"
+
+[vars]
+# Your GitHub Pages ORIGIN only (no path, no trailing slash)
+ALLOWED_ORIGIN = "https://felixsante02.github.io"

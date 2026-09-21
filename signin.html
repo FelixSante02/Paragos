@@ -3,128 +3,975 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Sign in — PARAGOS</title>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,900;1,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
 <link rel="stylesheet" href="assets/style.css">
 <link rel="stylesheet" href="assets/pages.css">
 </head>
+
 <body>
 
-<nav class="navbar">
-  <a href="index.html" class="logo">
-    <svg viewBox="0 0 24 24" fill="none"><path d="M3 17c2 1.4 4 1.4 6 0s4-1.4 6 0 4 1.4 6 0" stroke="#FF6B4A" stroke-width="2" stroke-linecap="round"/><path d="M6 17V6l10 3-6 2.4V17" stroke="#0A2E2C" stroke-width="2" stroke-linejoin="round"/></svg>
-    PARAGOS
-  </a>
-  <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="destinations.html">Destinations</a></li>
-    <li><a href="offers.html">Offers</a></li>
-    <li><a href="support.html">Support</a></li>
-  </ul>
-  <div class="nav-cta">
-    <a href="register.html" class="btn btn-ghost" id="navAuthLink">Register</a>
-    <button class="nav-toggle" aria-label="Open menu"><span></span><span></span><span></span></button>
-  </div>
-</nav>
+<!-- NAVBAR -->
+<nav class="navbar" id="siteNav" aria-label="Main navigation"></nav>
 
+
+<!-- AUTHENTICATION AREA -->
 <div class="auth-wrap">
+
+
+  <!-- VISUAL SIDE -->
   <div class="auth-visual">
+
     <div class="auth-visual-content">
-      <div class="eyebrow">Welcome back</div>
-      <h2>Your next island crossing is a few clicks away</h2>
-      <p>Sign in to manage bookings, save destinations, and reach your rental car receipts.</p>
-    </div>
-  </div>
-  <div class="auth-side">
-    <div class="auth-card">
-      <a href="index.html" class="logo">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M3 17c2 1.4 4 1.4 6 0s4-1.4 6 0 4 1.4 6 0" stroke="#FF6B4A" stroke-width="2" stroke-linecap="round"/><path d="M6 17V6l10 3-6 2.4V17" stroke="#0A2E2C" stroke-width="2" stroke-linejoin="round"/></svg>
-        PARAGOS
-      </a>
-      <h1>Sign in</h1>
-      <p class="sub">Enter your details to access your account.</p>
-      <div id="signinMessage" style="display:none;padding:12px 14px;border-radius:10px;font-size:13px;margin-bottom:18px;"></div>
-      <form class="auth-form" id="signinForm">
-        <div class="form-field">
-          <label>Email</label>
-          <input type="email" id="loginEmail" placeholder="you@email.com" required>
-        </div>
-        <div class="form-field">
-          <label>Password</label>
-          <input type="password" id="loginPassword" placeholder="••••••••" required>
-        </div>
-        <div class="auth-row">
-          <label class="remember">
-            <input type="checkbox">
-            Remember me
-          </label>
-          <a href="#">Forgot password?</a>
-        </div>
-        <button type="submit" class="btn btn-primary form-submit" id="loginSubmit">Sign in</button>
-      </form>
-      <div class="divider">OR CONTINUE WITH</div>
-      <div class="social-row">
-        <button class="btn-social">
-          <svg width="16" height="16" viewBox="0 0 24 24"><path fill="#EA4335" d="M12 10.2v3.9h5.5c-.24 1.3-1.7 3.8-5.5 3.8-3.3 0-6-2.7-6-6.1s2.7-6.1 6-6.1c1.9 0 3.1.8 3.8 1.5l2.6-2.5C16.7 2.9 14.6 2 12 2 6.9 2 2.8 6.1 2.8 11.2S6.9 20.4 12 20.4c6.9 0 9.3-4.8 9.3-7.4 0-.5-.1-.9-.1-1.3H12Z"/></svg>
-          Google
-        </button>
-        <button class="btn-social">
-          <svg width="16" height="16" viewBox="0 0 24 24"><path fill="#1877F2" d="M22 12.06C22 6.5 17.5 2 12 2S2 6.5 2 12.06c0 5 3.66 9.15 8.44 9.94v-7.03H7.9v-2.9h2.54V9.84c0-2.5 1.5-3.9 3.78-3.9 1.1 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.87h2.78l-.44 2.9h-2.34V22c4.78-.8 8.44-4.93 8.44-9.94Z"/></svg>
-          Facebook
-        </button>
+
+      <div class="eyebrow">
+        Welcome back
       </div>
-      <p class="auth-footer-note">New to PARAGOS? <a href="register.html">Create an account</a></p>
+
+      <h2>
+        Your next island crossing is a few clicks away
+      </h2>
+
+      <p>
+        Sign in to manage bookings, save destinations,
+        and access your PARAGOS account.
+      </p>
+
     </div>
+
   </div>
+
+
+  <!-- FORM SIDE -->
+  <div class="auth-side">
+
+    <div class="auth-card">
+
+
+      <a href="index.html" class="logo">
+
+        <svg viewBox="0 0 24 24" fill="none">
+
+          <path
+            d="M3 17c2 1.4 4 1.4 6 0s4-1.4 6 0 4 1.4 6 0"
+            stroke="#FF6B4A"
+            stroke-width="2"
+            stroke-linecap="round"/>
+
+          <path
+            d="M6 17V6l10 3-6 2.4V17"
+            stroke="#0A2E2C"
+            stroke-width="2"
+            stroke-linejoin="round"/>
+
+        </svg>
+
+        PARAGOS
+
+      </a>
+
+
+      <h1>
+        Sign in
+      </h1>
+
+      <p class="sub">
+        Enter your details to access your account.
+      </p>
+
+
+      <!-- MESSAGE -->
+      <div
+        id="signinMessage"
+        style="
+          display:none;
+          padding:12px 14px;
+          border-radius:10px;
+          font-size:13px;
+          margin-bottom:18px;
+        ">
+      </div>
+
+
+      <!-- SIGN-IN FORM -->
+      <form
+        class="auth-form"
+        id="signinForm"
+        novalidate>
+
+
+        <div class="form-field">
+
+          <label for="loginEmail">
+            Email
+          </label>
+
+          <input
+            type="email"
+            id="loginEmail"
+            name="email"
+            placeholder="you@email.com"
+            autocomplete="email"
+            required>
+
+        </div>
+
+
+        <div class="form-field">
+
+          <label for="loginPassword">
+            Password
+          </label>
+
+          <input
+            type="password"
+            id="loginPassword"
+            name="password"
+            placeholder="••••••••"
+            autocomplete="current-password"
+            required>
+
+        </div>
+
+
+        <div class="auth-row">
+
+          <label class="remember">
+
+            <input
+              type="checkbox"
+              id="rememberMe">
+
+            Remember me
+
+          </label>
+
+          <a
+            href="#"
+            id="forgotPassword">
+            Forgot password?
+          </a>
+
+        </div>
+
+
+        <button
+          type="submit"
+          class="btn btn-primary form-submit"
+          id="loginSubmit">
+
+          Sign in
+
+        </button>
+
+      </form>
+
+
+      <div class="divider">
+        OR CONTINUE WITH
+      </div>
+
+
+      <!-- SOCIAL SIGN-IN -->
+      <div class="social-row">
+
+        <button
+          type="button"
+          class="btn-social"
+          id="googleSigninBtn">
+
+          <svg width="16" height="16" viewBox="0 0 24 24">
+
+            <path
+              fill="#EA4335"
+              d="M12 10.2v3.9h5.5c-.24 1.3-1.7 3.8-5.5 3.8-3.3 0-6-2.7-6-6.1s2.7-6.1 6-6.1c1.9 0 3.1.8 3.8 1.5l2.6-2.5C16.7 2.9 14.6 2 12 2 6.9 2 2.8 6.1 2.8 11.2S6.9 20.4 12 20.4c6.9 0 9.3-4.8 9.3-7.4 0-.5-.1-.9-.1-1.3H12Z"/>
+
+          </svg>
+
+          Google
+
+        </button>
+
+
+        <button
+          type="button"
+          class="btn-social"
+          id="facebookSigninBtn">
+
+          <svg width="16" height="16" viewBox="0 0 24 24">
+
+            <path
+              fill="#1877F2"
+              d="M22 12.06C22 6.5 17.5 2 12 2S2 6.5 2 12.06c0 5 3.66 9.15 8.44 9.94v-7.03H7.9v-2.9h2.54V9.84c0-2.5 1.5-3.9 3.78-3.9 1.1 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.87h2.78l-.44 2.9h-2.34V22c4.78-.8 8.44-4.93 8.44-9.94Z"/>
+
+          </svg>
+
+          Facebook
+
+        </button>
+
+      </div>
+
+
+      <p class="auth-footer-note">
+
+        New to PARAGOS?
+
+        <a href="register.html">
+          Create an account
+        </a>
+
+      </p>
+
+    </div>
+
+  </div>
+
 </div>
 
+
+<!-- FOOTER -->
 <footer>
+
   <div class="footer-top">
+
+
     <div class="footer-brand">
+
       <a href="index.html" class="logo">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M3 17c2 1.4 4 1.4 6 0s4-1.4 6 0 4 1.4 6 0" stroke="#FF6B4A" stroke-width="2" stroke-linecap="round"/><path d="M6 17V6l10 3-6 2.4V17" stroke="#0A2E2C" stroke-width="2" stroke-linejoin="round"/></svg>
+
+        <svg viewBox="0 0 24 24" fill="none">
+
+          <path
+            d="M3 17c2 1.4 4 1.4 6 0s4-1.4 6 0 4 1.4 6 0"
+            stroke="#FF6B4A"
+            stroke-width="2"
+            stroke-linecap="round"/>
+
+          <path
+            d="M6 17V6l10 3-6 2.4V17"
+            stroke="#0A2E2C"
+            stroke-width="2"
+            stroke-linejoin="round"/>
+
+        </svg>
+
         PARAGOS
+
       </a>
-      <p>Local trip planning for the Philippine archipelago. Stays, island transfers, and rental cars in one place.</p>
+
+      <p>
+        Local trip planning for the Philippine archipelago.
+        Stays, island transfers, and rental cars in one place.
+      </p>
+
     </div>
+
+
     <div class="footer-col">
-      <h5>Company</h5>
+
+      <h5>
+        Company
+      </h5>
+
       <ul>
-        <li><a href="about.html">About</a></li>
-        <li><a href="support.html">Support</a></li>
-        <li><a href="#">Careers</a></li>
+
+        <li>
+          <a href="about.html">
+            About
+          </a>
+        </li>
+
+        <li>
+          <a href="support.html">
+            Support
+          </a>
+        </li>
+
+        <li>
+          <a href="#">
+            Careers
+          </a>
+        </li>
+
       </ul>
+
     </div>
+
+
     <div class="footer-col">
-      <h5>Explore</h5>
+
+      <h5>
+        Explore
+      </h5>
+
       <ul>
-        <li><a href="destinations.html">Destinations</a></li>
-        <li><a href="offers.html">Offers</a></li>
-        <li><a href="#">Rental cars</a></li>
+
+        <li>
+          <a href="destinations.html">
+            Destinations
+          </a>
+        </li>
+
+        <li>
+          <a href="offers.html">
+            Offers
+          </a>
+        </li>
+
+        <li>
+          <a href="booking.html">
+            Rental cars
+          </a>
+        </li>
+
       </ul>
+
     </div>
+
+
     <div class="footer-col">
-      <h5>Account</h5>
+
+      <h5>
+        Account
+      </h5>
+
       <ul>
-        <li><a href="signin.html">Sign in</a></li>
-        <li><a href="register.html">Register</a></li>
-        <li><a href="admin.html">Admin (demo)</a></li>
+
+        <li>
+          <a href="signin.html">
+            Sign in
+          </a>
+        </li>
+
+        <li>
+          <a href="register.html">
+            Register
+          </a>
+        </li>
+
+        <li>
+          <a href="authenticated.html">
+            My account
+          </a>
+        </li>
+
       </ul>
+
     </div>
+
   </div>
+
+
   <div class="footer-bottom">
-    <span>© 2026 PARAGOS Travel. All rights reserved.</span>
+
+    <span>
+      © 2026 PARAGOS Travel. All rights reserved.
+    </span>
+
     <div class="socials">
-      <a href="#">Instagram</a>
-      <a href="#">Facebook</a>
-      <a href="#">TikTok</a>
+
+      <a href="#">
+        Instagram
+      </a>
+
+      <a href="#">
+        Facebook
+      </a>
+
+      <a href="#">
+        TikTok
+      </a>
+
     </div>
+
   </div>
+
 </footer>
 
+
+<!-- CENTRAL PARAGOS DATA -->
+<script src="assets/data/destinations.js"></script>
+<script src="assets/data/stays.js"></script>
+<script src="assets/data/vehicles.js"></script>
+<script src="assets/data/offers.js"></script>
+<script src="assets/data/faqs.js"></script>
+<script src="assets/data/policies.js"></script>
+
 <script src="assets/main.js"></script>
+
+
+<script>
+(function(){
+
+  "use strict";
+
+
+  /* -----------------------------------------
+     ELEMENTS
+  ----------------------------------------- */
+
+  const form =
+    document.getElementById("signinForm");
+
+  const emailInput =
+    document.getElementById("loginEmail");
+
+  const passwordInput =
+    document.getElementById("loginPassword");
+
+  const rememberInput =
+    document.getElementById("rememberMe");
+
+  const submitButton =
+    document.getElementById("loginSubmit");
+
+  const message =
+    document.getElementById("signinMessage");
+
+  const forgotPassword =
+    document.getElementById("forgotPassword");
+
+
+  /* -----------------------------------------
+     MESSAGE
+  ----------------------------------------- */
+
+  function showMessage(text, type){
+
+    if(!message){
+      return;
+    }
+
+    message.textContent =
+      text;
+
+    message.style.display =
+      "block";
+
+
+    if(type === "success"){
+
+      message.style.background =
+        "rgba(14,110,102,.09)";
+
+      message.style.color =
+        "#0E6E66";
+
+    }else{
+
+      message.style.background =
+        "rgba(190,70,45,.09)";
+
+      message.style.color =
+        "#B44C35";
+
+    }
+
+  }
+
+
+  function clearMessage(){
+
+    if(message){
+
+      message.textContent =
+        "";
+
+      message.style.display =
+        "none";
+
+    }
+
+  }
+
+
+  /* -----------------------------------------
+     AUTH HELPERS
+  ----------------------------------------- */
+
+  function getAuth(){
+
+    if(window.PARAGOSAuth){
+      return window.PARAGOSAuth;
+    }
+
+    if(window.KatigAuth){
+      return window.KatigAuth;
+    }
+
+    return null;
+
+  }
+
+
+  function getSession(){
+
+    const auth =
+      getAuth();
+
+
+    if(
+      auth &&
+      typeof auth.getSession === "function"
+    ){
+
+      return auth.getSession();
+
+    }
+
+    return null;
+
+  }
+
+
+  /* -----------------------------------------
+     NAVIGATION AUTH STATE
+  ----------------------------------------- */
+
+  function setupNav(){
+
+    const session =
+      getSession();
+
+
+    const navUser =
+      document.getElementById("navUser");
+
+    const navAuthLink =
+      document.getElementById("navAuthLink");
+
+    const navLogout =
+      document.getElementById("navLogout");
+
+
+    if(!session){
+
+      if(navUser){
+        navUser.style.display =
+          "none";
+      }
+
+      if(navAuthLink){
+
+        navAuthLink.textContent =
+          "Register";
+
+        navAuthLink.href =
+          "register.html";
+
+        navAuthLink.style.display =
+          "inline-flex";
+
+      }
+
+      if(navLogout){
+
+        navLogout.style.display =
+          "none";
+
+      }
+
+      return;
+
+    }
+
+
+    if(navUser){
+
+      navUser.textContent =
+        session.name ||
+        session.email ||
+        "Account";
+
+      navUser.style.display =
+        "inline-flex";
+
+    }
+
+
+    if(navAuthLink){
+
+      navAuthLink.textContent =
+        "My account";
+
+      navAuthLink.href =
+        "authenticated.html";
+
+      navAuthLink.style.display =
+        "inline-flex";
+
+    }
+
+
+    if(navLogout){
+
+      navLogout.style.display =
+        "inline-flex";
+
+
+      navLogout.addEventListener(
+        "click",
+        function(){
+
+          const auth =
+            getAuth();
+
+
+          if(
+            auth &&
+            typeof auth.clearSession === "function"
+          ){
+
+            auth.clearSession();
+
+          }
+
+
+          window.location.href =
+            "signin.html";
+
+        }
+      );
+
+    }
+
+  }
+
+
+  setupNav();
+
+
+  /* -----------------------------------------
+     ALREADY SIGNED IN
+  ----------------------------------------- */
+
+  const currentSession =
+    getSession();
+
+
+  if(currentSession){
+
+    showMessage(
+      "You are already signed in. Redirecting to your account...",
+      "success"
+    );
+
+
+    if(form){
+
+      const controls =
+        form.querySelectorAll(
+          "input, button"
+        );
+
+      controls.forEach(function(control){
+
+        control.disabled =
+          true;
+
+      });
+
+    }
+
+
+    setTimeout(function(){
+
+      window.location.href =
+        "authenticated.html";
+
+    }, 700);
+
+    return;
+
+  }
+
+
+  /* -----------------------------------------
+     NORMALIZE EMAIL
+  ----------------------------------------- */
+
+  function normalizeEmail(email){
+
+    return String(email || "")
+      .trim()
+      .toLowerCase();
+
+  }
+
+
+  /* -----------------------------------------
+     SIGN IN
+  ----------------------------------------- */
+
+  if(form){
+
+    form.addEventListener(
+      "submit",
+      function(event){
+
+        event.preventDefault();
+
+        clearMessage();
+
+
+        const email =
+          normalizeEmail(
+            emailInput?.value
+          );
+
+
+        const password =
+          String(
+            passwordInput?.value || ""
+          );
+
+
+        if(!email){
+
+          showMessage(
+            "Please enter your email address.",
+            "error"
+          );
+
+          emailInput?.focus();
+
+          return;
+
+        }
+
+
+        if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+
+          showMessage(
+            "Please enter a valid email address.",
+            "error"
+          );
+
+          emailInput?.focus();
+
+          return;
+
+        }
+
+
+        if(!password){
+
+          showMessage(
+            "Please enter your password.",
+            "error"
+          );
+
+          passwordInput?.focus();
+
+          return;
+
+        }
+
+
+        const auth =
+          getAuth();
+
+
+        if(
+          !auth ||
+          typeof auth.signIn !== "function"
+        ){
+
+          showMessage(
+            "PARAGOS authentication is currently unavailable. Please try again.",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        submitButton.disabled =
+          true;
+
+        submitButton.textContent =
+          "Signing in...";
+
+
+        try{
+
+          /*
+           * The centralized PARAGOSAuth.signIn()
+           * handles the localStorage account lookup
+           * and session creation.
+           */
+          const result =
+            auth.signIn(
+              email,
+              password
+            );
+
+
+          if(!result){
+
+            throw new Error(
+              "Invalid email or password."
+            );
+
+          }
+
+
+          /*
+           * Remember me is retained as a local
+           * preference for this GitHub Pages demo.
+           */
+          try{
+
+            localStorage.setItem(
+              "paragos:remember_me",
+              rememberInput?.checked
+                ? "true"
+                : "false"
+            );
+
+          }catch(error){
+
+            /* Ignore storage preference errors. */
+
+          }
+
+
+          showMessage(
+            "Signed in successfully. Welcome back!",
+            "success"
+          );
+
+
+          setTimeout(function(){
+
+            window.location.href =
+              "authenticated.html";
+
+          }, 500);
+
+
+        }catch(error){
+
+          console.error(
+            "PARAGOS sign-in error:",
+            error
+          );
+
+
+          showMessage(
+            error.message ||
+            "Invalid email or password.",
+            "error"
+          );
+
+
+          submitButton.disabled =
+            false;
+
+          submitButton.textContent =
+            "Sign in";
+
+        }
+
+      }
+    );
+
+  }
+
+
+  /* -----------------------------------------
+     FORGOT PASSWORD
+  ----------------------------------------- */
+
+  if(forgotPassword){
+
+    forgotPassword.addEventListener(
+      "click",
+      function(event){
+
+        event.preventDefault();
+
+
+        showMessage(
+          "Password recovery is not connected in this GitHub Pages demo. Please create a new account or contact PARAGOS support.",
+          "error"
+        );
+
+      }
+    );
+
+  }
+
+
+  /* -----------------------------------------
+     SOCIAL SIGN-IN
+  ----------------------------------------- */
+
+  const googleButton =
+    document.getElementById(
+      "googleSigninBtn"
+    );
+
+
+  const facebookButton =
+    document.getElementById(
+      "facebookSigninBtn"
+    );
+
+
+  function socialDemoMessage(provider){
+
+    showMessage(
+      provider +
+      " sign-in is not connected in this GitHub Pages demo. Please use your PARAGOS email and password.",
+      "error"
+    );
+
+  }
+
+
+  if(googleButton){
+
+    googleButton.addEventListener(
+      "click",
+      function(){
+
+        socialDemoMessage(
+          "Google"
+        );
+
+      }
+    );
+
+  }
+
+
+  if(facebookButton){
+
+    facebookButton.addEventListener(
+      "click",
+      function(){
+
+        socialDemoMessage(
+          "Facebook"
+        );
+
+      }
+    );
+
+  }
+
+
+})();
+</script>
 
 </body>
 </html>

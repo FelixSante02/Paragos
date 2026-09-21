@@ -4,201 +4,1088 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Destinations — PARAGOS</title>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,900;1,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
 <link rel="stylesheet" href="assets/style.css">
 <link rel="stylesheet" href="assets/pages.css">
 </head>
+
 <body>
 
-<nav class="navbar">
-  <a href="index.html" class="logo">
-    <svg viewBox="0 0 24 24" fill="none"><path d="M3 17c2 1.4 4 1.4 6 0s4-1.4 6 0 4 1.4 6 0" stroke="#FF6B4A" stroke-width="2" stroke-linecap="round"/><path d="M6 17V6l10 3-6 2.4V17" stroke="#0A2E2C" stroke-width="2" stroke-linejoin="round"/></svg>
-    PARAGOS
-  </a>
-  <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="destinations.html" class="active">Destinations</a></li>
-    <li><a href="offers.html">Offers</a></li>
-    <li><a href="support.html">Support</a></li>
-  </ul>
-  <div class="nav-cta">
-    <a href="signin.html" class="btn btn-ghost">Sign in</a>
-    <button class="nav-toggle" aria-label="Open menu"><span></span><span></span><span></span></button>
-  </div>
-</nav>
+<nav class="navbar" id="siteNav" aria-label="Main navigation"></nav>
 
 <header class="page-header">
   <div class="page-header-inner">
-    <div class="breadcrumb"><a href="index.html">Home</a> / Destinations</div>
+
+    <div class="breadcrumb">
+      <a href="index.html">Home</a> / Destinations
+    </div>
+
     <div class="eyebrow">120+ places, one archipelago</div>
+
     <h1>Explore every corner of the Philippines</h1>
-    <p>From surf towns to rice terraces, browse stays and island crossings by region.</p>
+
+    <p>
+      From surf towns to rice terraces, browse stays and island crossings by region.
+    </p>
+
   </div>
 </header>
 
 <div class="filter-bar">
+
   <div class="filter-chips">
-    <button class="chip active">All</button>
-    <button class="chip">Beach</button>
-    <button class="chip">Islands</button>
-    <button class="chip">Mountains</button>
-    <button class="chip">City</button>
-    <button class="chip">Adventure</button>
+
+    <button
+      type="button"
+      class="chip active"
+      data-destination-filter="all"
+    >
+      All
+    </button>
+
+    <button
+      type="button"
+      class="chip"
+      data-destination-filter="beach"
+    >
+      Beach
+    </button>
+
+    <button
+      type="button"
+      class="chip"
+      data-destination-filter="islands"
+    >
+      Islands
+    </button>
+
+    <button
+      type="button"
+      class="chip"
+      data-destination-filter="mountains"
+    >
+      Mountains
+    </button>
+
+    <button
+      type="button"
+      class="chip"
+      data-destination-filter="city"
+    >
+      City
+    </button>
+
+    <button
+      type="button"
+      class="chip"
+      data-destination-filter="adventure"
+    >
+      Adventure
+    </button>
+
   </div>
+
   <div class="filter-sort">
     <span>Sort by</span>
-    <select>
-      <option>Most popular</option>
-      <option>Price, low to high</option>
-      <option>Price, high to low</option>
-      <option>Alphabetical</option>
+
+    <select id="destinationSort">
+      <option value="default">Recommended</option>
+      <option value="price-low">Price: Low to High</option>
+      <option value="price-high">Price: High to Low</option>
+      <option value="name">Name: A–Z</option>
     </select>
   </div>
+
 </div>
 
 <section class="section">
-  <div class="dest-grid">
-    <div class="dest-card">
-      <img src="https://picsum.photos/seed/boracay/600/800" alt="Boracay">
-      <div class="dest-card-overlay">
-        <span class="dest-code">BOR</span>
-        <h3>Boracay</h3>
-        <p class="from">From <strong>₱4,200</strong> / night</p>
-      </div>
-    </div>
-    <div class="dest-card">
-      <img src="https://picsum.photos/seed/elnido/600/800" alt="El Nido, Palawan">
-      <div class="dest-card-overlay">
-        <span class="dest-code">PPS</span>
-        <h3>El Nido</h3>
-        <p class="from">From <strong>₱5,600</strong> / night</p>
-      </div>
-    </div>
-    <div class="dest-card">
-      <img src="https://picsum.photos/seed/siargao/600/800" alt="Siargao">
-      <div class="dest-card-overlay">
-        <span class="dest-code">IAO</span>
-        <h3>Siargao</h3>
-        <p class="from">From <strong>₱3,100</strong> / night</p>
-      </div>
-    </div>
-    <div class="dest-card">
-      <img src="https://picsum.photos/seed/cebu/600/800" alt="Cebu">
-      <div class="dest-card-overlay">
-        <span class="dest-code">CEB</span>
-        <h3>Cebu</h3>
-        <p class="from">From <strong>₱2,800</strong> / night</p>
-      </div>
-    </div>
-    <div class="dest-card">
-      <img src="https://picsum.photos/seed/bohol/600/800" alt="Bohol">
-      <div class="dest-card-overlay">
-        <span class="dest-code">TAG</span>
-        <h3>Bohol</h3>
-        <p class="from">From <strong>₱3,450</strong> / night</p>
-      </div>
-    </div>
-    <div class="dest-card">
-      <img src="https://picsum.photos/seed/baguio/600/800" alt="Baguio">
-      <div class="dest-card-overlay">
-        <span class="dest-code">BAG</span>
-        <h3>Baguio</h3>
-        <p class="from">From <strong>₱2,300</strong> / night</p>
-      </div>
-    </div>
-    <div class="dest-card">
-      <img src="https://picsum.photos/seed/coron/600/800" alt="Coron, Palawan">
-      <div class="dest-card-overlay">
-        <span class="dest-code">USU</span>
-        <h3>Coron</h3>
-        <p class="from">From <strong>₱4,900</strong> / night</p>
-      </div>
-    </div>
-    <div class="dest-card">
-      <img src="https://picsum.photos/seed/vigan/600/800" alt="Vigan">
-      <div class="dest-card-overlay">
-        <span class="dest-code">VGN</span>
-        <h3>Vigan</h3>
-        <p class="from">From <strong>₱2,100</strong> / night</p>
-      </div>
-    </div>
-    <div class="dest-card">
-      <img src="https://picsum.photos/seed/davao/600/800" alt="Davao">
-      <div class="dest-card-overlay">
-        <span class="dest-code">DVO</span>
-        <h3>Davao</h3>
-        <p class="from">From <strong>₱2,650</strong> / night</p>
-      </div>
-    </div>
+
+  <div
+    id="searchSummary"
+    style="
+      display:none;
+      margin-bottom:24px;
+      padding:18px 20px;
+      border-radius:16px;
+      background:rgba(10,46,44,0.06);
+    "
+  >
+    <div class="eyebrow">Your search</div>
+
+    <div
+      id="searchSummaryText"
+      style="margin-top:6px;font-weight:600;"
+    ></div>
+
+    <a
+      href="index.html"
+      style="
+        display:inline-block;
+        margin-top:8px;
+        font-size:14px;
+        color:var(--coral);
+      "
+    >
+      Change search
+    </a>
   </div>
 
-  <div class="pagination">
-    <a href="#" class="page-nav">Prev</a>
-    <a href="#" class="page-num active">1</a>
-    <a href="#" class="page-num">2</a>
-    <a href="#" class="page-num">3</a>
-    <a href="#" class="page-nav">Next</a>
+  <div
+    class="dest-grid"
+    id="destinationGrid"
+  ></div>
+
+  <div
+    id="destinationEmptyState"
+    style="
+      display:none;
+      text-align:center;
+      padding:70px 20px;
+    "
+  >
+    <div class="eyebrow">No matches</div>
+
+    <h3 style="margin-top:10px;">
+      We couldn't find a destination for that search.
+    </h3>
+
+    <p style="margin-top:8px;color:rgba(10,46,44,0.7);">
+      Try another destination or choose a different category.
+    </p>
+
+    <button
+      type="button"
+      id="clearDestinationSearch"
+      class="btn btn-primary"
+      style="margin-top:20px;"
+    >
+      Show all destinations
+    </button>
   </div>
+
+  <div
+    class="pagination"
+    id="destinationPagination"
+  ></div>
+
 </section>
 
 <section class="section" style="padding-top:0;">
+
   <div class="newsletter">
+
     <div class="eyebrow">Stay in the loop</div>
-    <h2>Get seat sales and stay drops before they're gone</h2>
-    <form class="newsletter-form">
-      <input type="email" placeholder="you@email.com" required>
-      <button class="btn btn-coral" type="submit">Subscribe</button>
+
+    <h2>
+      Get seat sales and stay drops before they're gone
+    </h2>
+
+    <form
+      class="newsletter-form"
+      id="destinationNewsletterForm"
+    >
+      <input
+        type="email"
+        id="destinationNewsletterEmail"
+        placeholder="you@email.com"
+        required
+      >
+
+      <button
+        class="btn btn-coral"
+        type="submit"
+      >
+        Subscribe
+      </button>
     </form>
+
+    <p
+      id="destinationNewsletterMessage"
+      style="
+        display:none;
+        margin-top:12px;
+        font-size:14px;
+      "
+    ></p>
+
   </div>
+
 </section>
 
 <footer>
+
   <div class="footer-top">
+
     <div class="footer-brand">
+
       <a href="index.html" class="logo">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M3 17c2 1.4 4 1.4 6 0s4-1.4 6 0 4 1.4 6 0" stroke="#FF6B4A" stroke-width="2" stroke-linecap="round"/><path d="M6 17V6l10 3-6 2.4V17" stroke="#0A2E2C" stroke-width="2" stroke-linejoin="round"/></svg>
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M3 17c2 1.4 4 1.4 6 0s4-1.4 6 0 4 1.4 6 0"
+                stroke="#FF6B4A"
+                stroke-width="2"
+                stroke-linecap="round"/>
+          <path d="M6 17V6l10 3-6 2.4V17"
+                stroke="#0A2E2C"
+                stroke-width="2"
+                stroke-linejoin="round"/>
+        </svg>
         PARAGOS
       </a>
-      <p>Local trip planning for the Philippine archipelago. Stays, island transfers, and rental cars in one place.</p>
+
+      <p>
+        Local trip planning for the Philippine archipelago.
+        Stays, island transfers, and rental cars in one place.
+      </p>
+
     </div>
+
     <div class="footer-col">
+
       <h5>Company</h5>
+
       <ul>
         <li><a href="about.html">About</a></li>
         <li><a href="support.html">Support</a></li>
         <li><a href="#">Careers</a></li>
       </ul>
+
     </div>
+
     <div class="footer-col">
+
       <h5>Explore</h5>
+
       <ul>
         <li><a href="destinations.html">Destinations</a></li>
         <li><a href="offers.html">Offers</a></li>
-        <li><a href="#">Rental cars</a></li>
+        <li><a href="booking.html">Rental cars</a></li>
       </ul>
+
     </div>
+
     <div class="footer-col">
+
       <h5>Account</h5>
+
       <ul>
         <li><a href="signin.html">Sign in</a></li>
         <li><a href="register.html">Register</a></li>
-        <li><a href="#">Manage booking</a></li>
+        <li><a href="authenticated.html">My account</a></li>
       </ul>
+
     </div>
+
   </div>
+
   <div class="footer-bottom">
-    <span>© 2026 PARAGOS Travel. All rights reserved.</span>
+
+    <span>
+      © 2026 PARAGOS Travel. All rights reserved.
+    </span>
+
     <div class="socials">
       <a href="#">Instagram</a>
       <a href="#">Facebook</a>
       <a href="#">TikTok</a>
     </div>
+
   </div>
+
 </footer>
 
+<script src="assets/data/destinations.js"></script>
+<script src="assets/data/stays.js"></script>
+<script src="assets/data/vehicles.js"></script>
+<script src="assets/data/offers.js"></script>
+<script src="assets/data/faqs.js"></script>
+<script src="assets/data/policies.js"></script>
+
 <script src="assets/main.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  const data = window.PARAGOS_DATA || {};
+
+  const destinations = Array.isArray(data.destinations)
+    ? data.destinations
+    : (
+        typeof PARAGOS_DESTINATIONS !== "undefined"
+          ? PARAGOS_DESTINATIONS
+          : []
+      );
+
+  const grid = document.getElementById("destinationGrid");
+  const sortSelect = document.getElementById("destinationSort");
+  const emptyState = document.getElementById("destinationEmptyState");
+  const clearButton = document.getElementById("clearDestinationSearch");
+  const pagination = document.getElementById("destinationPagination");
+
+  const searchSummary = document.getElementById("searchSummary");
+  const searchSummaryText = document.getElementById("searchSummaryText");
+
+  const params = new URLSearchParams(window.location.search);
+
+  const requestedDestination =
+    params.get("destination") || "";
+
+  const requestedCheckin =
+    params.get("checkin") || "";
+
+  const requestedCheckout =
+    params.get("checkout") || "";
+
+  const requestedTravelers =
+    params.get("travelers") || "";
+
+  let activeFilter = "all";
+  let currentPage = 1;
+
+  const itemsPerPage = 9;
+
+  function escapeHTML(value) {
+    return String(value ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+  function getValue(item, keys, fallback = "") {
+
+    if (!item || typeof item !== "object") {
+      return fallback;
+    }
+
+    for (const key of keys) {
+
+      if (
+        item[key] !== undefined &&
+        item[key] !== null &&
+        item[key] !== ""
+      ) {
+        return item[key];
+      }
+
+    }
+
+    return fallback;
+  }
+
+  function formatPHP(value) {
+
+    const number = Number(value);
+
+    if (!Number.isFinite(number)) {
+      return "₱0";
+    }
+
+    return "₱" + number.toLocaleString("en-PH");
+  }
+
+  function getId(destination) {
+
+    return String(
+      getValue(
+        destination,
+        ["id", "destinationId", "slug", "code"],
+        ""
+      )
+    );
+
+  }
+
+  function getName(destination) {
+
+    return String(
+      getValue(
+        destination,
+        ["name", "title", "destination"],
+        "Destination"
+      )
+    );
+
+  }
+
+  function getCode(destination) {
+
+    return String(
+      getValue(
+        destination,
+        ["code", "airportCode", "iata"],
+        ""
+      )
+    );
+
+  }
+
+  function getDescription(destination) {
+
+    return String(
+      getValue(
+        destination,
+        ["description", "shortDescription", "summary"],
+        ""
+      )
+    );
+
+  }
+
+  function getImage(destination) {
+
+    return String(
+      getValue(
+        destination,
+        ["image", "imageUrl", "photo"],
+        "https://picsum.photos/seed/paragos-destination/600/800"
+      )
+    );
+
+  }
+
+  function getPrice(destination) {
+
+    return Number(
+      getValue(
+        destination,
+        ["pricePerNight", "startingPrice", "price", "fromPrice"],
+        0
+      )
+    );
+
+  }
+
+  function getCategories(destination) {
+
+    const value = getValue(
+      destination,
+      ["category", "categories", "type", "tags"],
+      []
+    );
+
+    if (Array.isArray(value)) {
+      return value
+        .map(item => String(item).toLowerCase().trim())
+        .filter(Boolean);
+    }
+
+    if (typeof value === "string") {
+      return value
+        .split(",")
+        .map(item => item.toLowerCase().trim())
+        .filter(Boolean);
+    }
+
+    return [];
+  }
+
+  function normalize(value) {
+
+    return String(value || "")
+      .toLowerCase()
+      .trim()
+      .replace(/[_\s]+/g, "-");
+
+  }
+
+  function matchesDestination(destination, query) {
+
+    if (!query) {
+      return true;
+    }
+
+    const normalizedQuery = normalize(query);
+
+    const id = normalize(getId(destination));
+    const name = normalize(getName(destination));
+    const code = normalize(getCode(destination));
+
+    return (
+      id === normalizedQuery ||
+      name === normalizedQuery ||
+      code === normalizedQuery ||
+      name.includes(normalizedQuery) ||
+      id.includes(normalizedQuery)
+    );
+
+  }
+
+  function getDestinationURL(destination) {
+
+    const destinationId = getId(destination);
+
+    const bookingParams = new URLSearchParams();
+
+    if (destinationId) {
+      bookingParams.set("destination", destinationId);
+    }
+
+    if (requestedCheckin) {
+      bookingParams.set("checkin", requestedCheckin);
+    }
+
+    if (requestedCheckout) {
+      bookingParams.set("checkout", requestedCheckout);
+    }
+
+    if (requestedTravelers) {
+      bookingParams.set("travelers", requestedTravelers);
+    }
+
+    return "booking.html?" + bookingParams.toString();
+
+  }
+
+  function renderDestinations() {
+
+    if (!grid) {
+      return;
+    }
+
+    let results = destinations.filter(destination => {
+
+      const categoryMatches =
+        activeFilter === "all" ||
+        getCategories(destination).includes(
+          normalize(activeFilter)
+        );
+
+      const destinationMatches =
+        matchesDestination(
+          destination,
+          requestedDestination
+        );
+
+      return categoryMatches && destinationMatches;
+
+    });
+
+    const sortValue =
+      sortSelect
+        ? sortSelect.value
+        : "default";
+
+    if (sortValue === "price-low") {
+
+      results.sort(
+        (a, b) =>
+          getPrice(a) - getPrice(b)
+      );
+
+    } else if (sortValue === "price-high") {
+
+      results.sort(
+        (a, b) =>
+          getPrice(b) - getPrice(a)
+      );
+
+    } else if (sortValue === "name") {
+
+      results.sort(
+        (a, b) =>
+          getName(a).localeCompare(
+            getName(b)
+          )
+      );
+
+    }
+
+    const totalPages =
+      Math.max(
+        1,
+        Math.ceil(
+          results.length / itemsPerPage
+        )
+      );
+
+    if (currentPage > totalPages) {
+      currentPage = totalPages;
+    }
+
+    const start =
+      (currentPage - 1) *
+      itemsPerPage;
+
+    const pageResults =
+      results.slice(
+        start,
+        start + itemsPerPage
+      );
+
+    grid.innerHTML = pageResults
+      .map(destination => {
+
+        const name =
+          getName(destination);
+
+        const code =
+          getCode(destination);
+
+        const image =
+          getImage(destination);
+
+        const description =
+          getDescription(destination);
+
+        const price =
+          getPrice(destination);
+
+        const bookingURL =
+          getDestinationURL(destination);
+
+        const categories =
+          getCategories(destination);
+
+        const categoryLabel =
+          categories.length
+            ? categories[0]
+                .replace(/-/g, " ")
+                .replace(/\b\w/g, char =>
+                  char.toUpperCase()
+                )
+            : "";
+
+        return `
+          <a
+            href="${escapeHTML(bookingURL)}"
+            class="dest-card"
+          >
+
+            <img
+              src="${escapeHTML(image)}"
+              alt="${escapeHTML(name)}"
+              loading="lazy"
+            >
+
+            <div class="dest-card-overlay">
+
+              ${
+                code
+                  ? `
+                    <span class="dest-code">
+                      ${escapeHTML(code)}
+                    </span>
+                  `
+                  : ""
+              }
+
+              <h3>
+                ${escapeHTML(name)}
+              </h3>
+
+              ${
+                description
+                  ? `
+                    <p
+                      style="
+                        margin:6px 0 4px;
+                        font-size:13px;
+                        line-height:1.45;
+                      "
+                    >
+                      ${escapeHTML(description)}
+                    </p>
+                  `
+                  : ""
+              }
+
+              ${
+                categoryLabel
+                  ? `
+                    <span
+                      style="
+                        display:inline-block;
+                        margin-bottom:4px;
+                        font-size:11px;
+                        text-transform:uppercase;
+                        letter-spacing:.08em;
+                        opacity:.8;
+                      "
+                    >
+                      ${escapeHTML(categoryLabel)}
+                    </span>
+                  `
+                  : ""
+              }
+
+              <p class="from">
+                From
+                <strong>
+                  ${formatPHP(price)}
+                </strong>
+                / night
+              </p>
+
+            </div>
+
+          </a>
+        `;
+
+      })
+      .join("");
+
+    if (emptyState) {
+
+      emptyState.style.display =
+        results.length === 0
+          ? "block"
+          : "none";
+
+    }
+
+    if (pagination) {
+
+      if (totalPages <= 1) {
+
+        pagination.innerHTML = "";
+
+      } else {
+
+        let paginationHTML = "";
+
+        paginationHTML += `
+          <button
+            type="button"
+            class="page-nav"
+            data-page="${Math.max(
+              1,
+              currentPage - 1
+            )}"
+            ${currentPage === 1 ? "disabled" : ""}
+          >
+            Prev
+          </button>
+        `;
+
+        for (
+          let page = 1;
+          page <= totalPages;
+          page++
+        ) {
+
+          paginationHTML += `
+            <button
+              type="button"
+              class="page-num ${
+                page === currentPage
+                  ? "active"
+                  : ""
+              }"
+              data-page="${page}"
+            >
+              ${page}
+            </button>
+          `;
+
+        }
+
+        paginationHTML += `
+          <button
+            type="button"
+            class="page-nav"
+            data-page="${Math.min(
+              totalPages,
+              currentPage + 1
+            )}"
+            ${currentPage === totalPages ? "disabled" : ""}
+          >
+            Next
+          </button>
+        `;
+
+        pagination.innerHTML =
+          paginationHTML;
+
+        pagination
+          .querySelectorAll("[data-page]")
+          .forEach(button => {
+
+            button.addEventListener(
+              "click",
+              function () {
+
+                const page =
+                  Number(
+                    this.dataset.page
+                  );
+
+                if (
+                  !Number.isFinite(page) ||
+                  page < 1 ||
+                  page > totalPages ||
+                  page === currentPage
+                ) {
+                  return;
+                }
+
+                currentPage = page;
+
+                renderDestinations();
+
+                window.scrollTo({
+                  top: document
+                    .querySelector(".filter-bar")
+                    ?.offsetTop || 0,
+                  behavior: "smooth"
+                });
+
+              }
+            );
+
+          });
+
+      }
+
+    }
+
+  }
+
+  /* ---------------------------------------------
+     SEARCH SUMMARY
+  --------------------------------------------- */
+
+  function updateSearchSummary() {
+
+    if (!searchSummary || !searchSummaryText) {
+      return;
+    }
+
+    if (!requestedDestination) {
+
+      searchSummary.style.display =
+        "none";
+
+      return;
+
+    }
+
+    const matched =
+      destinations.find(destination =>
+        matchesDestination(
+          destination,
+          requestedDestination
+        )
+      );
+
+    const destinationName =
+      matched
+        ? getName(matched)
+        : requestedDestination;
+
+    const parts = [
+      destinationName
+    ];
+
+    if (requestedCheckin) {
+      parts.push(
+        "Check-in: " +
+        requestedCheckin
+      );
+    }
+
+    if (requestedCheckout) {
+      parts.push(
+        "Check-out: " +
+        requestedCheckout
+      );
+    }
+
+    if (requestedTravelers) {
+
+      const travelerNumber =
+        Number(requestedTravelers);
+
+      parts.push(
+        Number.isFinite(travelerNumber)
+          ? travelerNumber === 1
+            ? "1 traveler"
+            : `${travelerNumber}+ travelers`
+          : requestedTravelers
+      );
+
+    }
+
+    searchSummaryText.textContent =
+      parts.join(" • ");
+
+    searchSummary.style.display =
+      "block";
+
+  }
+
+  /* ---------------------------------------------
+     FILTER BUTTONS
+  --------------------------------------------- */
+
+  document
+    .querySelectorAll(
+      "[data-destination-filter]"
+    )
+    .forEach(button => {
+
+      button.addEventListener(
+        "click",
+        function () {
+
+          document
+            .querySelectorAll(
+              "[data-destination-filter]"
+            )
+            .forEach(item =>
+              item.classList.remove("active")
+            );
+
+          this.classList.add("active");
+
+          activeFilter =
+            this.dataset.destinationFilter ||
+            "all";
+
+          currentPage = 1;
+
+          renderDestinations();
+
+        }
+      );
+
+    });
+
+  /* ---------------------------------------------
+     SORT
+  --------------------------------------------- */
+
+  if (sortSelect) {
+
+    sortSelect.addEventListener(
+      "change",
+      function () {
+
+        currentPage = 1;
+
+        renderDestinations();
+
+      }
+    );
+
+  }
+
+  /* ---------------------------------------------
+     CLEAR SEARCH
+  --------------------------------------------- */
+
+  if (clearButton) {
+
+    clearButton.addEventListener(
+      "click",
+      function () {
+
+        window.location.href =
+          "destinations.html";
+
+      }
+    );
+
+  }
+
+  /* ---------------------------------------------
+     NEWSLETTER
+  --------------------------------------------- */
+
+  const newsletterForm =
+    document.getElementById(
+      "destinationNewsletterForm"
+    );
+
+  const newsletterEmail =
+    document.getElementById(
+      "destinationNewsletterEmail"
+    );
+
+  const newsletterMessage =
+    document.getElementById(
+      "destinationNewsletterMessage"
+    );
+
+  if (newsletterForm) {
+
+    newsletterForm.addEventListener(
+      "submit",
+      function (event) {
+
+        event.preventDefault();
+
+        const email =
+          newsletterEmail
+            ? newsletterEmail.value.trim()
+            : "";
+
+        if (!email) {
+          return;
+        }
+
+        const storage =
+          window.PARAGOS &&
+          window.PARAGOS.storage
+            ? window.PARAGOS.storage
+            : null;
+
+        if (storage) {
+
+          const subscribers =
+            storage.get(
+              "newsletter_subscribers",
+              []
+            );
+
+          const list =
+            Array.isArray(subscribers)
+              ? subscribers
+              : [];
+
+          const exists =
+            list.some(item =>
+              String(item).toLowerCase() ===
+              email.toLowerCase()
+            );
+
+          if (!exists) {
+            list.push(email);
+
+            storage.set(
+              "newsletter_subscribers",
+              list
+            );
+          }
+
+        }
+
+        if (newsletterMessage) {
+
+          newsletterMessage.textContent =
+            "You're subscribed. We'll keep you posted on PARAGOS offers.";
+
+          newsletterMessage.style.display =
+            "block";
+
+        }
+
+        newsletterForm.reset();
+
+      }
+    );
+
+  }
+
+  updateSearchSummary();
+  renderDestinations();
+
+});
+</script>
 
 </body>
 </html>

@@ -1,508 +1,1952 @@
-const KatigStorage = (() => {
-  const memory = {};
-  const hasLocal = () => {
+/* =========================================================
+   PARAGOS — Main Application Controller
+   Stage 2: Centralized data + localStorage foundation
+   GitHub Pages / No Database
+   ========================================================= */
+
+"use strict";
+
+const PARAGOS_ASSET_BASE =
+  document.currentScript && document.currentScript.src
+    ? document.currentScript.src.replace(/[^/]*$/, "")
+    : "assets/";
+
+/* =========================================================
+   PARAGOS DATA
+   ========================================================= */
+
+const PARAGOS_DATA = {
+  destinations:
+    typeof PARAGOS_DESTINATIONS !== "undefined"
+      ? PARAGOS_DESTINATIONS
+      : [],
+
+  stays:
+    typeof PARAGOS_STAYS !== "undefined"
+      ? PARAGOS_STAYS
+      : [],
+
+  vehicles:
+    typeof PARAGOS_VEHICLES !== "undefined"
+      ? PARAGOS_VEHICLES
+      : [],
+
+  offers:
+    typeof PARAGOS_OFFERS !== "undefined"
+      ? PARAGOS_OFFERS
+      : [],
+
+  faqs:
+    typeof PARAGOS_FAQS !== "undefined"
+      ? PARAGOS_FAQS
+      : [],
+
+  policies:
+    typeof PARAGOS_POLICIES !== "undefined"
+      ? PARAGOS_POLICIES
+      : []
+};
+
+
+/* =========================================================
+   STORAGE
+   GitHub Pages / localStorage only
+   ========================================================= */
+
+const PARAGOSStorage = {
+
+  prefix: "paragos:",
+
+  key(name) {
+    return `${this.prefix}${name}`;
+  },
+
+  get(name, fallback = null) {
     try {
-      const testKey = '_katig_test_';
-      window.localStorage.setItem(testKey, '1');
-      window.localStorage.removeItem(testKey);
+      const value = localStorage.getItem(
+        this.key(name)
+      );
+
+      if (value === null) {
+        return fallback;
+      }
+
+      return JSON.parse(value);
+
+    } catch (error) {
+      console.warn(
+        "PARAGOSStorage.get error:",
+        error
+      );
+
+      return fallback;
+    }
+  },
+
+  set(name, value) {
+    try {
+      localStorage.setItem(
+        this.key(name),
+        JSON.stringify(value)
+      );
+
       return true;
-    } catch (err) {
+
+    } catch (error) {
+      console.warn(
+        "PARAGOSStorage.set error:",
+        error
+      );
+
       return false;
     }
-  };
-  const localOk = hasLocal();
+  },
 
-  function get(key) {
+  remove(name) {
     try {
-      if (localOk) return window.localStorage.getItem(key);
-      return Object.prototype.hasOwnProperty.call(memory, key) ? memory[key] : null;
-    } catch (err) {
+      localStorage.removeItem(
+        this.key(name)
+      );
+
+      return true;
+
+    } catch (error) {
+      console.warn(
+        "PARAGOSStorage.remove error:",
+        error
+      );
+
+      return false;
+    }
+  },
+
+  list(prefix = "") {
+    const results = [];
+
+    try {
+      for (
+        let index = 0;
+        index < localStorage.length;
+        index++
+      ) {
+        const storageKey =
+          localStorage.key(index);
+
+        if (!storageKey) {
+          continue;
+        }
+
+        if (
+          storageKey.startsWith(
+            this.key(prefix)
+          )
+        ) {
+          results.push(storageKey);
+        }
+      }
+
+    } catch (error) {
+      console.warn(
+        "PARAGOSStorage.list error:",
+        error
+      );
+    }
+
+    return results;
+  },
+
+  clearAll() {
+    const keys = [];
+
+    try {
+      for (
+        let index = 0;
+        index < localStorage.length;
+        index++
+      ) {
+        const storageKey =
+          localStorage.key(index);
+
+        if (
+          storageKey &&
+          storageKey.startsWith(
+            this.prefix
+          )
+        ) {
+          keys.push(storageKey);
+        }
+      }
+
+      keys.forEach(storageKey => {
+        localStorage.removeItem(
+          storageKey
+        );
+      });
+
+      return true;
+
+    } catch (error) {
+      console.warn(
+        "PARAGOSStorage.clearAll error:",
+        error
+      );
+
+      return false;
+    }
+  }
+};
+
+
+/* =========================================================
+   BACKWARD COMPATIBILITY
+   ========================================================= */
+
+const KatigStorage =
+  PARAGOSStorage;
+
+
+/* =========================================================
+   AUTHENTICATION
+   ========================================================= */
+
+const PARAGOSAuth = {
+
+  normalizeEmail(email) {
+    return String(email || "")
+      .trim()
+      .toLowerCase();
+  },
+
+
+  findUser(email) {
+
+    const normalizedEmail =
+      this.normalizeEmail(email);
+
+    if (!normalizedEmail) {
       return null;
     }
-  }
 
-  function set(key, value) {
-    try {
-      if (localOk) {
-        window.localStorage.setItem(key, value);
-        return true;
-      }
-      memory[key] = value;
-      return true;
-    } catch (err) {
+    return PARAGOSStorage.get(
+      `users:${normalizedEmail}`,
+      null
+    );
+  },
+
+
+  saveUser(user) {
+
+    if (
+      !user ||
+      !user.email
+    ) {
       return false;
     }
-  }
 
-  function remove(key) {
-    try {
-      if (localOk) {
-        window.localStorage.removeItem(key);
-        return true;
-      }
-      delete memory[key];
-      return true;
-    } catch (err) {
+    const normalizedEmail =
+      this.normalizeEmail(
+        user.email
+      );
+
+    if (!normalizedEmail) {
       return false;
     }
-  }
 
-  function list(prefix = '') {
-    try {
-      if (localOk) {
-        return Object.keys(window.localStorage).filter((k) => k.startsWith(prefix));
-      }
-      return Object.keys(memory).filter((k) => k.startsWith(prefix));
-    } catch (err) {
-      return [];
+    const normalizedUser = {
+      ...user,
+      email: normalizedEmail
+    };
+
+    return PARAGOSStorage.set(
+      `users:${normalizedEmail}`,
+      normalizedUser
+    );
+  },
+
+
+  getUsers() {
+
+    return PARAGOSStorage
+      .list("users:")
+      .map(storageKey => {
+
+        const cleanKey =
+          storageKey.startsWith(
+            PARAGOSStorage.prefix
+          )
+            ? storageKey.substring(
+                PARAGOSStorage.prefix.length
+              )
+            : storageKey;
+
+        return PARAGOSStorage.get(
+          cleanKey,
+          null
+        );
+      })
+      .filter(Boolean);
+  },
+
+
+  getSession() {
+
+    return PARAGOSStorage.get(
+      "session",
+      null
+    );
+  },
+
+
+  setSession(user) {
+
+    if (!user) {
+      return false;
     }
+
+    /*
+      Never place the password in the
+      active session object.
+    */
+
+    const sessionUser = {
+      id:
+        user.id || null,
+
+      name:
+        user.name || "",
+
+      email:
+        this.normalizeEmail(
+          user.email
+        )
+    };
+
+    return PARAGOSStorage.set(
+      "session",
+      sessionUser
+    );
+  },
+
+
+  clearSession() {
+
+    return PARAGOSStorage.remove(
+      "session"
+    );
+  },
+
+
+  isAuthenticated() {
+
+    return !!this.getSession();
+  },
+
+
+  register(
+    name,
+    email,
+    password
+  ) {
+
+    const cleanName =
+      String(name || "").trim();
+
+    const normalizedEmail =
+      this.normalizeEmail(email);
+
+    const cleanPassword =
+      String(password || "");
+
+    if (
+      !cleanName ||
+      !normalizedEmail ||
+      !cleanPassword
+    ) {
+      return {
+        success: false,
+        message:
+          "Please complete all required fields."
+      };
+    }
+
+    if (
+      this.findUser(
+        normalizedEmail
+      )
+    ) {
+      return {
+        success: false,
+        message:
+          "An account with this email already exists."
+      };
+    }
+
+    /*
+      GitHub Pages demo authentication.
+
+      IMPORTANT:
+      This is not production-grade authentication.
+      Passwords are stored locally only for this
+      browser demo. A real production system should
+      use a secure backend with password hashing.
+    */
+
+    const user = {
+      id:
+        `USR-${Date.now()}`,
+
+      name:
+        cleanName,
+
+      email:
+        normalizedEmail,
+
+      password:
+        cleanPassword,
+
+      createdAt:
+        new Date().toISOString()
+    };
+
+    const saved =
+      this.saveUser(user);
+
+    if (!saved) {
+      return {
+        success: false,
+        message:
+          "The account could not be saved in this browser."
+      };
+    }
+
+    return {
+      success: true,
+      user
+    };
+  },
+
+
+  signIn(
+    email,
+    password
+  ) {
+
+    const normalizedEmail =
+      this.normalizeEmail(email);
+
+    const user =
+      this.findUser(
+        normalizedEmail
+      );
+
+    if (
+      !user ||
+      user.password !== password
+    ) {
+      return {
+        success: false,
+        message:
+          "Invalid email or password."
+      };
+    }
+
+    const sessionSaved =
+      this.setSession(user);
+
+    if (!sessionSaved) {
+      return {
+        success: false,
+        message:
+          "Unable to create a session in this browser."
+      };
+    }
+
+    return {
+      success: true,
+      user
+    };
   }
+};
 
-  return { get, set, remove, list, isLocal: () => localOk };
-})();
 
-const KatigAuth = (() => {
-  function findUser(email) {
-    const raw = KatigStorage.get('users:' + email.toLowerCase());
-    return raw ? JSON.parse(raw) : null;
-  }
+/* =========================================================
+   BACKWARD COMPATIBILITY
+   ========================================================= */
 
-  function saveUser(user) {
-    KatigStorage.set('users:' + user.email.toLowerCase(), JSON.stringify(user));
-  }
+const KatigAuth =
+  PARAGOSAuth;
 
-  function getSession() {
-    const raw = KatigStorage.get('session');
-    return raw ? JSON.parse(raw) : null;
-  }
 
-  function setSession(user) {
-    KatigStorage.set('session', JSON.stringify({ name: user.name, email: user.email }));
-  }
+/* =========================================================
+   AUTH GUARD
+   ========================================================= */
 
-  function clearSession() {
-    KatigStorage.remove('session');
-  }
-
-  return { findUser, saveUser, getSession, setSession, clearSession };
-})();
-
-// Protect pages that require a signed-in user.
 function requireAuth() {
-  const session = KatigAuth.getSession();
 
-  if (!session) {
-    const currentPage =
-      window.location.pathname.split('/').pop() || 'index.html';
+  const session =
+    PARAGOSAuth.getSession();
 
-    const redirect =
-      encodeURIComponent(currentPage + window.location.search);
+  if (session) {
+    return session;
+  }
 
-    window.location.href = 'signin.html?redirect=' + redirect;
+  const currentPage =
+    window.location.pathname
+      .split("/")
+      .pop();
+
+  const redirect =
+    encodeURIComponent(
+      currentPage ||
+      "index.html"
+    );
+
+  window.location.href =
+    `signin.html?redirect=${redirect}`;
+
+  return null;
+}
+
+
+/* =========================================================
+   SAFE REDIRECT
+   ========================================================= */
+
+function getSafeRedirect(
+  fallback = "authenticated.html"
+) {
+
+  const requested =
+    new URLSearchParams(
+      window.location.search
+    ).get("redirect");
+
+  if (!requested) {
+    return fallback;
+  }
+
+  if (
+    requested.startsWith("http://") ||
+    requested.startsWith("https://") ||
+    requested.startsWith("//") ||
+    requested.includes(":")
+  ) {
+    return fallback;
+  }
+
+  return requested;
+}
+
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+
+function setupMobileNavigation() {
+
+  const toggle =
+    document.querySelector(
+      ".nav-toggle"
+    );
+
+  if (!toggle) {
+    return;
+  }
+
+  /*
+    Support both navigation structures
+    used by the PARAGOS pages.
+  */
+
+  const nav =
+    document.querySelector(
+      ".site-nav"
+    ) ||
+    document.querySelector(
+      ".nav-links"
+    );
+
+  if (!nav) {
+    return;
+  }
+
+  toggle.addEventListener(
+    "click",
+    () => {
+
+      const isOpen =
+        nav.classList.toggle(
+          "open"
+        );
+
+      toggle.setAttribute(
+        "aria-expanded",
+        isOpen
+          ? "true"
+          : "false"
+      );
+    }
+  );
+
+  nav
+    .querySelectorAll("a")
+    .forEach(link => {
+
+      link.addEventListener(
+        "click",
+        () => {
+
+          nav.classList.remove(
+            "open"
+          );
+
+          toggle.setAttribute(
+            "aria-expanded",
+            "false"
+          );
+        }
+      );
+    });
+}
+
+
+/* =========================================================
+   FAQ ACCORDION
+   ========================================================= */
+
+function setupFAQ() {
+
+  const faqItems =
+    document.querySelectorAll(
+      ".faq-item"
+    );
+
+  faqItems.forEach(item => {
+
+    const question =
+      item.querySelector(
+        ".faq-question"
+      );
+
+    if (!question) {
+      return;
+    }
+
+    question.addEventListener(
+      "click",
+      () => {
+
+        const isOpen =
+          item.classList.contains(
+            "open"
+          );
+
+        faqItems.forEach(other => {
+
+          other.classList.remove(
+            "open"
+          );
+
+          const otherQuestion =
+            other.querySelector(
+              ".faq-question"
+            );
+
+          if (otherQuestion) {
+            otherQuestion.setAttribute(
+              "aria-expanded",
+              "false"
+            );
+          }
+
+          const otherAnswer =
+            other.querySelector(
+              ".faq-answer"
+            );
+
+          if (otherAnswer) {
+            otherAnswer.style.maxHeight =
+              null;
+          }
+        });
+
+        if (!isOpen) {
+
+          item.classList.add(
+            "open"
+          );
+
+          question.setAttribute(
+            "aria-expanded",
+            "true"
+          );
+
+          const answer =
+            item.querySelector(
+              ".faq-answer"
+            );
+
+          if (answer) {
+            answer.style.maxHeight =
+              `${answer.scrollHeight}px`;
+          }
+        }
+      }
+    );
+  });
+}
+
+
+/* =========================================================
+   FILTER CHIPS
+   ========================================================= */
+
+function setupFilterChips() {
+
+  document
+    .querySelectorAll(
+      ".filter-chip"
+    )
+    .forEach(chip => {
+
+      chip.addEventListener(
+        "click",
+        () => {
+
+          const group =
+            chip.closest(
+              ".filter-group"
+            );
+
+          if (group) {
+
+            group
+              .querySelectorAll(
+                ".filter-chip"
+              )
+              .forEach(other => {
+
+                other.classList.remove(
+                  "active"
+                );
+
+                other.setAttribute(
+                  "aria-pressed",
+                  "false"
+                );
+              });
+          }
+
+          chip.classList.add(
+            "active"
+          );
+
+          chip.setAttribute(
+            "aria-pressed",
+            "true"
+          );
+        }
+      );
+    });
+}
+
+
+/* =========================================================
+   SELECTABLE CARDS
+   ========================================================= */
+
+function setupSelectableCards() {
+
+  document
+    .querySelectorAll(
+      "[data-selectable]"
+    )
+    .forEach(card => {
+
+      card.addEventListener(
+        "click",
+        () => {
+
+          const group =
+            card.closest(
+              "[data-selection-group]"
+            );
+
+          if (group) {
+
+            group
+              .querySelectorAll(
+                "[data-selectable]"
+              )
+              .forEach(other => {
+
+                other.classList.remove(
+                  "selected"
+                );
+
+                other.setAttribute(
+                  "aria-selected",
+                  "false"
+                );
+              });
+          }
+
+          card.classList.add(
+            "selected"
+          );
+
+          card.setAttribute(
+            "aria-selected",
+            "true"
+          );
+        }
+      );
+    });
+}
+
+
+/* =========================================================
+   NAV AUTH STATE
+   ========================================================= */
+
+function renderNavAuthState() {
+
+  const session =
+    PARAGOSAuth.getSession();
+
+  document
+    .querySelectorAll(
+      "[data-auth-state]"
+    )
+    .forEach(container => {
+
+      const state =
+        container.dataset.authState;
+
+      if (
+        state ===
+        "authenticated"
+      ) {
+        container.style.display =
+          session ? "" : "none";
+      }
+
+      if (
+        state === "guest"
+      ) {
+        container.style.display =
+          session ? "none" : "";
+      }
+    });
+
+
+  document
+    .querySelectorAll(
+      "[data-user-name]"
+    )
+    .forEach(element => {
+
+      element.textContent =
+        session?.name ||
+        session?.email ||
+        "Guest";
+    });
+
+
+  document
+    .querySelectorAll(
+      "[data-user-email]"
+    )
+    .forEach(element => {
+
+      element.textContent =
+        session?.email ||
+        "";
+    });
+
+
+  /*
+    Support the explicit IDs used by the
+    current authentication pages.
+  */
+
+  const navUser =
+    document.getElementById(
+      "navUser"
+    );
+
+  const navSignIn =
+    document.getElementById(
+      "navSignIn"
+    );
+
+  const navAuthLink =
+    document.getElementById(
+      "navAuthLink"
+    );
+
+  const navLogout =
+    document.getElementById(
+      "navLogout"
+    );
+
+  if (navUser) {
+    navUser.style.display =
+      session ? "" : "none";
+  }
+
+  if (navSignIn) {
+    navSignIn.style.display =
+      session ? "none" : "";
+  }
+
+  if (navAuthLink) {
+    navAuthLink.style.display =
+      session ? "none" : "";
+  }
+
+  if (navLogout) {
+    navLogout.style.display =
+      session ? "" : "none";
+  }
+
+  if (navUser && session) {
+
+    const nameElement =
+      navUser.querySelector(
+        "[data-user-name]"
+      );
+
+    const emailElement =
+      navUser.querySelector(
+        "[data-user-email]"
+      );
+
+    if (nameElement) {
+      nameElement.textContent =
+        session.name ||
+        session.email ||
+        "Account";
+    }
+
+    if (emailElement) {
+      emailElement.textContent =
+        session.email ||
+        "";
+    }
+  }
+}
+
+
+/* =========================================================
+   REGISTRATION
+   ========================================================= */
+
+function setupRegistration() {
+
+  const form =
+    document.querySelector(
+      "#registerForm"
+    );
+
+  if (!form) {
+    return;
+  }
+
+  /*
+    Some versions of register.html handle
+    registration themselves. Avoid attaching
+    a duplicate submit handler when the page
+    already marks the form as externally handled.
+  */
+
+  if (
+    form.dataset.paragosHandled ===
+    "true"
+  ) {
+    return;
+  }
+
+  form.dataset.paragosHandled =
+    "true";
+
+  form.addEventListener(
+    "submit",
+    event => {
+
+      event.preventDefault();
+
+      const name =
+        form.querySelector(
+          '[name="name"]'
+        )?.value.trim() || "";
+
+      const email =
+        form.querySelector(
+          '[name="email"]'
+        )?.value.trim().toLowerCase() || "";
+
+      const password =
+        form.querySelector(
+          '[name="password"]'
+        )?.value || "";
+
+      const confirmPassword =
+        form.querySelector(
+          '[name="confirmPassword"]'
+        )?.value || "";
+
+      const terms =
+        form.querySelector(
+          '[name="terms"]'
+        )?.checked || false;
+
+
+      if (
+        name.length < 2
+      ) {
+        alert(
+          "Please enter your full name."
+        );
+
+        return;
+      }
+
+
+      if (
+        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/
+          .test(email)
+      ) {
+        alert(
+          "Please enter a valid email address."
+        );
+
+        return;
+      }
+
+
+      if (
+        password.length < 8
+      ) {
+        alert(
+          "Password must be at least 8 characters."
+        );
+
+        return;
+      }
+
+
+      if (
+        password !==
+        confirmPassword
+      ) {
+        alert(
+          "Passwords do not match."
+        );
+
+        return;
+      }
+
+
+      if (!terms) {
+        alert(
+          "Please accept the terms and conditions."
+        );
+
+        return;
+      }
+
+
+      const result =
+        PARAGOSAuth.register(
+          name,
+          email,
+          password
+        );
+
+
+      if (!result.success) {
+        alert(
+          result.message ||
+          "Registration failed."
+        );
+
+        return;
+      }
+
+
+      const loginResult =
+        PARAGOSAuth.signIn(
+          email,
+          password
+        );
+
+      if (!loginResult.success) {
+
+        window.location.href =
+          "signin.html";
+
+        return;
+      }
+
+
+      window.location.href =
+        getSafeRedirect(
+          "authenticated.html"
+        );
+    }
+  );
+}
+
+
+/* =========================================================
+   SIGN IN
+   ========================================================= */
+
+function setupSignin() {
+
+  const form =
+    document.querySelector(
+      "#signinForm"
+    );
+
+  if (!form) {
+    return;
+  }
+
+  if (
+    form.dataset.paragosHandled ===
+    "true"
+  ) {
+    return;
+  }
+
+  form.dataset.paragosHandled =
+    "true";
+
+  form.addEventListener(
+    "submit",
+    event => {
+
+      event.preventDefault();
+
+      const email =
+        form.querySelector(
+          '[name="email"]'
+        )?.value.trim().toLowerCase() || "";
+
+      const password =
+        form.querySelector(
+          '[name="password"]'
+        )?.value || "";
+
+
+      if (
+        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/
+          .test(email)
+      ) {
+        alert(
+          "Please enter a valid email address."
+        );
+
+        return;
+      }
+
+
+      if (!password) {
+        alert(
+          "Please enter your password."
+        );
+
+        return;
+      }
+
+
+      const result =
+        PARAGOSAuth.signIn(
+          email,
+          password
+        );
+
+
+      if (!result.success) {
+        alert(
+          result.message ||
+          "Invalid email or password."
+        );
+
+        return;
+      }
+
+
+      const rememberMe =
+        form.querySelector(
+          '[name="rememberMe"]'
+        )?.checked || false;
+
+      PARAGOSStorage.set(
+        "remember_me",
+        rememberMe
+      );
+
+
+      window.location.href =
+        getSafeRedirect(
+          "authenticated.html"
+        );
+    }
+  );
+}
+
+
+/* =========================================================
+   SIGN OUT
+   ========================================================= */
+
+function setupSignout() {
+
+  document
+    .querySelectorAll(
+      "[data-signout]"
+    )
+    .forEach(button => {
+
+      if (
+        button.dataset.paragosHandled ===
+        "true"
+      ) {
+        return;
+      }
+
+      button.dataset.paragosHandled =
+        "true";
+
+      button.addEventListener(
+        "click",
+        event => {
+
+          event.preventDefault();
+
+          PARAGOSAuth.clearSession();
+
+          window.location.href =
+            "index.html";
+        }
+      );
+    });
+}
+
+
+/* =========================================================
+   DATA HELPERS
+   ========================================================= */
+
+function normalizeId(value) {
+
+  return String(
+    value ?? ""
+  )
+    .trim()
+    .toLowerCase();
+}
+
+
+function findById(
+  collection,
+  id
+) {
+
+  if (
+    !Array.isArray(collection) ||
+    id === undefined ||
+    id === null
+  ) {
     return null;
   }
 
-  return session;
+  const target =
+    normalizeId(id);
+
+  return (
+    collection.find(item => {
+
+      if (!item) {
+        return false;
+      }
+
+      return [
+        item.id,
+        item.code,
+        item.slug,
+        item.key
+      ]
+        .filter(
+          value =>
+            value !== undefined &&
+            value !== null
+        )
+        .some(
+          value =>
+            normalizeId(value) === target
+        );
+    }) ||
+    null
+  );
 }
 
-const navToggle = document.querySelector('.nav-toggle');
-const navLinksEl = document.querySelector('.nav-links');
-if (navToggle && navLinksEl) {
-  navToggle.addEventListener('click', () => {
-    const open = navLinksEl.style.display === 'flex';
-    navLinksEl.style.display = open ? 'none' : 'flex';
-    navLinksEl.style.cssText += open ? '' : 'position:fixed;top:86px;left:5vw;right:5vw;background:rgba(255,255,255,0.92);backdrop-filter:blur(18px);flex-direction:column;padding:20px;border-radius:14px;box-shadow:0 20px 40px rgba(7,33,31,0.2);';
-  });
+
+function getDestination(id) {
+
+  return findById(
+    PARAGOS_DATA.destinations,
+    id
+  );
 }
 
-document.querySelectorAll('.filter-chips').forEach((group) => {
-  group.querySelectorAll('.chip').forEach((chip) => {
-    chip.addEventListener('click', () => {
-      group.querySelectorAll('.chip').forEach((c) => c.classList.remove('active'));
-      chip.classList.add('active');
-    });
-  });
-});
 
-document.querySelectorAll('.faq-item').forEach((item) => {
-  const question = item.querySelector('.faq-question');
-  const answer = item.querySelector('.faq-answer');
-  if (!question || !answer) return;
-  question.addEventListener('click', () => {
-    const isOpen = item.classList.contains('open');
-    document.querySelectorAll('.faq-item.open').forEach((other) => {
-      if (other !== item) {
-        other.classList.remove('open');
-        other.querySelector('.faq-answer').style.maxHeight = null;
+function getStay(id) {
+
+  return findById(
+    PARAGOS_DATA.stays,
+    id
+  );
+}
+
+
+function getVehicle(id) {
+
+  return findById(
+    PARAGOS_DATA.vehicles,
+    id
+  );
+}
+
+
+function getOffer(id) {
+
+  return findById(
+    PARAGOS_DATA.offers,
+    id
+  );
+}
+
+
+function getFAQ(id) {
+
+  return findById(
+    PARAGOS_DATA.faqs,
+    id
+  );
+}
+
+
+/* =========================================================
+   CURRENCY
+   ========================================================= */
+
+function formatPHP(amount) {
+
+  const value =
+    Number(amount) || 0;
+
+  return new Intl.NumberFormat(
+    "en-PH",
+    {
+      style: "currency",
+      currency: "PHP",
+      maximumFractionDigits: 0
+    }
+  ).format(value);
+}
+
+
+/* =========================================================
+   DATE HELPERS
+   ========================================================= */
+
+function parseDateOnly(
+  value
+) {
+
+  if (!value) {
+    return null;
+  }
+
+  if (
+    typeof value === "string" &&
+    /^\d{4}-\d{2}-\d{2}$/
+      .test(value)
+  ) {
+
+    const [
+      year,
+      month,
+      day
+    ] =
+      value
+        .split("-")
+        .map(Number);
+
+    const date =
+      new Date(
+        year,
+        month - 1,
+        day
+      );
+
+    if (
+      date.getFullYear() !== year ||
+      date.getMonth() !== month - 1 ||
+      date.getDate() !== day
+    ) {
+      return null;
+    }
+
+    return date;
+  }
+
+  const date =
+    new Date(value);
+
+  return Number.isNaN(
+    date.getTime()
+  )
+    ? null
+    : date;
+}
+
+
+function getNights(
+  checkin,
+  checkout
+) {
+
+  const start =
+    parseDateOnly(checkin);
+
+  const end =
+    parseDateOnly(checkout);
+
+  if (
+    !start ||
+    !end
+  ) {
+    return 0;
+  }
+
+  const difference =
+    end.getTime() -
+    start.getTime();
+
+  if (
+    difference <= 0
+  ) {
+    return 0;
+  }
+
+  return Math.round(
+    difference /
+    (1000 * 60 * 60 * 24)
+  );
+}
+
+
+/* =========================================================
+   BOOKING STORAGE
+   ========================================================= */
+
+function normalizeBooking(
+  booking
+) {
+
+  if (!booking) {
+    return null;
+  }
+
+  const normalized = {
+    ...booking
+  };
+
+  /*
+    booking.html stores the owner as userEmail; the booking
+    index is keyed on email, so mirror it here.
+  */
+  if (
+    !normalized.email &&
+    normalized.userEmail
+  ) {
+    normalized.email =
+      normalized.userEmail;
+  }
+
+  if (normalized.email) {
+    normalized.email =
+      String(
+        normalized.email
+      )
+        .trim()
+        .toLowerCase();
+  }
+
+  if (
+    !normalized.createdAt
+  ) {
+    normalized.createdAt =
+      new Date().toISOString();
+  }
+
+  return normalized;
+}
+
+
+function saveBooking(
+  booking
+) {
+
+  const normalizedBooking =
+    normalizeBooking(
+      booking
+    );
+
+  if (
+    !normalizedBooking ||
+    !normalizedBooking.reference
+  ) {
+    return false;
+  }
+
+  const saved =
+    PARAGOSStorage.set(
+      `bookings:${normalizedBooking.reference}`,
+      normalizedBooking
+    );
+
+  if (!saved) {
+    return false;
+  }
+
+
+  if (
+    normalizedBooking.email
+  ) {
+
+    const email =
+      normalizedBooking.email;
+
+    const indexKey =
+      `booking-index:${email}`;
+
+    const existing =
+      PARAGOSStorage.get(
+        indexKey,
+        []
+      );
+
+    const references =
+      Array.isArray(existing)
+        ? existing
+        : [];
+
+    if (
+      !references.includes(
+        normalizedBooking.reference
+      )
+    ) {
+
+      references.push(
+        normalizedBooking.reference
+      );
+
+      PARAGOSStorage.set(
+        indexKey,
+        references
+      );
+    }
+  }
+
+  return true;
+}
+
+
+function getBooking(
+  reference
+) {
+
+  if (!reference) {
+    return null;
+  }
+
+  return PARAGOSStorage.get(
+    `bookings:${reference}`,
+    null
+  );
+}
+
+
+function getUserBookings(
+  email
+) {
+
+  const normalizedEmail =
+    PARAGOSAuth.normalizeEmail(
+      email
+    );
+
+  if (!normalizedEmail) {
+    return [];
+  }
+
+  const indexed =
+    PARAGOSStorage.get(
+      `booking-index:${normalizedEmail}`,
+      []
+    );
+
+  const found =
+    new Map();
+
+  (Array.isArray(indexed)
+    ? indexed
+    : []
+  ).forEach(reference => {
+
+    const booking =
+      getBooking(reference);
+
+    if (booking) {
+      found.set(
+        booking.reference ||
+          reference,
+        booking
+      );
+    }
+  });
+
+  /*
+    Also scan stored bookings so ones saved before the index
+    was keyed correctly (userEmail only) still show up.
+  */
+  PARAGOSStorage
+    .list("bookings:")
+    .forEach(storageKey => {
+
+      const booking =
+        PARAGOSStorage.get(
+          storageKey.substring(
+            PARAGOSStorage.prefix.length
+          ),
+          null
+        );
+
+      if (
+        booking &&
+        !found.has(booking.reference) &&
+        PARAGOSAuth.normalizeEmail(
+          booking.email ||
+          booking.userEmail
+        ) === normalizedEmail
+      ) {
+        found.set(
+          booking.reference,
+          booking
+        );
       }
     });
-    item.classList.toggle('open', !isOpen);
-    answer.style.maxHeight = !isOpen ? answer.scrollHeight + 'px' : null;
-  });
-});
 
-document.querySelectorAll('.select-grid').forEach((grid) => {
-  grid.querySelectorAll('.select-card').forEach((card) => {
-    card.addEventListener('click', () => {
-      grid.querySelectorAll('.select-card').forEach((c) => c.classList.remove('selected'));
-      card.classList.add('selected');
+  return Array.from(
+    found.values()
+  );
+}
+
+
+/* =========================================================
+   BOOKING REFERENCE
+   ========================================================= */
+
+function generateBookingReference() {
+
+  const timestamp =
+    Date.now()
+      .toString(36)
+      .toUpperCase();
+
+  const random =
+    Math.random()
+      .toString(36)
+      .substring(2, 7)
+      .toUpperCase();
+
+  return (
+    `PRG-${timestamp}-${random}`
+  );
+}
+
+
+/* =========================================================
+   SESSION UI
+   ========================================================= */
+
+function setupSessionUI() {
+
+  renderNavAuthState();
+
+  setupSignout();
+}
+
+
+/* =========================================================
+   GLOBAL WINDOW API
+   =========================================================
+
+   IMPORTANT:
+   These are explicitly attached to window.
+
+   This allows pages such as register.html,
+   signin.html, booking.html and admin.html
+   to safely access:
+
+     window.PARAGOSAuth
+     window.PARAGOSStorage
+     window.KatigAuth
+     window.KatigStorage
+
+   ========================================================= */
+
+window.PARAGOS_DATA =
+  PARAGOS_DATA;
+
+window.PARAGOSStorage =
+  PARAGOSStorage;
+
+window.KatigStorage =
+  KatigStorage;
+
+window.PARAGOSAuth =
+  PARAGOSAuth;
+
+window.KatigAuth =
+  KatigAuth;
+
+
+/* =========================================================
+   GLOBAL PARAGOS API
+   ========================================================= */
+
+window.PARAGOS = {
+
+  data:
+    PARAGOS_DATA,
+
+  storage:
+    PARAGOSStorage,
+
+  auth:
+    PARAGOSAuth,
+
+  requireAuth,
+
+  getSafeRedirect,
+
+  getDestination,
+
+  getStay,
+
+  getVehicle,
+
+  getOffer,
+
+  getFAQ,
+
+  formatPHP,
+
+  parseDateOnly,
+
+  getNights,
+
+  saveBooking,
+
+  getBooking,
+
+  getUserBookings,
+
+  generateBookingReference
+};
+
+
+/* =========================================================
+   SHARED NAVBAR
+   Single source of truth for every page. Renders the guest or
+   authenticated variant into <nav class="navbar" id="siteNav">.
+   ========================================================= */
+
+function renderNavbar() {
+
+  const nav =
+    document.getElementById("siteNav") ||
+    document.querySelector("nav.navbar");
+
+  if (!nav) {
+    return;
+  }
+
+  const session =
+    PARAGOSAuth.getSession();
+
+  const links = session
+    ? [
+        ["authenticated.html", "My Account"],
+        ["index.html", "Home"],
+        ["destinations.html", "Destinations"],
+        ["booking.html", "Booking"],
+        ["offers.html", "Offers"],
+        ["support.html", "Support"]
+      ]
+    : [
+        ["index.html", "Home"],
+        ["destinations.html", "Destinations"],
+        ["offers.html", "Offers"],
+        ["support.html", "Support"]
+      ];
+
+  const currentPage =
+    (window.location.pathname
+      .split("/")
+      .pop() || "index.html")
+      .toLowerCase();
+
+  const linkItems =
+    links
+      .map(([href, label]) => {
+
+        const active =
+          href === currentPage
+            ? ' class="active" aria-current="page"'
+            : "";
+
+        return `<li><a href="${href}"${active}>${label}</a></li>`;
+      })
+      .join("");
+
+  /*
+    Auth actions are duplicated inside the link list so the
+    mobile menu (which hides .nav-cta buttons) still has them.
+  */
+
+  const mobileItems = session
+    ? '<li class="nav-mobile-only"><button type="button" data-nav-logout>Sign out</button></li>'
+    : '<li class="nav-mobile-only"><a href="signin.html">Sign in</a></li>' +
+      '<li class="nav-mobile-only"><a href="register.html">Register</a></li>';
+
+  const cta = session
+    ? `<span class="user-chip"></span>
+       <button type="button" class="btn btn-primary" data-nav-logout>Sign out</button>`
+    : `<a href="signin.html" class="btn btn-ghost">Sign in</a>
+       <a href="register.html" class="btn btn-primary nav-register">Register</a>`;
+
+  nav.innerHTML = `
+    <a href="index.html" class="logo" aria-label="PARAGOS home">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M3 17c2 1.4 4 1.4 6 0s4-1.4 6 0 4 1.4 6 0"
+              stroke="#FF6B4A" stroke-width="2" stroke-linecap="round"/>
+        <path d="M6 17V6l10 3-6 2.4V17"
+              stroke="#0A2E2C" stroke-width="2" stroke-linejoin="round"/>
+      </svg>
+      PARAGOS
+    </a>
+
+    <ul class="nav-links" id="navLinks">
+      ${linkItems}
+      ${mobileItems}
+    </ul>
+
+    <div class="nav-cta">
+      ${cta}
+      <button class="nav-toggle" type="button"
+              aria-label="Open menu" aria-expanded="false"
+              aria-controls="navLinks">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  `;
+
+  const chip =
+    nav.querySelector(".user-chip");
+
+  if (chip && session) {
+    chip.textContent =
+      session.name ||
+      session.email ||
+      "Account";
+  }
+
+  nav
+    .querySelectorAll("[data-nav-logout]")
+    .forEach(button => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          PARAGOSAuth.clearSession();
+
+          window.location.href =
+            "index.html";
+        }
+      );
     });
-  });
-});
-
-function renderNavAuthState() {
-  const authLink = document.getElementById('navAuthLink');
-  if (!authLink) return;
-  const session = KatigAuth.getSession();
-  if (session) {
-    authLink.textContent = 'Sign out';
-    authLink.setAttribute('href', '#');
-    authLink.onclick = (e) => {
-      e.preventDefault();
-      KatigAuth.clearSession();
-      window.location.href = 'index.html';
-    };
-  }
-}
-renderNavAuthState();
-
-const registerForm = document.getElementById('registerForm');
-if (registerForm) {
-  const existingSession = KatigAuth.getSession();
-  if (existingSession) {
-    window.location.href = 'index.html';
-  }
-
-  const messageBox = document.getElementById('registerMessage');
-  const submitBtn = document.getElementById('regSubmit');
-
-  function showRegisterMessage(text, kind) {
-    messageBox.textContent = text;
-    messageBox.style.display = 'block';
-    messageBox.style.background = kind === 'error' ? 'rgba(255,107,74,0.12)' : 'rgba(23,163,152,0.12)';
-    messageBox.style.color = kind === 'error' ? '#B8422A' : '#0E6E66';
-  }
-
-  registerForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const name = document.getElementById('regName').value.trim();
-    const email = document.getElementById('regEmail').value.trim();
-    const password = document.getElementById('regPassword').value;
-    const confirm = document.getElementById('regConfirm').value;
-    const terms = document.getElementById('regTerms').checked;
-
-    if (!name || !email || !password) {
-      showRegisterMessage('Please fill in every field.', 'error');
-      return;
-    }
-    if (password.length < 😎 {
-      showRegisterMessage('Password must be at least 8 characters.', 'error');
-      return;
-    }
-    if (password !== confirm) {
-      showRegisterMessage('Passwords do not match.', 'error');
-      return;
-    }
-    if (!terms) {
-      showRegisterMessage('Please agree to the Terms and Privacy Policy.', 'error');
-      return;
-    }
-
-    const existingUser = KatigAuth.findUser(email);
-    if (existingUser) {
-      showRegisterMessage('An account with this email already exists. Try signing in instead.', 'error');
-      return;
-    }
-
-    submitBtn.textContent = 'Creating account...';
-    submitBtn.disabled = true;
-
-    KatigAuth.saveUser({ name, email, password });
-    KatigAuth.setSession({ name, email });
-    showRegisterMessage('Account created. Redirecting...', 'success');
-    setTimeout(() => { window.location.href = 'index.html'; }, 600);
-  });
 }
 
-const signinForm = document.getElementById('signinForm');
-if (signinForm) {
-  const existingSession = KatigAuth.getSession();
-  const params = new URLSearchParams(window.location.search);
-  const redirectTo = params.get('redirect') || 'authenticated.html';
-  if (existingSession) {
-    window.location.href = redirectTo;
+/*
+  Render immediately (main.js loads after the markup) so page
+  scripts that run later already see the final navbar.
+*/
+
+renderNavbar();
+
+
+/* =========================================================
+   INITIALIZATION
+   ========================================================= */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
+
+    setupMobileNavigation();
+
+    setupFAQ();
+
+    setupFilterChips();
+
+    setupSelectableCards();
+
+    setupRegistration();
+
+    setupSignin();
+
+    setupSessionUI();
+
+    loadChatbot();
+
+  }
+);
+
+/* =========================================================
+   CHAT SUPPORT (Gemini widget, see assets/chatbot.js)
+   ========================================================= */
+
+function loadChatbot() {
+
+  if (document.querySelector("[data-no-chatbot]")) {
+    return;
   }
 
-  const messageBox = document.getElementById('signinMessage');
-  const submitBtn = document.getElementById('loginSubmit');
+  const css = document.createElement("link");
+  css.rel = "stylesheet";
+  css.href = PARAGOS_ASSET_BASE + "chatbot.css";
+  document.head.appendChild(css);
 
-  function showSigninMessage(text, kind) {
-    messageBox.textContent = text;
-    messageBox.style.display = 'block';
-    messageBox.style.background = kind === 'error' ? 'rgba(255,107,74,0.12)' : 'rgba(23,163,152,0.12)';
-    messageBox.style.color = kind === 'error' ? '#B8422A' : '#0E6E66';
-  }
-
-  signinForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const email = document.getElementById('loginEmail').value.trim();
-    const password = document.getElementById('loginPassword').value;
-
-    if (!email || !password) {
-      showSigninMessage('Please enter your email and password.', 'error');
-      return;
-    }
-
-    const user = KatigAuth.findUser(email);
-    if (!user || user.password !== password) {
-      showSigninMessage('Incorrect email or password.', 'error');
-      return;
-    }
-
-    submitBtn.textContent = 'Signing in...';
-    submitBtn.disabled = true;
-
-    KatigAuth.setSession(user);
-    showSigninMessage('Signed in. Redirecting...', 'success');
-    setTimeout(() => { window.location.href = redirectTo; }, 500);
-  });
-}
-
-const bookingLayout = document.getElementById('bookingLayout');
-if (bookingLayout) {
-  const SERVICE_FEE = 850;
-  const PROMO_CODES = { WELCOME10: 0.10, ISLAND15: 0.15 };
-  let appliedPromo = null;
-
-  const destinationSelect = document.getElementById('tripDestination');
-  const travelersSelect = document.getElementById('tripTravelers');
-  const checkinInput = document.getElementById('tripCheckin');
-  const checkoutInput = document.getElementById('tripCheckout');
-  const stayGrid = document.getElementById('stayGrid');
-  const carGrid = document.getElementById('carGrid');
-  const promoInput = document.getElementById('promoInput');
-  const promoApplyBtn = document.getElementById('promoApplyBtn');
-  const promoMsg = document.getElementById('promoMsg');
-  const authBanner = document.getElementById('authBanner');
-
-  function peso(amount) {
-    return '₱' + Math.round(amount).toLocaleString('en-PH');
-  }
-
-  function formatDate(value) {
-    const d = new Date(value + 'T00:00:00');
-    if (isNaN(d)) return value;
-    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-  }
-
-  function getNights() {
-    const inDate = new Date(checkinInput.value + 'T00:00:00');
-    const outDate = new Date(checkoutInput.value + 'T00:00:00');
-    const diff = Math.round((outDate - inDate) / (1000 * 60 * 60 * 24));
-    return diff > 0 ? diff : 1;
-  }
-
-  function updateSummary() {
-    const nights = getNights();
-    const destOption = destinationSelect.selectedOptions[0];
-    const destName = destOption.textContent;
-    const destCode = destOption.getAttribute('data-code');
-    const travelers = travelersSelect.value === '4' ? '4+' : travelersSelect.value;
-
-    document.getElementById('summaryCode').textContent = destCode;
-    document.getElementById('metaDestination').textContent = destName;
-    document.getElementById('metaCheckin').textContent = formatDate(checkinInput.value);
-    document.getElementById('metaCheckout').textContent = formatDate(checkoutInput.value);
-    document.getElementById('metaTravelers').textContent = travelers;
-
-    const stayCard = stayGrid.querySelector('.select-card.selected');
-    const stayName = stayCard.getAttribute('data-name');
-    const stayPrice = parseFloat(stayCard.getAttribute('data-price'));
-    const stayTotal = stayPrice * nights;
-    document.getElementById('rowStayLabel').textContent = stayName + ', ' + nights + ' night' + (nights > 1 ? 's' : '');
-    document.getElementById('rowStayPrice').textContent = peso(stayTotal);
-
-    const carCard = carGrid.querySelector('.select-card.selected');
-    const carName = carCard.getAttribute('data-name');
-    const carPrice = parseFloat(carCard.getAttribute('data-price'));
-    const carRow = document.getElementById('rowCar');
-    let carTotal = 0;
-    if (carName) {
-      carTotal = carPrice * nights;
-      carRow.style.display = 'flex';
-      document.getElementById('rowCarLabel').textContent = carName + ' rental, ' + nights + ' day' + (nights > 1 ? 's' : '');
-      document.getElementById('rowCarPrice').textContent = peso(carTotal);
-    } else {
-      carRow.style.display = 'none';
-    }
-
-    document.getElementById('rowServiceFee').textContent = peso(SERVICE_FEE);
-
-    const subtotal = stayTotal + carTotal;
-    const discountRow = document.getElementById('rowDiscount');
-    let discount = 0;
-    if (appliedPromo) {
-      discount = subtotal * PROMO_CODES[appliedPromo];
-      document.getElementById('rowDiscountLabel').textContent = 'Promo ' + appliedPromo;
-      document.getElementById('rowDiscountAmount').textContent = '−' + peso(discount);
-      discountRow.style.display = 'flex';
-    } else {
-      discountRow.style.display = 'none';
-    }
-
-    const total = subtotal + SERVICE_FEE - discount;
-    document.getElementById('summaryTotal').textContent = peso(total);
-
-    return { nights, destName, destCode, travelers, stayName, stayTotal, carName, carTotal, subtotal, discount, total };
-  }
-
-  destinationSelect.addEventListener('change', updateSummary);
-  travelersSelect.addEventListener('change', updateSummary);
-  checkinInput.addEventListener('change', updateSummary);
-  checkoutInput.addEventListener('change', updateSummary);
-  stayGrid.querySelectorAll('.select-card').forEach((card) => card.addEventListener('click', updateSummary));
-  carGrid.querySelectorAll('.select-card').forEach((card) => card.addEventListener('click', updateSummary));
-
-  promoApplyBtn.addEventListener('click', () => {
-    const code = promoInput.value.trim().toUpperCase();
-    promoMsg.style.display = 'block';
-    if (!code) {
-      promoMsg.textContent = 'Enter a code to apply.';
-      promoMsg.style.color = 'rgba(10,46,44,0.55)';
-      return;
-    }
-    if (PROMO_CODES[code]) {
-      appliedPromo = code;
-      promoMsg.textContent = code + ' applied.';
-      promoMsg.style.color = '#0E6E66';
-    } else {
-      appliedPromo = null;
-      promoMsg.textContent = 'Invalid code. Try WELCOME10 or ISLAND15.';
-      promoMsg.style.color = '#B8422A';
-    }
-    updateSummary();
-  });
-
-  const session = KatigAuth.getSession();
-  authBanner.style.display = 'block';
-  if (session) {
-    authBanner.innerHTML = 'Booking as <strong>' + session.name + '</strong> (' + session.email + '). This trip will be saved to your account.';
-    const paymentName = document.getElementById('paymentName');
-    if (!paymentName.value) paymentName.value = session.name;
-  } else {
-    authBanner.innerHTML = 'Not signed in. <a href="signin.html?redirect=booking.html" style="color:var(--coral);font-weight:600;">Sign in</a> to save this booking to your account.';
-  }
-
-  document.getElementById('confirmPayBtn').addEventListener('click', () => {
-    const name = document.getElementById('paymentName').value.trim();
-    const card = document.getElementById('paymentCard').value.trim();
-    const expiry = document.getElementById('paymentExpiry').value.trim();
-    const cvv = document.getElementById('paymentCVV').value.trim();
-    const errorBox = document.getElementById('paymentError');
-
-    if (!name || !card || !expiry || !cvv) {
-      errorBox.textContent = 'Please complete all payment fields before confirming.';
-      errorBox.style.display = 'block';
-      errorBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      return;
-    }
-    errorBox.style.display = 'none';
-
-    const details = updateSummary();
-    const currentSession = KatigAuth.getSession();
-    const reference = 'KTG-' + Math.random().toString(36).slice(2, 😎.toUpperCase();
-
-    const booking = {
-      reference,
-      email: currentSession ? currentSession.email : null,
-      destination: details.destName,
-      code: details.destCode,
-      checkin: checkinInput.value,
-      checkout: checkoutInput.value,
-      travelers: details.travelers,
-      stay: details.stayName,
-      car: details.carName || null,
-      total: details.total,
-      createdAt: new Date().toISOString()
-    };
-    KatigStorage.set('bookings:' + reference, JSON.stringify(booking));
-
-    document.getElementById('confirmCode').textContent = details.destCode;
-    document.getElementById('confirmDestination').textContent = details.destName;
-    document.getElementById('confirmRef').textContent = reference;
-    document.getElementById('confirmCheckin').textContent = formatDate(checkinInput.value);
-    document.getElementById('confirmCheckout').textContent = formatDate(checkoutInput.value);
-    document.getElementById('confirmTravelers').textContent = details.travelers;
-    document.getElementById('confirmTotal').textContent = peso(details.total);
-
-    document.getElementById('bookingLayout').style.display = 'none';
-    document.querySelector('.stepper').style.display = 'none';
-    authBanner.style.display = 'none';
-    document.getElementById('confirmationPanel').style.display = 'block';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-
-  updateSummary();
-}
-
-const usersWrap = document.getElementById('usersWrap');
-if (usersWrap) {
-  const bookingsWrap = document.getElementById('bookingsWrap');
-  const storagePill = document.getElementById('storagePill');
-  const storageLabel = document.getElementById('storageLabel');
-
-  function escapeHtml(str) {
-    const div = document.createElement('div');
-    div.textContent = str;
-    return div.innerHTML;
-  }
-
-  if (KatigStorage.isLocal()) {
-    storageLabel.textContent = 'Connected to browser localStorage';
-  } else {
-    storagePill.classList.add('offline');
-    storageLabel.textContent = 'Using in-memory fallback (this tab only)';
-  }
-
-  const userKeys = KatigStorage.list('users:');
-  if (userKeys.length === 0) {
-    usersWrap.innerHTML = '<div class="empty-note">No accounts yet. Create one on the Register page.</div>';
-  } else {
-    const rows = [];
-    for (const key of userKeys) {
-      const raw = KatigStorage.get(key);
-      if (!raw) continue;
-      const user = JSON.parse(raw);
-      rows.push(
-        '<tr><td>' + escapeHtml(user.name) + '</td>' +
-        '<td>' + escapeHtml(user.email) + '</td>' +
-        '<td><code>' + '•'.repeat(Math.min(user.password.length, 12)) + '</code></td></tr>'
-      );
-    }
-    usersWrap.innerHTML =
-      '<table class="data-table"><thead><tr><th>Name</th><th>Email</th><th>Password</th></tr></thead><tbody>' +
-      rows.join('') + '</tbody></table>';
-  }
-
-  const bookingKeys = KatigStorage.list('bookings:');
-  if (bookingKeys.length === 0) {
-    bookingsWrap.innerHTML = '<div class="empty-note">No bookings yet. Confirm one on the Booking page.</div>';
-  } else {
-    const rows = [];
-    for (const key of bookingKeys) {
-      const raw = KatigStorage.get(key);
-      if (!raw) continue;
-      const b = JSON.parse(raw);
-      rows.push(
-        '<tr><td>' + escapeHtml(b.reference) + '</td>' +
-        '<td>' + escapeHtml(b.destination) + '</td>' +
-        '<td>' + escapeHtml(b.checkin) + ' → ' + escapeHtml(b.checkout) + '</td>' +
-        '<td>' + escapeHtml(b.email || 'Guest') + '</td>' +
-        '<td>₱' + Math.round(b.total).toLocaleString('en-PH') + '</td></tr>'
-      );
-    }
-    bookingsWrap.innerHTML =
-      '<table class="data-table"><thead><tr><th>Reference</th><th>Destination</th><th>Dates</th><th>Account</th><th>Total</th></tr></thead><tbody>' +
-      rows.join('') + '</tbody></table>';
-  }
+  const script = document.createElement("script");
+  script.src = PARAGOS_ASSET_BASE + "chatbot.js";
+  document.body.appendChild(script);
 }

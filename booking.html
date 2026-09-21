@@ -3,289 +3,4016 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Book your trip — PARAGOS</title>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,900;1,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
 <link rel="stylesheet" href="assets/style.css">
 <link rel="stylesheet" href="assets/pages.css">
+
+<style>
+.booking-error {
+  display: none;
+  padding: 12px 14px;
+  margin-bottom: 18px;
+  border-radius: 10px;
+  background: rgba(255, 107, 74, 0.12);
+  color: #B8422A;
+  font-size: 13px;
+}
+
+.booking-success {
+  display: none;
+  padding: 12px 14px;
+  margin-bottom: 18px;
+  border-radius: 10px;
+  background: rgba(47, 111, 97, 0.12);
+  color: #2F6F61;
+  font-size: 13px;
+}
+
+.select-card {
+  cursor: pointer;
+}
+
+.select-card.selected {
+  border-color: var(--coral, #FF6B4A);
+}
+
+.select-card-noimg {
+  min-height: 100px;
+}
+
+.booking-loading {
+  padding: 20px;
+  border-radius: 12px;
+  background: var(--sand-dim);
+  color: rgba(10, 46, 44, 0.75);
+  font-size: 13px;
+}
+
+.booking-empty {
+  padding: 20px;
+  border-radius: 12px;
+  background: var(--sand-dim);
+  color: rgba(10, 46, 44, 0.75);
+  font-size: 13px;
+}
+
+.promo-success {
+  color: #2F6F61;
+}
+
+.promo-error {
+  color: #B8422A;
+}
+
+.summary-row.discount {
+  color: #2F6F61;
+}
+
+</style>
+
 </head>
+
 <body>
 
-<nav class="navbar">
-  <a href="index.html" class="logo">
-    <svg viewBox="0 0 24 24" fill="none"><path d="M3 17c2 1.4 4 1.4 6 0s4-1.4 6 0 4 1.4 6 0" stroke="#FF6B4A" stroke-width="2" stroke-linecap="round"/><path d="M6 17V6l10 3-6 2.4V17" stroke="#0A2E2C" stroke-width="2" stroke-linejoin="round"/></svg>
-    PARAGOS
-  </a>
-  <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="destinations.html">Destinations</a></li>
-    <li><a href="offers.html">Offers</a></li>
-    <li><a href="support.html">Support</a></li>
-  </ul>
-  <div class="nav-cta">
-    <a href="signin.html" class="btn btn-ghost" id="navAuthLink">Sign in</a>
-    <button class="nav-toggle" aria-label="Open menu"><span></span><span></span><span></span></button>
-  </div>
-</nav>
+<nav class="navbar" id="siteNav" aria-label="Main navigation"></nav>
 
-<header class="page-header" style="padding-bottom:60px;">
+
+<header
+  class="page-header"
+  style="padding-bottom:60px;"
+>
+
   <div class="page-header-inner">
-    <div class="breadcrumb"><a href="index.html">Home</a> / <a href="destinations.html">Destinations</a> / Book</div>
-    <div class="eyebrow">Almost there</div>
-    <h1>Complete your booking</h1>
-    <p>Confirm your trip details, pick a stay and a rental car, then pay securely.</p>
+
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      /
+      <a href="destinations.html">Destinations</a>
+      /
+      Book
+    </div>
+
+    <div class="eyebrow">
+      Almost there
+    </div>
+
+    <h1>
+      Complete your booking
+    </h1>
+
+    <p>
+      Confirm your trip details, pick a stay and a rental car, then complete the demo checkout.
+    </p>
+
   </div>
+
 </header>
 
-<section class="section" style="padding-top:70px;">
+
+<section
+  class="section"
+  style="padding-top:70px;"
+>
+
   <div class="stepper">
-    <div class="step active"><span class="step-num">1</span><span class="step-label">Trip details</span></div>
+
+    <div class="step active">
+      <span class="step-num">1</span>
+      <span class="step-label">Trip details</span>
+    </div>
+
     <div class="step-line"></div>
-    <div class="step"><span class="step-num">2</span><span class="step-label">Stay</span></div>
+
+    <div class="step">
+      <span class="step-num">2</span>
+      <span class="step-label">Stay</span>
+    </div>
+
     <div class="step-line"></div>
-    <div class="step"><span class="step-num">3</span><span class="step-label">Rental car</span></div>
+
+    <div class="step">
+      <span class="step-num">3</span>
+      <span class="step-label">Rental car</span>
+    </div>
+
     <div class="step-line"></div>
-    <div class="step"><span class="step-num">4</span><span class="step-label">Payment</span></div>
+
+    <div class="step">
+      <span class="step-num">4</span>
+      <span class="step-label">Payment</span>
+    </div>
+
   </div>
 
-  <div id="authBanner" style="display:none;margin-bottom:30px;padding:14px 18px;border-radius:12px;background:var(--sand-dim);font-size:13px;color:rgba(10,46,44,0.75);"></div>
 
-  <div class="booking-layout" id="bookingLayout">
-    <div class="booking-main" id="bookingMain">
+  <div
+    id="authBanner"
+    style="
+      display:none;
+      margin-bottom:30px;
+      padding:14px 18px;
+      border-radius:12px;
+      background:var(--sand-dim);
+      font-size:13px;
+      color:rgba(10,46,44,0.75);
+    "
+  ></div>
+
+
+  <div
+    class="booking-layout"
+    id="bookingLayout"
+  >
+
+    <div
+      class="booking-main"
+      id="bookingMain"
+    >
+
+      <!-- STEP 1 -->
 
       <div class="booking-step">
-        <div class="eyebrow">Step 1</div>
-        <h3>Trip details</h3>
+
+        <div class="eyebrow">
+          Step 1
+        </div>
+
+        <h3>
+          Trip details
+        </h3>
+
+        <div
+          id="tripError"
+          class="booking-error"
+          role="alert"
+        ></div>
+
         <div class="form-row">
+
           <div class="form-field">
-            <label>Destination</label>
-            <select id="tripDestination">
-              <option data-code="PPS">El Nido, Palawan</option>
-              <option data-code="BOR">Boracay, Aklan</option>
-              <option data-code="IAO">Siargao, Surigao</option>
-              <option data-code="CEB">Cebu City</option>
-              <option data-code="TAG">Panglao, Bohol</option>
+
+            <label for="tripDestination">
+              Destination
+            </label>
+
+            <select
+              id="tripDestination"
+              required
+            ></select>
+
+          </div>
+
+
+          <div class="form-field">
+
+            <label for="tripTravelers">
+              Travelers
+            </label>
+
+            <select
+              id="tripTravelers"
+              required
+            >
+
+              <option value="1">
+                1 traveler
+              </option>
+
+              <option value="2" selected>
+                2 travelers
+              </option>
+
+              <option value="3">
+                3 travelers
+              </option>
+
+              <option value="4">
+                4 travelers
+              </option>
+
+              <option value="5">
+                5 travelers
+              </option>
+
+              <option value="6">
+                6 travelers
+              </option>
+
+              <option value="7">
+                7 travelers
+              </option>
+
+              <option value="8">
+                8 travelers
+              </option>
+
             </select>
+
           </div>
-          <div class="form-field">
-            <label>Travelers</label>
-            <select id="tripTravelers">
-              <option value="1">1 traveler</option>
-              <option value="2" selected>2 travelers</option>
-              <option value="3">3 travelers</option>
-              <option value="4">4+ travelers</option>
-            </select>
-          </div>
+
         </div>
+
+
         <div class="form-row">
+
           <div class="form-field">
-            <label>Check-in</label>
-            <input type="date" id="tripCheckin" value="2026-09-14">
+
+            <label for="tripCheckin">
+              Check-in
+            </label>
+
+            <input
+              type="date"
+              id="tripCheckin"
+              required
+            >
+
           </div>
+
+
           <div class="form-field">
-            <label>Check-out</label>
-            <input type="date" id="tripCheckout" value="2026-09-18">
+
+            <label for="tripCheckout">
+              Check-out
+            </label>
+
+            <input
+              type="date"
+              id="tripCheckout"
+              required
+            >
+
           </div>
+
         </div>
+
       </div>
 
-      <div class="booking-step">
-        <div class="eyebrow">Step 2</div>
-        <h3>Choose your stay</h3>
-        <div class="select-grid" id="stayGrid">
-          <div class="select-card" data-name="Kalye Suites" data-price="3200">
-            <div class="radio-dot"></div>
-            <img src="https://picsum.photos/seed/resort2/400/240" alt="Kalye Suites">
-            <div class="select-card-body">
-              <h4>Kalye Suites</h4>
-              <span>₱3,200 / night</span>
-            </div>
-          </div>
-          <div class="select-card selected" data-name="Amihan Cove Resort" data-price="5600">
-            <div class="radio-dot"></div>
-            <img src="https://picsum.photos/seed/resort1/400/240" alt="Amihan Cove Resort">
-            <div class="select-card-body">
-              <h4>Amihan Cove Resort</h4>
-              <span>₱5,600 / night</span>
-            </div>
-          </div>
-          <div class="select-card" data-name="Cloud 9 Villas" data-price="5400">
-            <div class="radio-dot"></div>
-            <img src="https://picsum.photos/seed/resort3/400/240" alt="Cloud 9 Villas">
-            <div class="select-card-body">
-              <h4>Cloud 9 Villas</h4>
-              <span>₱5,400 / night</span>
-            </div>
-          </div>
-        </div>
-      </div>
+
+      <!-- STEP 2 -->
 
       <div class="booking-step">
-        <div class="eyebrow">Step 3</div>
-        <h3>Add a rental car</h3>
-        <div class="select-grid" id="carGrid">
-          <div class="select-card" data-name="Sedan" data-price="1800">
-            <div class="radio-dot"></div>
-            <img src="https://picsum.photos/seed/sedan/400/240" alt="Sedan">
-            <div class="select-card-body">
-              <h4>Sedan</h4>
-              <span>₱1,800 / day</span>
-            </div>
-          </div>
-          <div class="select-card selected" data-name="SUV" data-price="3500">
-            <div class="radio-dot"></div>
-            <img src="https://picsum.photos/seed/suv/400/240" alt="SUV">
-            <div class="select-card-body">
-              <h4>SUV</h4>
-              <span>₱3,500 / day</span>
-            </div>
-          </div>
-          <div class="select-card" data-name="Van" data-price="4900">
-            <div class="radio-dot"></div>
-            <img src="https://picsum.photos/seed/van/400/240" alt="Van">
-            <div class="select-card-body">
-              <h4>Van</h4>
-              <span>₱4,900 / day</span>
-            </div>
-          </div>
-          <div class="select-card select-card-noimg" data-name="" data-price="0">
-            <div class="radio-dot"></div>
-            <div class="select-card-body" style="padding:0;">
-              <h4>No rental car</h4>
-              <span>Skip this step</span>
-            </div>
+
+        <div class="eyebrow">
+          Step 2
+        </div>
+
+        <h3>
+          Choose your stay
+        </h3>
+
+        <div
+          class="select-grid"
+          id="stayGrid"
+        >
+          <div class="booking-loading">
+            Loading available stays...
           </div>
         </div>
+
       </div>
 
+
+      <!-- STEP 3 -->
+
       <div class="booking-step">
-        <div class="eyebrow">Step 4</div>
-        <h3>Payment details</h3>
-        <div id="paymentError" style="display:none;padding:12px 14px;border-radius:10px;font-size:13px;margin-bottom:18px;background:rgba(255,107,74,0.12);color:#B8422A;"></div>
+
+        <div class="eyebrow">
+          Step 3
+        </div>
+
+        <h3>
+          Add a rental car
+        </h3>
+
+        <div
+          class="select-grid"
+          id="carGrid"
+        >
+          <div class="booking-loading">
+            Loading rental vehicles...
+          </div>
+        </div>
+
+      </div>
+
+
+      <!-- STEP 4 -->
+
+      <div class="booking-step">
+
+        <div class="eyebrow">
+          Step 4
+        </div>
+
+        <h3>
+          Payment details
+        </h3>
+
+        <p
+          style="
+            font-size:13px;
+            line-height:1.6;
+            color:rgba(10,46,44,0.68);
+            margin-top:-6px;
+            margin-bottom:20px;
+          "
+        >
+          This is a demonstration checkout. No real payment is processed or stored.
+        </p>
+
+        <div
+          id="paymentError"
+          class="booking-error"
+          role="alert"
+        ></div>
+
+        <div
+          id="paymentSuccess"
+          class="booking-success"
+          role="status"
+        ></div>
+
+
         <div class="form-field">
-          <label>Name on card</label>
-          <input type="text" id="paymentName" placeholder="Juan Dela Cruz">
+
+          <label for="paymentName">
+            Name on card
+          </label>
+
+          <input
+            type="text"
+            id="paymentName"
+            placeholder="Juan Dela Cruz"
+            autocomplete="cc-name"
+          >
+
         </div>
+
+
         <div class="form-field">
-          <label>Card number</label>
-          <input type="text" id="paymentCard" placeholder="1234 1234 1234 1234" maxlength="19">
+
+          <label for="paymentCard">
+            Demo card number
+          </label>
+
+          <input
+            type="text"
+            id="paymentCard"
+            placeholder="1234 1234 1234 1234"
+            maxlength="19"
+            inputmode="numeric"
+            autocomplete="cc-number"
+          >
+
         </div>
+
+
         <div class="form-row">
+
           <div class="form-field">
-            <label>Expiry</label>
-            <input type="text" id="paymentExpiry" placeholder="MM / YY" maxlength="7">
+
+            <label for="paymentExpiry">
+              Expiry
+            </label>
+
+            <input
+              type="text"
+              id="paymentExpiry"
+              placeholder="MM / YY"
+              maxlength="7"
+              inputmode="numeric"
+              autocomplete="cc-exp"
+            >
+
           </div>
+
+
           <div class="form-field">
-            <label>CVV</label>
-            <input type="text" id="paymentCVV" placeholder="123" maxlength="4">
+
+            <label for="paymentCVV">
+              CVV
+            </label>
+
+            <input
+              type="text"
+              id="paymentCVV"
+              placeholder="123"
+              maxlength="4"
+              inputmode="numeric"
+              autocomplete="cc-csc"
+            >
+
           </div>
+
         </div>
+
+
         <div class="form-field">
-          <label>Billing address</label>
-          <input type="text" id="paymentAddress" placeholder="Street, city, province">
+
+          <label for="paymentAddress">
+            Billing address
+          </label>
+
+          <input
+            type="text"
+            id="paymentAddress"
+            placeholder="Street, city, province"
+            autocomplete="street-address"
+          >
+
         </div>
+
       </div>
 
     </div>
+
+
+    <!-- SUMMARY -->
 
     <div class="summary-card">
-      <div class="eyebrow">Your itinerary</div>
-      <div class="summary-route">MNL <span class="arrow">→</span> <span id="summaryCode">PPS</span></div>
+
+      <div class="eyebrow">
+        Your itinerary
+      </div>
+
+
+      <div class="summary-route">
+
+        MNL
+
+        <span class="arrow">
+          →
+        </span>
+
+        <span id="summaryCode">
+          —
+        </span>
+
+      </div>
+
+
       <div class="summary-meta">
-        <div><span>Destination</span><span id="metaDestination">El Nido, Palawan</span></div>
-        <div><span>Check-in</span><span id="metaCheckin">Sep 14, 2026</span></div>
-        <div><span>Check-out</span><span id="metaCheckout">Sep 18, 2026</span></div>
-        <div><span>Travelers</span><span id="metaTravelers">2</span></div>
+
+        <div>
+          <span>Destination</span>
+          <span id="metaDestination">—</span>
+        </div>
+
+        <div>
+          <span>Check-in</span>
+          <span id="metaCheckin">—</span>
+        </div>
+
+        <div>
+          <span>Check-out</span>
+          <span id="metaCheckout">—</span>
+        </div>
+
+        <div>
+          <span>Travelers</span>
+          <span id="metaTravelers">2</span>
+        </div>
+
       </div>
+
+
       <div class="summary-perf"></div>
-      <div class="summary-row" id="rowStay"><span id="rowStayLabel">Amihan Cove Resort, 4 nights</span><span id="rowStayPrice">₱22,400</span></div>
-      <div class="summary-row" id="rowCar"><span id="rowCarLabel">SUV rental, 4 days</span><span id="rowCarPrice">₱14,000</span></div>
-      <div class="summary-row"><span>Service fee</span><span id="rowServiceFee">₱850</span></div>
-      <div class="summary-row discount" id="rowDiscount" style="display:none;"><span id="rowDiscountLabel">Promo</span><span id="rowDiscountAmount">−₱0</span></div>
+
+
+      <div
+        class="summary-row"
+        id="rowStay"
+      >
+
+        <span id="rowStayLabel">
+          Stay
+        </span>
+
+        <span id="rowStayPrice">
+          ₱0
+        </span>
+
+      </div>
+
+
+      <div
+        class="summary-row"
+        id="rowCar"
+      >
+
+        <span id="rowCarLabel">
+          Rental car
+        </span>
+
+        <span id="rowCarPrice">
+          ₱0
+        </span>
+
+      </div>
+
+
+      <div class="summary-row">
+
+        <span>
+          Service fee
+        </span>
+
+        <span id="rowServiceFee">
+          ₱850
+        </span>
+
+      </div>
+
+
+      <div
+        class="summary-row discount"
+        id="rowDiscount"
+        style="display:none;"
+      >
+
+        <span id="rowDiscountLabel">
+          Promo
+        </span>
+
+        <span id="rowDiscountAmount">
+          −₱0
+        </span>
+
+      </div>
+
+
       <div class="promo-row">
-        <input type="text" id="promoInput" placeholder="Promo code">
-        <button type="button" id="promoApplyBtn">Apply</button>
+
+        <input
+          type="text"
+          id="promoInput"
+          placeholder="Promo code"
+          autocomplete="off"
+          maxlength="40"
+        >
+
+        <button
+          type="button"
+          id="promoApplyBtn"
+        >
+          Apply
+        </button>
+
       </div>
-      <p id="promoMsg" style="display:none;font-size:12px;margin-top:-2px;margin-bottom:6px;"></p>
+
+
+      <p
+        id="promoMsg"
+        style="
+          display:none;
+          font-size:12px;
+          margin-top:-2px;
+          margin-bottom:6px;
+        "
+      ></p>
+
+
       <div class="summary-total">
-        <span>Total</span>
-        <span id="summaryTotal">₱37,250</span>
+
+        <span>
+          Total
+        </span>
+
+        <span id="summaryTotal">
+          ₱850
+        </span>
+
       </div>
-      <button type="button" class="btn btn-coral form-submit" id="confirmPayBtn" style="margin-top:20px;">Confirm and pay</button>
-      <p class="summary-note">Demo checkout, no real payment is processed. Free cancellation up to 48 hours before check-in.</p>
+
+
+      <button
+        type="button"
+        class="btn btn-coral form-submit"
+        id="confirmPayBtn"
+        style="margin-top:20px;"
+      >
+        Confirm and pay
+      </button>
+
+
+      <p class="summary-note">
+        Demo checkout only. No real payment is processed.
+        Free cancellation up to 48 hours before check-in.
+      </p>
+
     </div>
+
   </div>
 
-  <div id="confirmationPanel" style="display:none;">
-    <div class="ticket" style="max-width:560px;margin:0 auto;">
+
+  <!-- CONFIRMATION -->
+
+  <div
+    id="confirmationPanel"
+    style="display:none;"
+  >
+
+    <div
+      class="ticket"
+      style="max-width:560px;margin:0 auto;"
+    >
+
       <div class="ticket-top">
-        <div class="eyebrow">Booking confirmed</div>
-        <div class="ticket-route">MNL <span class="arrow">→</span> <span id="confirmCode">PPS</span></div>
-        <h4 id="confirmDestination">El Nido, Palawan</h4>
-      </div>
-      <div class="ticket-perf"></div>
-      <div class="ticket-bottom" style="flex-direction:column;align-items:flex-start;gap:16px;">
-        <div style="width:100%;">
-          <div class="summary-meta" style="margin-top:0;">
-            <div><span>Reference</span><span id="confirmRef">KTG-000000</span></div>
-            <div><span>Check-in</span><span id="confirmCheckin">Sep 14, 2026</span></div>
-            <div><span>Check-out</span><span id="confirmCheckout">Sep 18, 2026</span></div>
-            <div><span>Travelers</span><span id="confirmTravelers">2</span></div>
-            <div><span>Total paid</span><span id="confirmTotal">₱37,250</span></div>
-          </div>
+
+        <div class="eyebrow">
+          Booking confirmed
         </div>
-        <a href="index.html" class="btn btn-primary" style="width:100%;justify-content:center;">Back to home</a>
+
+        <div class="ticket-route">
+
+          MNL
+
+          <span class="arrow">
+            →
+          </span>
+
+          <span id="confirmCode">
+            —
+          </span>
+
+        </div>
+
+        <h4 id="confirmDestination">
+          —
+        </h4>
+
       </div>
+
+
+      <div class="ticket-perf"></div>
+
+
+      <div
+        class="ticket-bottom"
+        style="
+          flex-direction:column;
+          align-items:flex-start;
+          gap:16px;
+        "
+      >
+
+        <div style="width:100%;">
+
+          <div
+            class="summary-meta"
+            style="margin-top:0;"
+          >
+
+            <div>
+              <span>Reference</span>
+              <span id="confirmRef">
+                PRG-000000
+              </span>
+            </div>
+
+            <div>
+              <span>Check-in</span>
+              <span id="confirmCheckin">
+                —
+              </span>
+            </div>
+
+            <div>
+              <span>Check-out</span>
+              <span id="confirmCheckout">
+                —
+              </span>
+            </div>
+
+            <div>
+              <span>Travelers</span>
+              <span id="confirmTravelers">
+                —
+              </span>
+            </div>
+
+            <div>
+              <span>Total</span>
+              <span id="confirmTotal">
+                ₱0
+              </span>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <a
+          href="authenticated.html"
+          class="btn btn-primary"
+          style="
+            width:100%;
+            justify-content:center;
+          "
+        >
+          Go to my account
+        </a>
+
+        <a
+          href="index.html"
+          class="btn btn-secondary"
+          style="
+            width:100%;
+            justify-content:center;
+          "
+        >
+          Back to home
+        </a>
+
+      </div>
+
     </div>
+
   </div>
+
 </section>
 
+
 <footer>
+
   <div class="footer-top">
+
     <div class="footer-brand">
-      <a href="index.html" class="logo">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M3 17c2 1.4 4 1.4 6 0s4-1.4 6 0 4 1.4 6 0" stroke="#FF6B4A" stroke-width="2" stroke-linecap="round"/><path d="M6 17V6l10 3-6 2.4V17" stroke="#0A2E2C" stroke-width="2" stroke-linejoin="round"/></svg>
+
+      <a
+        href="index.html"
+        class="logo"
+      >
+
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+        >
+
+          <path
+            d="M3 17c2 1.4 4 1.4 6 0s4-1.4 6 0 4 1.4 6 0"
+            stroke="#FF6B4A"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+
+          <path
+            d="M6 17V6l10 3-6 2.4V17"
+            stroke="#0A2E2C"
+            stroke-width="2"
+            stroke-linejoin="round"
+          />
+
+        </svg>
+
         PARAGOS
+
       </a>
-      <p>Local trip planning for the Philippine archipelago. Stays, island transfers, and rental cars in one place.</p>
+
+      <p>
+        Local trip planning for the Philippine archipelago.
+        Stays, island transfers, and rental cars in one place.
+      </p>
+
     </div>
+
+
     <div class="footer-col">
-      <h5>Company</h5>
+
+      <h5>
+        Company
+      </h5>
+
       <ul>
-        <li><a href="about.html">About</a></li>
-        <li><a href="support.html">Support</a></li>
-        <li><a href="#">Careers</a></li>
+
+        <li>
+          <a href="about.html">
+            About
+          </a>
+        </li>
+
+        <li>
+          <a href="support.html">
+            Support
+          </a>
+        </li>
+
+        <li>
+          <a href="#">
+            Careers
+          </a>
+        </li>
+
       </ul>
+
     </div>
+
+
     <div class="footer-col">
-      <h5>Explore</h5>
+
+      <h5>
+        Explore
+      </h5>
+
       <ul>
-        <li><a href="destinations.html">Destinations</a></li>
-        <li><a href="offers.html">Offers</a></li>
-        <li><a href="#">Rental cars</a></li>
+
+        <li>
+          <a href="destinations.html">
+            Destinations
+          </a>
+        </li>
+
+        <li>
+          <a href="offers.html">
+            Offers
+          </a>
+        </li>
+
+        <li>
+          <a href="booking.html">
+            Rental cars
+          </a>
+        </li>
+
       </ul>
+
     </div>
+
+
     <div class="footer-col">
-      <h5>Account</h5>
+
+      <h5>
+        Account
+      </h5>
+
       <ul>
-        <li><a href="signin.html">Sign in</a></li>
-        <li><a href="register.html">Register</a></li>
-        <li><a href="admin.html">Admin (demo)</a></li>
+
+        <li>
+          <a href="signin.html">
+            Sign in
+          </a>
+        </li>
+
+        <li>
+          <a href="register.html">
+            Register
+          </a>
+        </li>
+
+        <li>
+          <a href="admin.html">
+            Admin (demo)
+          </a>
+        </li>
+
       </ul>
+
     </div>
+
   </div>
+
+
   <div class="footer-bottom">
-    <span>© 2026 PARAGOS Travel. All rights reserved.</span>
+
+    <span>
+      © 2026 PARAGOS Travel. All rights reserved.
+    </span>
+
     <div class="socials">
-      <a href="#">Instagram</a>
-      <a href="#">Facebook</a>
-      <a href="#">TikTok</a>
+
+      <a href="#">
+        Instagram
+      </a>
+
+      <a href="#">
+        Facebook
+      </a>
+
+      <a href="#">
+        TikTok
+      </a>
+
     </div>
+
   </div>
+
 </footer>
 
+
+<!-- CENTRALIZED DATA -->
+
+<script src="assets/data/destinations.js"></script>
+<script src="assets/data/stays.js"></script>
+<script src="assets/data/vehicles.js"></script>
+<script src="assets/data/offers.js"></script>
+<script src="assets/data/faqs.js"></script>
+<script src="assets/data/policies.js"></script>
+
 <script src="assets/main.js"></script>
+
+
+<script>
+
+document.addEventListener(
+  'DOMContentLoaded',
+  () => {
+
+    /* =========================================
+       AUTH
+    ========================================= */
+
+    const session =
+      typeof PARAGOSAuth !== 'undefined' &&
+      typeof PARAGOSAuth.getSession === 'function'
+        ? PARAGOSAuth.getSession()
+        : null;
+
+    if (!session) {
+      return;
+    }
+
+
+    /* =========================================
+       NAVIGATION
+    ========================================= */
+
+    const navUser =
+      document.getElementById(
+        'navUser'
+      );
+
+    if (navUser) {
+      navUser.textContent =
+        session.name ||
+        session.email ||
+        'Account';
+    }
+
+
+    const logoutBtn =
+      document.getElementById(
+        'logoutBtn'
+      );
+
+    if (logoutBtn) {
+
+      logoutBtn.addEventListener(
+        'click',
+        event => {
+
+          event.preventDefault();
+
+          if (
+            typeof PARAGOSAuth !== 'undefined' &&
+            typeof PARAGOSAuth.clearSession === 'function'
+          ) {
+
+            PARAGOSAuth.clearSession();
+
+          }
+
+          window.location.href =
+            'index.html';
+
+        }
+      );
+
+    }
+
+
+    /* =========================================
+       ELEMENTS
+    ========================================= */
+
+    const destinationSelect =
+      document.getElementById(
+        'tripDestination'
+      );
+
+    const travelersSelect =
+      document.getElementById(
+        'tripTravelers'
+      );
+
+    const checkinInput =
+      document.getElementById(
+        'tripCheckin'
+      );
+
+    const checkoutInput =
+      document.getElementById(
+        'tripCheckout'
+      );
+
+    const stayGrid =
+      document.getElementById(
+        'stayGrid'
+      );
+
+    const carGrid =
+      document.getElementById(
+        'carGrid'
+      );
+
+    const summaryCode =
+      document.getElementById(
+        'summaryCode'
+      );
+
+    const metaDestination =
+      document.getElementById(
+        'metaDestination'
+      );
+
+    const metaCheckin =
+      document.getElementById(
+        'metaCheckin'
+      );
+
+    const metaCheckout =
+      document.getElementById(
+        'metaCheckout'
+      );
+
+    const metaTravelers =
+      document.getElementById(
+        'metaTravelers'
+      );
+
+    const rowStayLabel =
+      document.getElementById(
+        'rowStayLabel'
+      );
+
+    const rowStayPrice =
+      document.getElementById(
+        'rowStayPrice'
+      );
+
+    const rowCar =
+      document.getElementById(
+        'rowCar'
+      );
+
+    const rowCarLabel =
+      document.getElementById(
+        'rowCarLabel'
+      );
+
+    const rowCarPrice =
+      document.getElementById(
+        'rowCarPrice'
+      );
+
+    const rowServiceFee =
+      document.getElementById(
+        'rowServiceFee'
+      );
+
+    const rowDiscount =
+      document.getElementById(
+        'rowDiscount'
+      );
+
+    const rowDiscountLabel =
+      document.getElementById(
+        'rowDiscountLabel'
+      );
+
+    const rowDiscountAmount =
+      document.getElementById(
+        'rowDiscountAmount'
+      );
+
+    const summaryTotal =
+      document.getElementById(
+        'summaryTotal'
+      );
+
+    const promoInput =
+      document.getElementById(
+        'promoInput'
+      );
+
+    const promoApplyBtn =
+      document.getElementById(
+        'promoApplyBtn'
+      );
+
+    const promoMsg =
+      document.getElementById(
+        'promoMsg'
+      );
+
+    const confirmPayBtn =
+      document.getElementById(
+        'confirmPayBtn'
+      );
+
+    const paymentError =
+      document.getElementById(
+        'paymentError'
+      );
+
+    const paymentSuccess =
+      document.getElementById(
+        'paymentSuccess'
+      );
+
+    const tripError =
+      document.getElementById(
+        'tripError'
+      );
+
+    const bookingLayout =
+      document.getElementById(
+        'bookingLayout'
+      );
+
+    const confirmationPanel =
+      document.getElementById(
+        'confirmationPanel'
+      );
+
+
+    /* =========================================
+       DATA
+    ========================================= */
+
+    const data =
+      window.PARAGOS?.data || {};
+
+    const destinations =
+      Array.isArray(data.destinations)
+        ? data.destinations
+        : [];
+
+    const stays =
+      Array.isArray(data.stays)
+        ? data.stays
+        : [];
+
+    const vehicles =
+      Array.isArray(data.vehicles)
+        ? data.vehicles
+        : [];
+
+    const offers =
+      Array.isArray(data.offers)
+        ? data.offers
+        : [];
+
+
+    /* =========================================
+       GENERIC HELPERS
+    ========================================= */
+
+    function firstValue(
+      object,
+      keys,
+      fallback = ''
+    ) {
+
+      if (!object) {
+        return fallback;
+      }
+
+      for (
+        const key of keys
+      ) {
+
+        if (
+          object[key] !== undefined &&
+          object[key] !== null &&
+          object[key] !== ''
+        ) {
+
+          return object[key];
+
+        }
+
+      }
+
+      return fallback;
+    }
+
+
+    function escapeHTML(
+      value
+    ) {
+
+      return String(
+        value ?? ''
+      )
+        .replace(
+          /&/g,
+          '&amp;'
+        )
+        .replace(
+          /</g,
+          '&lt;'
+        )
+        .replace(
+          />/g,
+          '&gt;'
+        )
+        .replace(
+          /"/g,
+          '&quot;'
+        )
+        .replace(
+          /'/g,
+          '&#039;'
+        );
+    }
+
+
+    function normalize(
+      value
+    ) {
+
+      return String(
+        value ?? ''
+      )
+        .trim()
+        .toLowerCase();
+    }
+
+
+    function money(
+      value
+    ) {
+
+      if (
+        window.PARAGOS &&
+        typeof window.PARAGOS.formatPHP ===
+          'function'
+      ) {
+
+        return window.PARAGOS.formatPHP(
+          Number(value) || 0
+        );
+
+      }
+
+      return (
+        '₱' +
+        (
+          Number(value) || 0
+        ).toLocaleString(
+          'en-PH'
+        )
+      );
+    }
+
+
+    /* =========================================
+       DESTINATION HELPERS
+    ========================================= */
+
+    function destinationId(
+      destination
+    ) {
+
+      return firstValue(
+        destination,
+        [
+          'id',
+          'code',
+          'slug',
+          'name'
+        ]
+      );
+    }
+
+
+    function destinationName(
+      destination
+    ) {
+
+      return firstValue(
+        destination,
+        [
+          'name',
+          'title',
+          'destination'
+        ],
+        'Destination'
+      );
+    }
+
+
+    function destinationCode(
+      destination
+    ) {
+
+      return firstValue(
+        destination,
+        [
+          'code',
+          'airportCode',
+          'iata'
+        ]
+      );
+    }
+
+
+    function getDestinationById(
+      id
+    ) {
+
+      const target =
+        normalize(id);
+
+      if (!target) {
+        return null;
+      }
+
+      return (
+        destinations.find(
+          destination => {
+
+            return [
+              destinationId(
+                destination
+              ),
+              destinationCode(
+                destination
+              ),
+              destinationName(
+                destination
+              )
+            ]
+              .some(
+                value =>
+                  normalize(value) ===
+                  target
+              );
+
+          }
+        ) ||
+        null
+      );
+    }
+
+
+    /* =========================================
+       STAY HELPERS
+    ========================================= */
+
+    function stayId(
+      stay
+    ) {
+
+      return firstValue(
+        stay,
+        [
+          'id',
+          'slug',
+          'name'
+        ]
+      );
+    }
+
+
+    function stayName(
+      stay
+    ) {
+
+      return firstValue(
+        stay,
+        [
+          'name',
+          'title'
+        ],
+        'Stay'
+      );
+    }
+
+
+    function stayPrice(
+      stay
+    ) {
+
+      return Number(
+        firstValue(
+          stay,
+          [
+            'pricePerNight',
+            'price',
+            'price_per_night',
+            'nightlyRate',
+            'rate'
+          ],
+          0
+        )
+      ) || 0;
+    }
+
+
+    function stayImage(
+      stay
+    ) {
+
+      return firstValue(
+        stay,
+        [
+          'image',
+          'imageUrl',
+          'photo'
+        ],
+        'https://picsum.photos/seed/paragosstay/400/240'
+      );
+    }
+
+
+    function getStayById(
+      id
+    ) {
+
+      const target =
+        normalize(id);
+
+      return (
+        stays.find(
+          stay =>
+            normalize(
+              stayId(stay)
+            ) === target
+        ) ||
+        null
+      );
+    }
+
+
+    /* =========================================
+       VEHICLE HELPERS
+    ========================================= */
+
+    function vehicleId(
+      vehicle
+    ) {
+
+      return firstValue(
+        vehicle,
+        [
+          'id',
+          'slug',
+          'name'
+        ]
+      );
+    }
+
+
+    function vehicleName(
+      vehicle
+    ) {
+
+      return firstValue(
+        vehicle,
+        [
+          'name',
+          'title'
+        ],
+        'Rental car'
+      );
+    }
+
+
+    function vehiclePrice(
+      vehicle
+    ) {
+
+      return Number(
+        firstValue(
+          vehicle,
+          [
+            'pricePerDay',
+            'price',
+            'price_per_day',
+            'dailyRate',
+            'rate'
+          ],
+          0
+        )
+      ) || 0;
+    }
+
+
+    function vehicleImage(
+      vehicle
+    ) {
+
+      return firstValue(
+        vehicle,
+        [
+          'image',
+          'imageUrl',
+          'photo'
+        ],
+        ''
+      );
+    }
+
+
+    function getVehicleById(
+      id
+    ) {
+
+      const target =
+        normalize(id);
+
+      return (
+        vehicles.find(
+          vehicle =>
+            normalize(
+              vehicleId(vehicle)
+            ) === target
+        ) ||
+        null
+      );
+    }
+
+
+    function isNoRental(
+      vehicle
+    ) {
+
+      const name =
+        normalize(
+          vehicleName(vehicle)
+        );
+
+      const type =
+        normalize(
+          firstValue(
+            vehicle,
+            [
+              'type',
+              'category'
+            ]
+          )
+        );
+
+      return (
+        Number(
+          vehiclePrice(vehicle)
+        ) <= 0 ||
+        name === 'none' ||
+        name === 'no rental' ||
+        name.includes(
+          'no rental'
+        ) ||
+        type === 'none'
+      );
+    }
+
+
+    /* =========================================
+       OFFER HELPERS
+    ========================================= */
+
+    function offerId(
+      offer
+    ) {
+
+      return firstValue(
+        offer,
+        [
+          'id',
+          'offerId',
+          'slug',
+          'code'
+        ]
+      );
+    }
+
+
+    function offerCode(
+      offer
+    ) {
+
+      return firstValue(
+        offer,
+        [
+          'promoCode',
+          'code',
+          'couponCode'
+        ]
+      );
+    }
+
+
+    function offerDiscount(
+      offer
+    ) {
+
+      const raw =
+        firstValue(
+          offer,
+          [
+            'discountPercent',
+            'discount',
+            'percent',
+            'percentage',
+            'rate'
+          ],
+          0
+        );
+
+      const parsed =
+        Number(
+          String(raw)
+            .replace(
+              '%',
+              ''
+            )
+            .trim()
+        );
+
+      return Number.isFinite(
+        parsed
+      )
+        ? parsed
+        : 0;
+    }
+
+
+    function getOfferByCode(
+      code
+    ) {
+
+      const target =
+        normalize(code);
+
+      if (!target) {
+        return null;
+      }
+
+      return (
+        offers.find(
+          offer =>
+            normalize(
+              offerCode(offer)
+            ) === target ||
+            normalize(
+              offerId(offer)
+            ) === target
+        ) ||
+        null
+      );
+    }
+
+
+    function getOfferDestinationId(
+      offer
+    ) {
+
+      return firstValue(
+        offer,
+        [
+          'destinationId',
+          'destination',
+          'destinationCode',
+          'toCode'
+        ]
+      );
+    }
+
+
+    /* =========================================
+       URL PARAMETERS
+    ========================================= */
+
+    const params =
+      new URLSearchParams(
+        window.location.search
+      );
+
+    const requestedDestination =
+      params.get(
+        'destination'
+      );
+
+    const requestedCheckin =
+      params.get(
+        'checkin'
+      );
+
+    const requestedCheckout =
+      params.get(
+        'checkout'
+      );
+
+    const requestedTravelers =
+      params.get(
+        'travelers'
+      );
+
+    const requestedOffer =
+      params.get(
+        'offer'
+      );
+
+
+    /* =========================================
+       DESTINATION OPTIONS
+    ========================================= */
+
+    if (
+      destinations.length
+    ) {
+
+      destinationSelect.innerHTML =
+        destinations
+          .map(
+            destination => {
+
+              const id =
+                destinationId(
+                  destination
+                );
+
+              const name =
+                destinationName(
+                  destination
+                );
+
+              const code =
+                destinationCode(
+                  destination
+                );
+
+              return `
+                <option value="${escapeHTML(id)}">
+                  ${escapeHTML(name)}
+                  ${
+                    code
+                      ? ` (${escapeHTML(code)})`
+                      : ''
+                  }
+                </option>
+              `;
+            }
+          )
+          .join('');
+
+    } else {
+
+      destinationSelect.innerHTML = `
+        <option value="">
+          No destinations available
+        </option>
+      `;
+
+    }
+
+
+    /* =========================================
+       APPLY URL DESTINATION
+    ========================================= */
+
+    if (
+      requestedDestination
+    ) {
+
+      const destination =
+        getDestinationById(
+          requestedDestination
+        );
+
+      if (destination) {
+
+        destinationSelect.value =
+          destinationId(
+            destination
+          );
+
+      }
+
+    }
+
+
+    /* =========================================
+       DATE SETUP
+    ========================================= */
+
+    const today =
+      new Date();
+
+    const todayString =
+      [
+        today.getFullYear(),
+        String(
+          today.getMonth() + 1
+        ).padStart(
+          2,
+          '0'
+        ),
+        String(
+          today.getDate()
+        ).padStart(
+          2,
+          '0'
+        )
+      ].join('-');
+
+
+    checkinInput.min =
+      todayString;
+
+    checkoutInput.min =
+      todayString;
+
+
+    function validDateString(
+      value
+    ) {
+
+      return (
+        /^\d{4}-\d{2}-\d{2}$/
+          .test(value || '')
+      );
+
+    }
+
+
+    if (
+      validDateString(
+        requestedCheckin
+      )
+    ) {
+
+      checkinInput.value =
+        requestedCheckin;
+
+    }
+
+
+    if (
+      validDateString(
+        requestedCheckout
+      )
+    ) {
+
+      checkoutInput.value =
+        requestedCheckout;
+
+    }
+
+
+    if (
+      !checkinInput.value
+    ) {
+
+      const defaultCheckin =
+        new Date();
+
+      defaultCheckin.setDate(
+        defaultCheckin.getDate() + 1
+      );
+
+      checkinInput.value =
+        [
+          defaultCheckin.getFullYear(),
+          String(
+            defaultCheckin.getMonth() + 1
+          ).padStart(
+            2,
+            '0'
+          ),
+          String(
+            defaultCheckin.getDate()
+          ).padStart(
+            2,
+            '0'
+          )
+        ].join('-');
+
+    }
+
+
+    if (
+      !checkoutInput.value
+    ) {
+
+      const defaultCheckout =
+        new Date();
+
+      defaultCheckout.setDate(
+        defaultCheckout.getDate() + 5
+      );
+
+      checkoutInput.value =
+        [
+          defaultCheckout.getFullYear(),
+          String(
+            defaultCheckout.getMonth() + 1
+          ).padStart(
+            2,
+            '0'
+          ),
+          String(
+            defaultCheckout.getDate()
+          ).padStart(
+            2,
+            '0'
+          )
+        ].join('-');
+
+    }
+
+
+    if (
+      requestedTravelers &&
+      [
+        ...travelersSelect.options
+      ].some(
+        option =>
+          option.value ===
+          requestedTravelers
+      )
+    ) {
+
+      travelersSelect.value =
+        requestedTravelers;
+
+    }
+
+
+    checkoutInput.min =
+      checkinInput.value ||
+      todayString;
+
+
+    /* =========================================
+       RENDER STAYS
+    ========================================= */
+
+    function renderStays() {
+
+      if (
+        !stays.length
+      ) {
+
+        stayGrid.innerHTML = `
+          <div class="booking-empty">
+            No stays are currently available.
+          </div>
+        `;
+
+        return;
+
+      }
+
+
+      const destination =
+        getDestinationById(
+          destinationSelect.value
+        );
+
+
+      const destinationIdentifiers =
+        destination
+          ? [
+              destinationId(
+                destination
+              ),
+              destinationCode(
+                destination
+              ),
+              destinationName(
+                destination
+              )
+            ]
+              .filter(Boolean)
+              .map(normalize)
+          
+          : [];
+
+
+      const compatibleStays =
+        stays.filter(
+          stay => {
+
+            const stayDestination =
+              firstValue(
+                stay,
+                [
+                  'destinationId',
+                  'destination',
+                  'destinationCode',
+                  'codeDestination'
+                ],
+                ''
+              );
+
+            if (
+              !stayDestination
+            ) {
+              return true;
+            }
+
+            return destinationIdentifiers
+              .includes(
+                normalize(
+                  stayDestination
+                )
+              );
+
+          }
+        );
+
+
+      const displayStays =
+        compatibleStays.length
+          ? compatibleStays
+          : stays;
+
+
+      stayGrid.innerHTML =
+        displayStays
+          .map(
+            (
+              stay,
+              index
+            ) => {
+
+              const id =
+                stayId(stay);
+
+              const name =
+                stayName(stay);
+
+              const price =
+                stayPrice(stay);
+
+              const image =
+                stayImage(stay);
+
+              return `
+                <div
+                  class="select-card ${
+                    index === 0
+                      ? 'selected'
+                      : ''
+                  }"
+                  data-id="${escapeHTML(id)}"
+                  data-name="${escapeHTML(name)}"
+                  data-price="${price}"
+                  role="button"
+                  tabindex="0"
+                  aria-selected="${
+                    index === 0
+                      ? 'true'
+                      : 'false'
+                  }"
+                >
+
+                  <div class="radio-dot"></div>
+
+                  <img
+                    src="${escapeHTML(image)}"
+                    alt="${escapeHTML(name)}"
+                    loading="lazy"
+                  >
+
+                  <div class="select-card-body">
+
+                    <h4>
+                      ${escapeHTML(name)}
+                    </h4>
+
+                    <span>
+                      ${money(price)} / night
+                    </span>
+
+                  </div>
+
+                </div>
+              `;
+
+            }
+          )
+          .join('');
+
+    }
+
+
+    /* =========================================
+       RENDER VEHICLES
+    ========================================= */
+
+    function renderVehicles() {
+
+      if (
+        !vehicles.length
+      ) {
+
+        carGrid.innerHTML = `
+          <div class="booking-empty">
+            No rental vehicles are currently available.
+          </div>
+        `;
+
+        return;
+
+      }
+
+
+      carGrid.innerHTML =
+        vehicles
+          .map(
+            (
+              vehicle,
+              index
+            ) => {
+
+              const id =
+                vehicleId(
+                  vehicle
+                );
+
+              const name =
+                vehicleName(
+                  vehicle
+                );
+
+              const price =
+                vehiclePrice(
+                  vehicle
+                );
+
+              const image =
+                vehicleImage(
+                  vehicle
+                );
+
+              const noRental =
+                isNoRental(
+                  vehicle
+                );
+
+
+              return `
+                <div
+                  class="select-card ${
+                    index === 0
+                      ? 'selected'
+                      : ''
+                  } ${
+                    !image
+                      ? 'select-card-noimg'
+                      : ''
+                  }"
+                  data-id="${escapeHTML(id)}"
+                  data-name="${escapeHTML(name)}"
+                  data-price="${price}"
+                  role="button"
+                  tabindex="0"
+                  aria-selected="${
+                    index === 0
+                      ? 'true'
+                      : 'false'
+                  }"
+                >
+
+                  <div class="radio-dot"></div>
+
+                  ${
+                    image
+                      ? `
+                        <img
+                          src="${escapeHTML(image)}"
+                          alt="${escapeHTML(name)}"
+                          loading="lazy"
+                        >
+                      `
+                      : ''
+                  }
+
+                  <div
+                    class="select-card-body"
+                    ${
+                      !image
+                        ? 'style="padding:0;"'
+                        : ''
+                    }
+                  >
+
+                    <h4>
+                      ${escapeHTML(name)}
+                    </h4>
+
+                    <span>
+                      ${
+                        noRental
+                          ? 'Skip this step'
+                          : `${money(price)} / day`
+                      }
+                    </span>
+
+                  </div>
+
+                </div>
+              `;
+
+            }
+          )
+          .join('');
+
+    }
+
+
+    renderStays();
+    renderVehicles();
+
+
+    /* =========================================
+       CARD SELECTION
+    ========================================= */
+
+    function selectCard(
+      grid,
+      card
+    ) {
+
+      grid
+        .querySelectorAll(
+          '.select-card'
+        )
+        .forEach(
+          item => {
+
+            item.classList.remove(
+              'selected'
+            );
+
+            item.setAttribute(
+              'aria-selected',
+              'false'
+            );
+
+          }
+        );
+
+
+      card.classList.add(
+        'selected'
+      );
+
+      card.setAttribute(
+        'aria-selected',
+        'true'
+      );
+
+
+      updateSummary();
+
+    }
+
+
+    function setupSelectionGrid(
+      grid
+    ) {
+
+      grid.addEventListener(
+        'click',
+        event => {
+
+          const card =
+            event.target.closest(
+              '.select-card'
+            );
+
+          if (!card) {
+            return;
+          }
+
+          selectCard(
+            grid,
+            card
+          );
+
+        }
+      );
+
+
+      grid.addEventListener(
+        'keydown',
+        event => {
+
+          if (
+            event.key !== 'Enter' &&
+            event.key !== ' '
+          ) {
+            return;
+          }
+
+          const card =
+            event.target.closest(
+              '.select-card'
+            );
+
+          if (!card) {
+            return;
+          }
+
+          event.preventDefault();
+
+          selectCard(
+            grid,
+            card
+          );
+
+        }
+      );
+
+    }
+
+
+    setupSelectionGrid(
+      stayGrid
+    );
+
+    setupSelectionGrid(
+      carGrid
+    );
+
+
+    /* =========================================
+       PROMO
+    ========================================= */
+
+    let appliedPromo =
+      null;
+
+
+    function setPromoMessage(
+      message,
+      success = false
+    ) {
+
+      promoMsg.textContent =
+        message;
+
+      promoMsg.style.display =
+        '';
+
+      promoMsg.classList.toggle(
+        'promo-success',
+        success
+      );
+
+      promoMsg.classList.toggle(
+        'promo-error',
+        !success
+      );
+
+    }
+
+
+    function applyPromo() {
+
+      const code =
+        promoInput.value
+          .trim()
+          .toUpperCase();
+
+
+      if (!code) {
+
+        appliedPromo =
+          null;
+
+        setPromoMessage(
+          'Enter a promo code.'
+        );
+
+        updateSummary();
+
+        return;
+
+      }
+
+
+      const offer =
+        getOfferByCode(
+          code
+        );
+
+
+      if (!offer) {
+
+        appliedPromo =
+          null;
+
+        setPromoMessage(
+          'Promo code not found.'
+        );
+
+        updateSummary();
+
+        return;
+
+      }
+
+
+      const discount =
+        offerDiscount(
+          offer
+        );
+
+
+      if (
+        discount <= 0
+      ) {
+
+        appliedPromo =
+          null;
+
+        setPromoMessage(
+          'This offer does not contain a valid discount.'
+        );
+
+        updateSummary();
+
+        return;
+
+      }
+
+
+      const offerDestination =
+        getOfferDestinationId(
+          offer
+        );
+
+
+      if (
+        offerDestination
+      ) {
+
+        const selectedDestination =
+          getDestinationById(
+            destinationSelect.value
+          );
+
+        const destinationMatches =
+          selectedDestination &&
+          [
+            destinationId(
+              selectedDestination
+            ),
+            destinationCode(
+              selectedDestination
+            ),
+            destinationName(
+              selectedDestination
+            )
+          ]
+            .filter(Boolean)
+            .some(
+              value =>
+                normalize(value) ===
+                normalize(
+                  offerDestination
+                )
+            );
+
+
+        if (
+          !destinationMatches
+        ) {
+
+          appliedPromo =
+            null;
+
+          setPromoMessage(
+            'This offer is not available for the selected destination.'
+          );
+
+          updateSummary();
+
+          return;
+
+        }
+
+      }
+
+
+      appliedPromo =
+        offerCode(
+          offer
+        ) ||
+        code;
+
+
+      setPromoMessage(
+        `${appliedPromo} applied successfully.`,
+        true
+      );
+
+
+      updateSummary();
+
+    }
+
+
+    promoApplyBtn.addEventListener(
+      'click',
+      applyPromo
+    );
+
+
+    promoInput.addEventListener(
+      'keydown',
+      event => {
+
+        if (
+          event.key === 'Enter'
+        ) {
+
+          event.preventDefault();
+
+          applyPromo();
+
+        }
+
+      }
+    );
+
+
+    /* =========================================
+       SUMMARY
+    ========================================= */
+
+    function updateSummary() {
+
+      const destination =
+        getDestinationById(
+          destinationSelect.value
+        );
+
+
+      const selectedStay =
+        stayGrid.querySelector(
+          '.select-card.selected'
+        );
+
+
+      const selectedCar =
+        carGrid.querySelector(
+          '.select-card.selected'
+        );
+
+
+      const checkin =
+        checkinInput.value;
+
+      const checkout =
+        checkoutInput.value;
+
+
+      const nights =
+        window.PARAGOS &&
+        typeof window.PARAGOS.getNights ===
+          'function'
+          ? window.PARAGOS.getNights(
+              checkin,
+              checkout
+            )
+          : 0;
+
+
+      const travelers =
+        travelersSelect.value ||
+        '2';
+
+
+      if (
+        destination
+      ) {
+
+        const code =
+          destinationCode(
+            destination
+          );
+
+        summaryCode.textContent =
+          code || '—';
+
+        metaDestination.textContent =
+          destinationName(
+            destination
+          );
+
+      } else {
+
+        summaryCode.textContent =
+          '—';
+
+        metaDestination.textContent =
+          '—';
+
+      }
+
+
+      metaCheckin.textContent =
+        formatDate(
+          checkin
+        );
+
+      metaCheckout.textContent =
+        formatDate(
+          checkout
+        );
+
+      metaTravelers.textContent =
+        travelers;
+
+
+      /* STAY */
+
+      const selectedStayPrice =
+        selectedStay
+          ? Number(
+              selectedStay.dataset.price
+            ) || 0
+          : 0;
+
+
+      const selectedStayName =
+        selectedStay
+          ? selectedStay.dataset.name
+          : '';
+
+
+      const stayTotal =
+        selectedStayPrice *
+        nights;
+
+
+      rowStayLabel.textContent =
+        selectedStayName
+          ? `${selectedStayName}, ${nights} ${
+              nights === 1
+                ? 'night'
+                : 'nights'
+            }`
+          : 'No stay selected';
+
+
+      rowStayPrice.textContent =
+        money(
+          stayTotal
+        );
+
+
+      /* VEHICLE */
+
+      const selectedVehiclePrice =
+        selectedCar
+          ? Number(
+              selectedCar.dataset.price
+            ) || 0
+          : 0;
+
+
+      const selectedVehicleName =
+        selectedCar
+          ? selectedCar.dataset.name
+          : '';
+
+
+      /*
+        Rental vehicles are priced per day.
+        For this booking flow, rental days
+        follow the number of nights.
+      */
+
+      const vehicleTotal =
+        selectedVehiclePrice *
+        nights;
+
+
+      if (
+        !selectedCar ||
+        selectedVehiclePrice <= 0
+      ) {
+
+        rowCar.style.display =
+          'none';
+
+      } else {
+
+        rowCar.style.display =
+          '';
+
+        rowCarLabel.textContent =
+          `${selectedVehicleName} rental, ${nights} ${
+            nights === 1
+              ? 'day'
+              : 'days'
+          }`;
+
+        rowCarPrice.textContent =
+          money(
+            vehicleTotal
+          );
+
+      }
+
+
+      /* SERVICE FEE */
+
+      const serviceFee =
+        850;
+
+      rowServiceFee.textContent =
+        money(
+          serviceFee
+        );
+
+
+      const subtotal =
+        stayTotal +
+        vehicleTotal +
+        serviceFee;
+
+
+      /* PROMO */
+
+      let discount =
+        0;
+
+      let activeOffer =
+        null;
+
+
+      if (
+        appliedPromo
+      ) {
+
+        activeOffer =
+          getOfferByCode(
+            appliedPromo
+          );
+
+
+        if (
+          activeOffer
+        ) {
+
+          const percent =
+            offerDiscount(
+              activeOffer
+            );
+
+          discount =
+            Math.round(
+              subtotal *
+              (
+                percent /
+                100
+              )
+            );
+
+        }
+
+      }
+
+
+      if (
+        discount > 0
+      ) {
+
+        rowDiscount.style.display =
+          '';
+
+        rowDiscountLabel.textContent =
+          `Promo (${appliedPromo})`;
+
+        rowDiscountAmount.textContent =
+          `−${money(discount)}`;
+
+      } else {
+
+        rowDiscount.style.display =
+          'none';
+
+      }
+
+
+      const total =
+        Math.max(
+          0,
+          subtotal -
+          discount
+        );
+
+
+      summaryTotal.textContent =
+        money(
+          total
+        );
+
+
+      return {
+
+        destination,
+
+        selectedStay,
+
+        selectedCar,
+
+        checkin,
+
+        checkout,
+
+        nights,
+
+        travelers,
+
+        stayTotal,
+
+        vehicleTotal,
+
+        serviceFee,
+
+        subtotal,
+
+        discount,
+
+        total,
+
+        promoCode:
+          appliedPromo ||
+          null,
+
+        offer:
+          activeOffer ||
+          null
+
+      };
+
+    }
+
+
+    /* =========================================
+       DATE FORMATTING
+    ========================================= */
+
+    function formatDate(
+      value
+    ) {
+
+      if (!value) {
+        return '—';
+      }
+
+
+      if (
+        !/^\d{4}-\d{2}-\d{2}$/
+          .test(value)
+      ) {
+        return '—';
+      }
+
+
+      const parts =
+        value
+          .split('-')
+          .map(Number);
+
+
+      const date =
+        new Date(
+          parts[0],
+          parts[1] - 1,
+          parts[2]
+        );
+
+
+      if (
+        Number.isNaN(
+          date.getTime()
+        )
+      ) {
+        return '—';
+      }
+
+
+      return date.toLocaleDateString(
+        'en-PH',
+        {
+          month: 'short',
+          day: 'numeric',
+          year: 'numeric'
+        }
+      );
+
+    }
+
+
+    /* =========================================
+       DESTINATION CHANGE
+    ========================================= */
+
+    destinationSelect.addEventListener(
+      'change',
+      () => {
+
+        renderStays();
+
+        /*
+          A destination change can make a previously
+          applied destination-specific promo invalid.
+        */
+
+        if (
+          appliedPromo
+        ) {
+
+          const offer =
+            getOfferByCode(
+              appliedPromo
+            );
+
+          const offerDestination =
+            offer
+              ? getOfferDestinationId(
+                  offer
+                )
+              : '';
+
+
+          if (
+            offerDestination
+          ) {
+
+            const destination =
+              getDestinationById(
+                destinationSelect.value
+              );
+
+            const matches =
+              destination &&
+              [
+                destinationId(
+                  destination
+                ),
+                destinationCode(
+                  destination
+                ),
+                destinationName(
+                  destination
+                )
+              ]
+                .filter(Boolean)
+                .some(
+                  value =>
+                    normalize(value) ===
+                    normalize(
+                      offerDestination
+                    )
+                );
+
+
+            if (!matches) {
+
+              appliedPromo =
+                null;
+
+              setPromoMessage(
+                'The selected promo is not available for this destination.'
+              );
+
+            }
+
+          }
+
+        }
+
+
+        updateSummary();
+
+      }
+    );
+
+
+    /* =========================================
+       DATE EVENTS
+    ========================================= */
+
+    checkinInput.addEventListener(
+      'change',
+      () => {
+
+        checkoutInput.min =
+          checkinInput.value ||
+          todayString;
+
+        updateSummary();
+
+      }
+    );
+
+
+    checkoutInput.addEventListener(
+      'change',
+      updateSummary
+    );
+
+
+    travelersSelect.addEventListener(
+      'change',
+      updateSummary
+    );
+
+
+    /* =========================================
+       VALIDATION
+    ========================================= */
+
+    function showTripError(
+      message
+    ) {
+
+      tripError.textContent =
+        message;
+
+      tripError.style.display =
+        '';
+
+    }
+
+
+    function hideTripError() {
+
+      tripError.style.display =
+        'none';
+
+    }
+
+
+    function validateTrip(
+      bookingData
+    ) {
+
+      hideTripError();
+
+
+      if (
+        !bookingData.destination
+      ) {
+
+        showTripError(
+          'Please select a destination.'
+        );
+
+        return false;
+
+      }
+
+
+      if (
+        !bookingData.checkin
+      ) {
+
+        showTripError(
+          'Please select a check-in date.'
+        );
+
+        return false;
+
+      }
+
+
+      if (
+        !bookingData.checkout
+      ) {
+
+        showTripError(
+          'Please select a check-out date.'
+        );
+
+        return false;
+
+      }
+
+
+      if (
+        !validDateString(
+          bookingData.checkin
+        ) ||
+        !validDateString(
+          bookingData.checkout
+        )
+      ) {
+
+        showTripError(
+          'Please enter valid travel dates.'
+        );
+
+        return false;
+
+      }
+
+
+      if (
+        bookingData.checkin <
+        todayString
+      ) {
+
+        showTripError(
+          'Check-in cannot be before today.'
+        );
+
+        return false;
+
+      }
+
+
+      if (
+        bookingData.nights <= 0
+      ) {
+
+        showTripError(
+          'Check-out must be after check-in.'
+        );
+
+        return false;
+
+      }
+
+
+      if (
+        bookingData.nights > 365
+      ) {
+
+        showTripError(
+          'Please choose a trip shorter than one year.'
+        );
+
+        return false;
+
+      }
+
+
+      if (
+        !bookingData.selectedStay
+      ) {
+
+        showTripError(
+          'Please select a stay.'
+        );
+
+        return false;
+
+      }
+
+
+      return true;
+
+    }
+
+
+    /* =========================================
+       PAYMENT VALIDATION
+    ========================================= */
+
+    function showPaymentError(
+      message
+    ) {
+
+      paymentError.textContent =
+        message;
+
+      paymentError.style.display =
+        '';
+
+    }
+
+
+    function hidePaymentMessages() {
+
+      paymentError.style.display =
+        'none';
+
+      paymentSuccess.style.display =
+        'none';
+
+    }
+
+
+    function validatePayment() {
+
+      hidePaymentMessages();
+
+
+      const paymentName =
+        document.getElementById(
+          'paymentName'
+        );
+
+
+      const paymentCard =
+        document.getElementById(
+          'paymentCard'
+        );
+
+
+      const paymentExpiry =
+        document.getElementById(
+          'paymentExpiry'
+        );
+
+
+      const paymentCVV =
+        document.getElementById(
+          'paymentCVV'
+        );
+
+
+      const paymentAddress =
+        document.getElementById(
+          'paymentAddress'
+        );
+
+
+      const name =
+        paymentName.value.trim();
+
+
+      const card =
+        paymentCard.value
+          .replace(
+            /\s/g,
+            ''
+          );
+
+
+      const expiry =
+        paymentExpiry.value.trim();
+
+
+      const cvv =
+        paymentCVV.value.trim();
+
+
+      const address =
+        paymentAddress.value.trim();
+
+
+      if (!name) {
+
+        showPaymentError(
+          'Please enter the name on the card.'
+        );
+
+        return false;
+
+      }
+
+
+      if (
+        !/^\d{13,19}$/.test(
+          card
+        )
+      ) {
+
+        showPaymentError(
+          'Please enter a valid demo card number.'
+        );
+
+        return false;
+
+      }
+
+
+      if (
+        !/^(0[1-9]|1[0-2])\s*\/?\s*\d{2}$/
+          .test(expiry)
+      ) {
+
+        showPaymentError(
+          'Please enter the expiry date as MM / YY.'
+        );
+
+        return false;
+
+      }
+
+
+      if (
+        !/^\d{3,4}$/.test(
+          cvv
+        )
+      ) {
+
+        showPaymentError(
+          'Please enter a valid CVV.'
+        );
+
+        return false;
+
+      }
+
+
+      if (!address) {
+
+        showPaymentError(
+          'Please enter the billing address.'
+        );
+
+        return false;
+
+      }
+
+
+      return true;
+
+    }
+
+
+    /* =========================================
+       CARD FORMATTING
+    ========================================= */
+
+    const paymentCard =
+      document.getElementById(
+        'paymentCard'
+      );
+
+
+    paymentCard.addEventListener(
+      'input',
+      () => {
+
+        let value =
+          paymentCard.value
+            .replace(
+              /\D/g,
+              ''
+            )
+            .slice(
+              0,
+              16
+            );
+
+
+        value =
+          value
+            .replace(
+              /(.{4})/g,
+              '$1 '
+            )
+            .trim();
+
+
+        paymentCard.value =
+          value;
+
+      }
+    );
+
+
+    const paymentExpiry =
+      document.getElementById(
+        'paymentExpiry'
+      );
+
+
+    paymentExpiry.addEventListener(
+      'input',
+      () => {
+
+        let value =
+          paymentExpiry.value
+            .replace(
+              /\D/g,
+              ''
+            )
+            .slice(
+              0,
+              4
+            );
+
+
+        if (
+          value.length > 2
+        ) {
+
+          value =
+            value.slice(
+              0,
+              2
+            ) +
+            ' / ' +
+            value.slice(
+              2
+            );
+
+        }
+
+
+        paymentExpiry.value =
+          value;
+
+      }
+    );
+
+
+    const paymentCVV =
+      document.getElementById(
+        'paymentCVV'
+      );
+
+
+    paymentCVV.addEventListener(
+      'input',
+      () => {
+
+        paymentCVV.value =
+          paymentCVV.value
+            .replace(
+              /\D/g,
+              ''
+            )
+            .slice(
+              0,
+              4
+            );
+
+      }
+    );
+
+
+    /* =========================================
+       CREATE BOOKING
+    ========================================= */
+
+    function createBooking(
+      bookingData
+    ) {
+
+      const reference =
+        window.PARAGOS &&
+        typeof window.PARAGOS.generateBookingReference ===
+          'function'
+          ? window.PARAGOS.generateBookingReference()
+          : `PRG-${Date.now()
+              .toString(36)
+              .toUpperCase()}`;
+
+
+      const destination =
+        bookingData.destination;
+
+
+      const stay =
+        bookingData.selectedStay
+          ? getStayById(
+              bookingData.selectedStay.dataset.id
+            )
+          : null;
+
+
+      const vehicle =
+        bookingData.selectedCar
+          ? getVehicleById(
+              bookingData.selectedCar.dataset.id
+            )
+          : null;
+
+
+      const booking = {
+
+        reference,
+
+        userId:
+          session.id ||
+          session.userId ||
+          session.email ||
+          null,
+
+        userName:
+          session.name ||
+          '',
+
+        userEmail:
+          session.email ||
+          '',
+
+
+        destination: {
+
+          id:
+            destinationId(
+              destination
+            ),
+
+          name:
+            destinationName(
+              destination
+            ),
+
+          code:
+            destinationCode(
+              destination
+            )
+
+        },
+
+
+        checkin:
+          bookingData.checkin,
+
+        checkout:
+          bookingData.checkout,
+
+        nights:
+          bookingData.nights,
+
+        travelers:
+          bookingData.travelers,
+
+
+        stay:
+          stay
+            ? {
+
+                id:
+                  stayId(
+                    stay
+                  ),
+
+                name:
+                  stayName(
+                    stay
+                  ),
+
+                pricePerNight:
+                  stayPrice(
+                    stay
+                  )
+
+              }
+            : null,
+
+
+        vehicle:
+          vehicle &&
+          !isNoRental(
+            vehicle
+          )
+            ? {
+
+                id:
+                  vehicleId(
+                    vehicle
+                  ),
+
+                name:
+                  vehicleName(
+                    vehicle
+                  ),
+
+                pricePerDay:
+                  vehiclePrice(
+                    vehicle
+                  )
+
+              }
+            : null,
+
+
+        pricing: {
+
+          stay:
+            bookingData.stayTotal,
+
+          vehicle:
+            bookingData.vehicleTotal,
+
+          serviceFee:
+            bookingData.serviceFee,
+
+          subtotal:
+            bookingData.subtotal,
+
+          discount:
+            bookingData.discount,
+
+          total:
+            bookingData.total
+
+        },
+
+
+        promoCode:
+          bookingData.promoCode,
+
+
+        offerId:
+          bookingData.offer
+            ? offerId(
+                bookingData.offer
+              )
+            : null,
+
+
+        status:
+          'confirmed',
+
+        paymentStatus:
+          'demo-paid',
+
+        createdAt:
+          new Date().toISOString()
+
+      };
+
+
+      const saved =
+        window.PARAGOS &&
+        typeof window.PARAGOS.saveBooking ===
+          'function'
+          ? window.PARAGOS.saveBooking(
+              booking
+            )
+          : false;
+
+
+      if (!saved) {
+
+        throw new Error(
+          'Unable to save booking.'
+        );
+
+      }
+
+
+      return booking;
+
+    }
+
+
+    /* =========================================
+       CONFIRMATION
+    ========================================= */
+
+    function showConfirmation(
+      booking,
+      bookingData
+    ) {
+
+      const confirmCode =
+        document.getElementById(
+          'confirmCode'
+        );
+
+      const confirmDestination =
+        document.getElementById(
+          'confirmDestination'
+        );
+
+      const confirmRef =
+        document.getElementById(
+          'confirmRef'
+        );
+
+      const confirmCheckin =
+        document.getElementById(
+          'confirmCheckin'
+        );
+
+      const confirmCheckout =
+        document.getElementById(
+          'confirmCheckout'
+        );
+
+      const confirmTravelers =
+        document.getElementById(
+          'confirmTravelers'
+        );
+
+      const confirmTotal =
+        document.getElementById(
+          'confirmTotal'
+        );
+
+
+      confirmCode.textContent =
+        destinationCode(
+          bookingData.destination
+        ) ||
+        '—';
+
+
+      confirmDestination.textContent =
+        destinationName(
+          bookingData.destination
+        );
+
+
+      confirmRef.textContent =
+        booking.reference;
+
+
+      confirmCheckin.textContent =
+        formatDate(
+          bookingData.checkin
+        );
+
+
+      confirmCheckout.textContent =
+        formatDate(
+          bookingData.checkout
+        );
+
+
+      confirmTravelers.textContent =
+        bookingData.travelers;
+
+
+      confirmTotal.textContent =
+        money(
+          bookingData.total
+        );
+
+
+      bookingLayout.style.display =
+        'none';
+
+
+      confirmationPanel.style.display =
+        '';
+
+
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+
+    }
+
+
+    /* =========================================
+       CONFIRM PAYMENT
+    ========================================= */
+
+    confirmPayBtn.addEventListener(
+      'click',
+      () => {
+
+        const bookingData =
+          updateSummary();
+
+
+        if (
+          !validateTrip(
+            bookingData
+          )
+        ) {
+
+          tripError.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+          });
+
+          return;
+
+        }
+
+
+        if (
+          !validatePayment()
+        ) {
+
+          paymentError.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+          });
+
+          return;
+
+        }
+
+
+        confirmPayBtn.disabled =
+          true;
+
+        confirmPayBtn.textContent =
+          'Processing...';
+
+
+        setTimeout(
+          () => {
+
+            try {
+
+              const booking =
+                createBooking(
+                  bookingData
+                );
+
+
+              paymentSuccess.textContent =
+                'Demo payment completed successfully.';
+
+
+              paymentSuccess.style.display =
+                '';
+
+
+              showConfirmation(
+                booking,
+                bookingData
+              );
+
+            } catch (
+              error
+            ) {
+
+              console.error(
+                'PARAGOS booking error:',
+                error
+              );
+
+
+              showPaymentError(
+                'We could not save this demo booking. Please try again.'
+              );
+
+
+              confirmPayBtn.disabled =
+                false;
+
+              confirmPayBtn.textContent =
+                'Confirm and pay';
+
+            }
+
+          },
+          350
+        );
+
+      }
+    );
+
+
+    /* =========================================
+       URL OFFER
+    ========================================= */
+
+    if (
+      requestedOffer
+    ) {
+
+      const requestedOfferObject =
+        getOfferByCode(
+          requestedOffer
+        );
+
+
+      if (
+        requestedOfferObject
+      ) {
+
+        const code =
+          offerCode(
+            requestedOfferObject
+          );
+
+
+        const destinationIdFromOffer =
+          getOfferDestinationId(
+            requestedOfferObject
+          );
+
+
+        if (
+          destinationIdFromOffer &&
+          !requestedDestination
+        ) {
+
+          const destination =
+            getDestinationById(
+              destinationIdFromOffer
+            );
+
+
+          if (
+            destination
+          ) {
+
+            destinationSelect.value =
+              destinationId(
+                destination
+              );
+
+            renderStays();
+
+          }
+
+        }
+
+
+        if (
+          code
+        ) {
+
+          promoInput.value =
+            code;
+
+          applyPromo();
+
+        } else {
+
+          const discount =
+            offerDiscount(
+              requestedOfferObject
+            );
+
+
+          if (
+            discount > 0
+          ) {
+
+            setPromoMessage(
+              `Offer available: ${discount}% discount.`,
+              true
+            );
+
+          }
+
+        }
+
+      }
+
+    }
+
+
+    /* =========================================
+       INITIAL SUMMARY
+    ========================================= */
+
+    updateSummary();
+
+  }
+);
+
+</script>
 
 </body>
 </html>

@@ -6,159 +6,101 @@
 <title>Offers — PARAGOS</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,900;1,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
 <link rel="stylesheet" href="assets/pages.css">
 </head>
 <body>
 
-<nav class="navbar">
-  <a href="index.html" class="logo">
-    <svg viewBox="0 0 24 24" fill="none"><path d="M3 17c2 1.4 4 1.4 6 0s4-1.4 6 0 4 1.4 6 0" stroke="#FF6B4A" stroke-width="2" stroke-linecap="round"/><path d="M6 17V6l10 3-6 2.4V17" stroke="#0A2E2C" stroke-width="2" stroke-linejoin="round"/></svg>
-    PARAGOS
-  </a>
-  <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="destinations.html">Destinations</a></li>
-    <li><a href="offers.html" class="active">Offers</a></li>
-    <li><a href="support.html">Support</a></li>
-  </ul>
-  <div class="nav-cta">
-    <a href="signin.html" class="btn btn-ghost">Sign in</a>
-    <button class="nav-toggle" aria-label="Open menu"><span></span><span></span><span></span></button>
-  </div>
-</nav>
+<nav class="navbar" id="siteNav" aria-label="Main navigation"></nav>
 
 <header class="page-header">
   <div class="page-header-inner">
-    <div class="breadcrumb"><a href="index.html">Home</a> / Offers</div>
+    <div class="breadcrumb">
+      <a href="index.html">Home</a> / Offers
+    </div>
     <div class="eyebrow">Limited seats</div>
     <h1>Current fares, stays, and bundles</h1>
-    <p>Seasonal discounts across the archipelago. Most offers move fast during dry season.</p>
+    <p>
+      Seasonal discounts across the archipelago. Most offers move fast during dry season.
+    </p>
   </div>
 </header>
 
 <div class="filter-bar">
   <div class="filter-chips">
-    <button class="chip active">All</button>
-    <button class="chip">Stays</button>
-    <button class="chip">Rental cars</button>
-    <button class="chip">Packages</button>
+    <button class="chip active" type="button" data-offer-filter="all">All</button>
+    <button class="chip" type="button" data-offer-filter="stays">Stays</button>
+    <button class="chip" type="button" data-offer-filter="rental-cars">Rental cars</button>
+    <button class="chip" type="button" data-offer-filter="packages">Packages</button>
   </div>
+
   <div class="filter-sort">
     <span>Sort by</span>
-    <select>
-      <option>Ending soonest</option>
-      <option>Highest discount</option>
-      <option>Newest</option>
+    <select id="offerSort">
+      <option value="ending-soonest">Ending soonest</option>
+      <option value="discount-high">Highest discount</option>
+      <option value="newest">Newest</option>
     </select>
   </div>
 </div>
 
 <section class="section">
-  <div class="offers-grid">
-    <div class="ticket">
-      <div class="ticket-top">
-        <div class="eyebrow">Off-peak fare</div>
-        <div class="ticket-route">MNL <span class="arrow">→</span> PPS</div>
-        <h4>Palawan stay, 15% off</h4>
-      </div>
-      <div class="ticket-perf"></div>
-      <div class="ticket-bottom">
-        <div class="ticket-discount">15%<span>Valid through Sept 30</span></div>
-        <a href="#" class="btn btn-coral">Claim</a>
-      </div>
-    </div>
-    <div class="ticket">
-      <div class="ticket-top">
-        <div class="eyebrow">Group rate</div>
-        <div class="ticket-route">MNL <span class="arrow">→</span> BOR</div>
-        <h4>Boracay group package</h4>
-      </div>
-      <div class="ticket-perf"></div>
-      <div class="ticket-bottom">
-        <div class="ticket-discount">20%<span>Groups of 4+</span></div>
-        <a href="#" class="btn btn-coral">Claim</a>
-      </div>
-    </div>
-    <div class="ticket">
-      <div class="ticket-top">
-        <div class="eyebrow">Rental bundle</div>
-        <div class="ticket-route">CEB <span class="arrow">→</span> TAG</div>
-        <h4>Bohol stay + rental car</h4>
-      </div>
-      <div class="ticket-perf"></div>
-      <div class="ticket-bottom">
-        <div class="ticket-discount">10%<span>Book both together</span></div>
-        <a href="#" class="btn btn-coral">Claim</a>
-      </div>
-    </div>
-    <div class="ticket">
-      <div class="ticket-top">
-        <div class="eyebrow">Early bird</div>
-        <div class="ticket-route">MNL <span class="arrow">→</span> IAO</div>
-        <h4>Siargao surf season pass</h4>
-      </div>
-      <div class="ticket-perf"></div>
-      <div class="ticket-bottom">
-        <div class="ticket-discount">12%<span>Book 30 days ahead</span></div>
-        <a href="#" class="btn btn-coral">Claim</a>
-      </div>
-    </div>
-    <div class="ticket">
-      <div class="ticket-top">
-        <div class="eyebrow">Weekday rate</div>
-        <div class="ticket-route">CEB <span class="arrow">→</span> CEB</div>
-        <h4>Cebu self-drive, weekdays</h4>
-      </div>
-      <div class="ticket-perf"></div>
-      <div class="ticket-bottom">
-        <div class="ticket-discount">18%<span>Mon to Thu pickups</span></div>
-        <a href="#" class="btn btn-coral">Claim</a>
-      </div>
-    </div>
-    <div class="ticket">
-      <div class="ticket-top">
-        <div class="eyebrow">Long stay</div>
-        <div class="ticket-route">MNL <span class="arrow">→</span> BAG</div>
-        <h4>Baguio 7-night stay</h4>
-      </div>
-      <div class="ticket-perf"></div>
-      <div class="ticket-bottom">
-        <div class="ticket-discount">25%<span>7 nights or more</span></div>
-        <a href="#" class="btn btn-coral">Claim</a>
-      </div>
-    </div>
+  <div id="offersGrid" class="offers-grid"></div>
+
+  <div id="offersEmpty" style="display:none; text-align:center; padding:60px 20px;">
+    <div class="eyebrow">No offers found</div>
+    <h3>No offers match this filter.</h3>
+    <p>Try another offer category.</p>
+    <button id="clearOfferFilter" class="btn btn-coral" type="button">
+      View all offers
+    </button>
   </div>
 
-  <div class="pagination">
-    <a href="#" class="page-nav">Prev</a>
-    <a href="#" class="page-num active">1</a>
-    <a href="#" class="page-num">2</a>
-    <a href="#" class="page-nav">Next</a>
-  </div>
+  <div id="offersPagination" class="pagination"></div>
 </section>
 
 <section class="section" style="padding-top:0;">
   <div class="newsletter">
     <div class="eyebrow">Stay in the loop</div>
     <h2>Get seat sales and stay drops before they're gone</h2>
-    <form class="newsletter-form">
-      <input type="email" placeholder="you@email.com" required>
+
+    <form id="offerNewsletterForm" class="newsletter-form">
+      <input
+        id="offerNewsletterEmail"
+        type="email"
+        placeholder="you@email.com"
+        autocomplete="email"
+        required
+      >
       <button class="btn btn-coral" type="submit">Subscribe</button>
     </form>
+
+    <p id="offerNewsletterMessage" style="margin-top:12px;"></p>
   </div>
 </section>
 
 <footer>
   <div class="footer-top">
+
     <div class="footer-brand">
       <a href="index.html" class="logo">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M3 17c2 1.4 4 1.4 6 0s4-1.4 6 0 4 1.4 6 0" stroke="#FF6B4A" stroke-width="2" stroke-linecap="round"/><path d="M6 17V6l10 3-6 2.4V17" stroke="#0A2E2C" stroke-width="2" stroke-linejoin="round"/></svg>
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M3 17c2 1.4 4 1.4 6 0s4-1.4 6 0 4 1.4 6 0"
+            stroke="#FF6B4A" stroke-width="2" stroke-linecap="round"/>
+          <path d="M6 17V6l10 3-6 2.4V17"
+            stroke="#0A2E2C" stroke-width="2" stroke-linejoin="round"/>
+        </svg>
         PARAGOS
       </a>
-      <p>Local trip planning for the Philippine archipelago. Stays, island transfers, and rental cars in one place.</p>
+
+      <p>
+        Local trip planning for the Philippine archipelago.
+        Stays, island transfers, and rental cars in one place.
+      </p>
     </div>
+
     <div class="footer-col">
       <h5>Company</h5>
       <ul>
@@ -167,25 +109,30 @@
         <li><a href="#">Careers</a></li>
       </ul>
     </div>
+
     <div class="footer-col">
       <h5>Explore</h5>
       <ul>
         <li><a href="destinations.html">Destinations</a></li>
         <li><a href="offers.html">Offers</a></li>
-        <li><a href="#">Rental cars</a></li>
+        <li><a href="booking.html">Rental cars</a></li>
       </ul>
     </div>
+
     <div class="footer-col">
       <h5>Account</h5>
       <ul>
         <li><a href="signin.html">Sign in</a></li>
         <li><a href="register.html">Register</a></li>
-        <li><a href="#">Manage booking</a></li>
+        <li><a href="authenticated.html">Manage booking</a></li>
       </ul>
     </div>
+
   </div>
+
   <div class="footer-bottom">
     <span>© 2026 PARAGOS Travel. All rights reserved.</span>
+
     <div class="socials">
       <a href="#">Instagram</a>
       <a href="#">Facebook</a>
@@ -194,7 +141,632 @@
   </div>
 </footer>
 
+<script src="assets/data/destinations.js"></script>
+<script src="assets/data/stays.js"></script>
+<script src="assets/data/vehicles.js"></script>
+<script src="assets/data/offers.js"></script>
+<script src="assets/data/faqs.js"></script>
+<script src="assets/data/policies.js"></script>
 <script src="assets/main.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const offersGrid = document.getElementById("offersGrid");
+  const offersEmpty = document.getElementById("offersEmpty");
+  const offersPagination = document.getElementById("offersPagination");
+  const offerSort = document.getElementById("offerSort");
+  const clearOfferFilter = document.getElementById("clearOfferFilter");
+  const filterButtons = document.querySelectorAll("[data-offer-filter]");
+
+  const offers =
+    Array.isArray(window.PARAGOS_OFFERS)
+      ? window.PARAGOS_OFFERS
+      : Array.isArray(window.PARAGOS?.data?.offers)
+        ? window.PARAGOS.data.offers
+        : [];
+
+  const destinations =
+    Array.isArray(window.PARAGOS_DESTINATIONS)
+      ? window.PARAGOS_DESTINATIONS
+      : Array.isArray(window.PARAGOS?.data?.destinations)
+        ? window.PARAGOS.data.destinations
+        : [];
+
+  const params = new URLSearchParams(window.location.search);
+  const requestedOffer = params.get("offer");
+
+  let activeFilter = "all";
+  let currentPage = 1;
+
+  const pageSize = 6;
+
+  function firstValue(obj, keys, fallback = "") {
+    for (const key of keys) {
+      if (
+        obj &&
+        obj[key] !== undefined &&
+        obj[key] !== null &&
+        obj[key] !== ""
+      ) {
+        return obj[key];
+      }
+    }
+
+    return fallback;
+  }
+
+  function normalize(value) {
+    return String(value || "")
+      .trim()
+      .toLowerCase()
+      .replace(/[_\s]+/g, "-");
+  }
+
+  function escapeHTML(value) {
+    return String(value ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+  function getOfferId(offer, index) {
+    return firstValue(
+      offer,
+      ["id", "offerId", "code", "slug"],
+      `offer-${index + 1}`
+    );
+  }
+
+  function getOfferTitle(offer) {
+    return firstValue(
+      offer,
+      ["name", "title", "label"],
+      "PARAGOS travel offer"
+    );
+  }
+
+  function getOfferEyebrow(offer) {
+    return firstValue(
+      offer,
+      ["eyebrow", "typeLabel", "offerType", "type", "category"],
+      "Special offer"
+    );
+  }
+
+  function getOfferDescription(offer) {
+    return firstValue(
+      offer,
+      ["description", "summary", "details", "subtitle"],
+      "Save on your next PARAGOS trip."
+    );
+  }
+
+  function getOfferDiscount(offer) {
+    const value = firstValue(
+      offer,
+      ["discount", "discountPercent", "percentage", "percent"],
+      0
+    );
+
+    const numeric = Number(String(value).replace("%", "").trim());
+
+    if (Number.isFinite(numeric) && numeric > 0) {
+      return `${numeric}%`;
+    }
+
+    return String(value || "Special");
+  }
+
+  function getOfferEndDate(offer) {
+    return firstValue(
+      offer,
+      ["endDate", "validUntil", "expires", "expiryDate", "validThrough"],
+      ""
+    );
+  }
+
+  function getOfferStartDate(offer) {
+    return firstValue(
+      offer,
+      ["startDate", "validFrom", "createdAt", "date"],
+      ""
+    );
+  }
+
+  function getOfferCategory(offer) {
+    const raw = firstValue(
+      offer,
+      ["category", "type", "offerType", "kind"],
+      ""
+    );
+
+    if (Array.isArray(raw)) {
+      return raw.map(normalize);
+    }
+
+    return [normalize(raw)];
+  }
+
+  function getOfferRoute(offer) {
+    const origin = firstValue(
+      offer,
+      ["originCode", "fromCode", "departureCode", "from"],
+      "MNL"
+    );
+
+    const destination = firstValue(
+      offer,
+      ["destinationCode", "toCode", "arrivalCode", "to"],
+      ""
+    );
+
+    if (destination) {
+      return `${origin} → ${destination}`;
+    }
+
+    const route = firstValue(
+      offer,
+      ["route", "routeLabel"],
+      "PARAGOS"
+    );
+
+    return route;
+  }
+
+  function getDestinationForOffer(offer) {
+    const destinationId = firstValue(
+      offer,
+      ["destinationId", "destination", "destinationCode", "toCode"],
+      ""
+    );
+
+    if (!destinationId) {
+      return null;
+    }
+
+    const normalized = normalize(destinationId);
+
+    return destinations.find(destination => {
+      return (
+        normalize(firstValue(destination, ["id", "code", "slug"], "")) === normalized ||
+        normalize(firstValue(destination, ["code"], "")) === normalized
+      );
+    }) || null;
+  }
+
+  function getClaimUrl(offer, index) {
+    const offerId = getOfferId(offer, index);
+    const destination = getDestinationForOffer(offer);
+
+    const params = new URLSearchParams();
+
+    params.set("offer", offerId);
+
+    if (destination) {
+      params.set(
+        "destination",
+        firstValue(destination, ["id", "code", "slug"], "")
+      );
+    }
+
+    return `booking.html?${params.toString()}`;
+  }
+
+  function parseDate(value) {
+    if (!value) return null;
+
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) {
+      return null;
+    }
+
+    return date;
+  }
+
+  function formatEndDate(value) {
+    const date = parseDate(value);
+
+    if (!date) {
+      return value || "Limited time";
+    }
+
+    return date.toLocaleDateString("en-PH", {
+      month: "short",
+      day: "numeric",
+      year: "numeric"
+    });
+  }
+
+  function getDaysUntilEnd(value) {
+    const date = parseDate(value);
+
+    if (!date) {
+      return Number.POSITIVE_INFINITY;
+    }
+
+    const now = new Date();
+    const end = new Date(date);
+
+    end.setHours(23, 59, 59, 999);
+
+    return Math.ceil(
+      (end.getTime() - now.getTime()) / 86400000
+    );
+  }
+
+  function getCategoryForFilter(offer) {
+    const categories = getOfferCategory(offer);
+
+    if (
+      categories.includes("stay") ||
+      categories.includes("stays") ||
+      categories.includes("accommodation") ||
+      categories.includes("hotel")
+    ) {
+      return "stays";
+    }
+
+    if (
+      categories.includes("rental") ||
+      categories.includes("rental-car") ||
+      categories.includes("rental-cars") ||
+      categories.includes("car") ||
+      categories.includes("cars")
+    ) {
+      return "rental-cars";
+    }
+
+    if (
+      categories.includes("package") ||
+      categories.includes("packages") ||
+      categories.includes("bundle") ||
+      categories.includes("bundles")
+    ) {
+      return "packages";
+    }
+
+    const title = normalize(getOfferTitle(offer));
+    const description = normalize(getOfferDescription(offer));
+
+    if (
+      title.includes("rental") ||
+      title.includes("self-drive") ||
+      description.includes("rental")
+    ) {
+      return "rental-cars";
+    }
+
+    if (
+      title.includes("package") ||
+      title.includes("bundle") ||
+      description.includes("bundle")
+    ) {
+      return "packages";
+    }
+
+    return "stays";
+  }
+
+  function matchesFilter(offer) {
+    if (activeFilter === "all") {
+      return true;
+    }
+
+    return getCategoryForFilter(offer) === activeFilter;
+  }
+
+  function sortOffers(list) {
+    const sorted = [...list];
+
+    switch (offerSort.value) {
+      case "discount-high":
+        return sorted.sort((a, b) => {
+          const discountA = Number(
+            String(getOfferDiscount(a)).replace(/[^\d.]/g, "")
+          ) || 0;
+
+          const discountB = Number(
+            String(getOfferDiscount(b)).replace(/[^\d.]/g, "")
+          ) || 0;
+
+          return discountB - discountA;
+        });
+
+      case "newest":
+        return sorted.sort((a, b) => {
+          const dateA = parseDate(getOfferStartDate(a));
+          const dateB = parseDate(getOfferStartDate(b));
+
+          if (!dateA && !dateB) return 0;
+          if (!dateA) return 1;
+          if (!dateB) return -1;
+
+          return dateB - dateA;
+        });
+
+      case "ending-soonest":
+        return sorted.sort((a, b) => {
+          return (
+            getDaysUntilEnd(getOfferEndDate(a)) -
+            getDaysUntilEnd(getOfferEndDate(b))
+          );
+        });
+
+      default:
+        return sorted;
+    }
+  }
+
+  function renderOffer(offer, index) {
+    const offerId = getOfferId(offer, index);
+    const eyebrow = getOfferEyebrow(offer);
+    const route = getOfferRoute(offer);
+    const title = getOfferTitle(offer);
+    const description = getOfferDescription(offer);
+    const discount = getOfferDiscount(offer);
+    const endDate = getOfferEndDate(offer);
+    const claimUrl = getClaimUrl(offer, index);
+
+    let validityText = "Limited time";
+
+    if (endDate) {
+      validityText = `Valid through ${formatEndDate(endDate)}`;
+    } else if (
+      firstValue(offer, ["requirements", "condition", "terms"], "")
+    ) {
+      validityText = firstValue(
+        offer,
+        ["requirements", "condition", "terms"],
+        ""
+      );
+    }
+
+    return `
+      <div class="ticket" data-offer-id="${escapeHTML(offerId)}">
+        <div class="ticket-top">
+          <div class="eyebrow">${escapeHTML(eyebrow)}</div>
+
+          <div class="ticket-route">
+            ${escapeHTML(route)}
+          </div>
+
+          <h4>${escapeHTML(title)}</h4>
+
+          <p style="margin-top:10px;">
+            ${escapeHTML(description)}
+          </p>
+        </div>
+
+        <div class="ticket-perf"></div>
+
+        <div class="ticket-bottom">
+          <div class="ticket-discount">
+            ${escapeHTML(discount)}
+            <span>${escapeHTML(validityText)}</span>
+          </div>
+
+          <a href="${escapeHTML(claimUrl)}" class="btn btn-coral">
+            Claim
+          </a>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderPagination(totalItems) {
+    if (totalItems <= pageSize) {
+      offersPagination.innerHTML = "";
+      return;
+    }
+
+    const totalPages = Math.ceil(totalItems / pageSize);
+
+    let html = `
+      <button
+        type="button"
+        class="page-nav"
+        data-page="${Math.max(1, currentPage - 1)}"
+        ${currentPage === 1 ? "disabled" : ""}
+      >
+        Prev
+      </button>
+    `;
+
+    for (let page = 1; page <= totalPages; page++) {
+      html += `
+        <button
+          type="button"
+          class="page-num ${page === currentPage ? "active" : ""}"
+          data-page="${page}"
+        >
+          ${page}
+        </button>
+      `;
+    }
+
+    html += `
+      <button
+        type="button"
+        class="page-nav"
+        data-page="${Math.min(totalPages, currentPage + 1)}"
+        ${currentPage === totalPages ? "disabled" : ""}
+      >
+        Next
+      </button>
+    `;
+
+    offersPagination.innerHTML = html;
+
+    offersPagination.querySelectorAll("[data-page]").forEach(button => {
+      button.addEventListener("click", function () {
+        if (button.disabled) return;
+
+        currentPage = Number(button.dataset.page) || 1;
+
+        render();
+
+        window.scrollTo({
+          top: document.querySelector(".filter-bar").offsetTop - 20,
+          behavior: "smooth"
+        });
+      });
+    });
+  }
+
+  function render() {
+    const filtered = offers.filter(matchesFilter);
+    const sorted = sortOffers(filtered);
+
+    const totalPages = Math.max(
+      1,
+      Math.ceil(sorted.length / pageSize)
+    );
+
+    if (currentPage > totalPages) {
+      currentPage = totalPages;
+    }
+
+    const start = (currentPage - 1) * pageSize;
+    const visible = sorted.slice(start, start + pageSize);
+
+    if (!visible.length) {
+      offersGrid.innerHTML = "";
+      offersEmpty.style.display = "block";
+      offersPagination.innerHTML = "";
+      return;
+    }
+
+    offersEmpty.style.display = "none";
+
+    offersGrid.innerHTML = visible
+      .map((offer, index) => renderOffer(offer, start + index))
+      .join("");
+
+    renderPagination(sorted.length);
+  }
+
+  filterButtons.forEach(button => {
+    button.addEventListener("click", function () {
+      filterButtons.forEach(item => item.classList.remove("active"));
+      button.classList.add("active");
+
+      activeFilter = button.dataset.offerFilter || "all";
+      currentPage = 1;
+
+      render();
+    });
+  });
+
+  offerSort.addEventListener("change", function () {
+    currentPage = 1;
+    render();
+  });
+
+  clearOfferFilter.addEventListener("click", function () {
+    activeFilter = "all";
+    currentPage = 1;
+
+    filterButtons.forEach(button => {
+      button.classList.toggle(
+        "active",
+        button.dataset.offerFilter === "all"
+      );
+    });
+
+    render();
+  });
+
+  /*
+   * If an offer was supplied through the URL, scroll to it after rendering.
+   * Example:
+   * offers.html?offer=palawan-15
+   */
+  function focusRequestedOffer() {
+    if (!requestedOffer) return;
+
+    const requested = normalize(requestedOffer);
+
+    const index = offers.findIndex((offer, index) => {
+      return normalize(getOfferId(offer, index)) === requested;
+    });
+
+    if (index === -1) return;
+
+    const targetPage = Math.floor(index / pageSize) + 1;
+
+    currentPage = targetPage;
+    activeFilter = "all";
+
+    filterButtons.forEach(button => {
+      button.classList.toggle(
+        "active",
+        button.dataset.offerFilter === "all"
+      );
+    });
+
+    render();
+
+    requestAnimationFrame(() => {
+      const card = document.querySelector(
+        `[data-offer-id="${CSS.escape(getOfferId(offers[index], index))}"]`
+      );
+
+      if (card) {
+        card.scrollIntoView({
+          behavior: "smooth",
+          block: "center"
+        });
+      }
+    });
+  }
+
+  render();
+  focusRequestedOffer();
+
+  const newsletterForm = document.getElementById("offerNewsletterForm");
+  const newsletterEmail = document.getElementById("offerNewsletterEmail");
+  const newsletterMessage = document.getElementById("offerNewsletterMessage");
+
+  newsletterForm.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const email = newsletterEmail.value.trim().toLowerCase();
+
+    if (!email) return;
+
+    let subscribers = [];
+
+    try {
+      subscribers = JSON.parse(
+        localStorage.getItem("paragos:newsletter_subscribers") || "[]"
+      );
+    } catch (error) {
+      subscribers = [];
+    }
+
+    if (!Array.isArray(subscribers)) {
+      subscribers = [];
+    }
+
+    if (!subscribers.includes(email)) {
+      subscribers.push(email);
+    }
+
+    localStorage.setItem(
+      "paragos:newsletter_subscribers",
+      JSON.stringify(subscribers)
+    );
+
+    newsletterMessage.textContent =
+      "You're subscribed to PARAGOS offers.";
+
+    newsletterForm.reset();
+  });
+});
+</script>
 
 </body>
 </html>

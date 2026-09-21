@@ -1,0 +1,13 @@
+/* PARAGOS sample stays (pricePerNight in PHP) */
+window.PARAGOS_STAYS = [
+  { id: "boracay-shoreline", destinationId: "boracay", name: "Shoreline Beach Resort", type: "resort", pricePerNight: 4800, rating: 4.7, amenities: ["Beachfront", "Pool", "Breakfast included", "Free Wi-Fi"], image: "https://picsum.photos/seed/paragos-stay-boracay1/400/240" },
+  { id: "boracay-hostel", destinationId: "boracay", name: "Station 2 Backpackers", type: "hostel", pricePerNight: 1200, rating: 4.3, amenities: ["Shared kitchen", "Free Wi-Fi", "Near beach"], image: "https://picsum.photos/seed/paragos-stay-boracay2/400/240" },
+  { id: "palawan-lagoon", destinationId: "palawan", name: "Bacuit Lagoon Villas", type: "villa", pricePerNight: 6500, rating: 4.9, amenities: ["Private balcony", "Island-hopping desk", "Breakfast included"], image: "https://picsum.photos/seed/paragos-stay-palawan1/400/240" },
+  { id: "palawan-inn", destinationId: "palawan", name: "El Nido Town Inn", type: "inn", pricePerNight: 2100, rating: 4.4, amenities: ["Air-conditioning", "Free Wi-Fi", "Tour assistance"], image: "https://picsum.photos/seed/paragos-stay-palawan2/400/240" },
+  { id: "cebu-cityview", destinationId: "cebu", name: "Cityview Suites Cebu", type: "hotel", pricePerNight: 3400, rating: 4.5, amenities: ["Rooftop pool", "Gym", "Free Wi-Fi"], image: "https://picsum.photos/seed/paragos-stay-cebu1/400/240" },
+  { id: "siargao-surf", destinationId: "siargao", name: "Cloud 9 Surf Lodge", type: "lodge", pricePerNight: 3500, rating: 4.7, amenities: ["Surf lessons", "Bike rental", "Cafe"], image: "https://picsum.photos/seed/paragos-stay-siargao1/400/240" },
+  { id: "baguio-pine", destinationId: "baguio", name: "Pine Ridge Lodge", type: "lodge", pricePerNight: 2600, rating: 4.4, amenities: ["Fireplace lounge", "Breakfast included", "Free parking"], image: "https://picsum.photos/seed/paragos-stay-baguio1/400/240" },
+  { id: "banaue-terrace", destinationId: "banaue", name: "Terraces View Homestay", type: "homestay", pricePerNight: 1800, rating: 4.6, amenities: ["Terrace views", "Home-cooked meals", "Guided treks"], image: "https://picsum.photos/seed/paragos-stay-banaue1/400/240" },
+  { id: "bohol-riverside", destinationId: "bohol", name: "Loboc Riverside Retreat", type: "resort", pricePerNight: 3600, rating: 4.6, amenities: ["River views", "Pool", "Breakfast included"], image: "https://picsum.photos/seed/paragos-stay-bohol1/400/240" },
+  { id: "manila-heritage", destinationId: "manila", name: "Intramuros Heritage Hotel", type: "hotel", pricePerNight: 3000, rating: 4.4, amenities: ["Walking-tour desk", "Restaurant", "Free Wi-Fi"], image: "https://picsum.photos/seed/paragos-stay-manila1/400/240" }
+];
